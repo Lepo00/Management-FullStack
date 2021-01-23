@@ -1,7 +1,11 @@
 package it.jac.ManagementSpring.model;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
@@ -30,6 +34,10 @@ public class Customer extends AuditModel{
 	@Column(name = "phone")
 	@NotNull
 	private String phone;
+	
+	@OneToMany
+	@JoinColumn(name = "customer_id")
+	private List<Invoice> invoices;
 
 	public String getFiscalCode() {
 		return fiscalCode;
@@ -70,4 +78,13 @@ public class Customer extends AuditModel{
 	public void setPhone(String phone) {
 		this.phone = phone;
 	}
+
+	public List<Invoice> getInvoices() {
+		return invoices;
+	}
+
+	public void setInvoices(List<Invoice> invoices) {
+		this.invoices = invoices;
+	}
+	
 }

@@ -2,6 +2,7 @@ package it.jac.ManagementSpring.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
@@ -23,6 +24,9 @@ public class Item extends AuditModel{
 	
 	@Column(name = "price")
 	private int price;
+	
+	@ManyToOne
+	private UnitOfMeasure unitOfMeasure;
 
 	public String getCode() {
 		return code;
