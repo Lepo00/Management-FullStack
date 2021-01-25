@@ -3,6 +3,7 @@ package it.jac.management.controller;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,13 +24,13 @@ public class CustomerController {
 	@Autowired
 	CustomerService customerService;
 	
-	@GetMapping("/detail/{id}")
-	public ResponseEntity<Customer> get(@PathVariable Long id){
+	@GetMapping("/{id}")
+	public ResponseEntity<?> get(@PathVariable Long id){
 		Optional<Customer> c = customerService.get(id);
 		if (c.isPresent()) {
 			return ResponseEntity.ok(c.get());
 		} else {
-			return ResponseEntity.notFound().build();
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Customer doesn't exists");
 		}
 	}
 	
@@ -37,6 +38,8 @@ public class CustomerController {
 	public ResponseEntity<?> newCustomer(@RequestBody Customer customer) throws Exception {
 		try {
 			Customer save = customerService.create(customer);
+			if(save==null)
+				throw new Exception();
 			return ResponseEntity.ok(save);
 		} catch (Exception e) {
 			return ResponseEntity.badRequest().body("Customer Not Saved!");
@@ -47,9 +50,9 @@ public class CustomerController {
 	public ResponseEntity<?> updateCustomer(@PathVariable Long id,
 			@RequestBody Customer customer) {
 		try {
-			Customer save = customerService.update(customer, id);
-			return ResponseEntity.ok(save);
-		} catch (Exception e) {
+			Customer update = customerService.update(customer, id);
+			return ResponseEntity.ok(update);
+		}catch (Exception e) {
 			return ResponseEntity.badRequest().body("Customer Not Updated!");
 		}
 	}
@@ -60,7 +63,7 @@ public class CustomerController {
 			customerService.delete(id);
 			return ResponseEntity.ok().body("Customer deleted");
 		} catch (Exception e) {
-			return ResponseEntity.notFound().build();
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Customer doesn't exists");
 		}
 	}
 	
