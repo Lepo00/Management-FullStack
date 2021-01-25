@@ -22,7 +22,9 @@ public class CustomerServiceImpl implements CustomerService {
 
 	@Override
 	public Customer create(Customer c){
-		return customerRepository.save(c);
+		if(customerRepository.findByFiscalCode(c.getFiscalCode())==null)
+			return customerRepository.save(c);
+		return null;
 	}
 
 	@Override
