@@ -1,4 +1,4 @@
-package it.jac.ManagementSpring.model;
+package it.jac.management.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
