@@ -7,5 +7,5 @@ import it.jac.management.model.Customer;
 
 @Repository("customerRepository")
 public interface CustomerRepository extends JpaRepository<Customer, Long> {
-
+	Customer findByFiscalCode(String fiscalCode);
 }
