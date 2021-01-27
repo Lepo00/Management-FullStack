@@ -1,4 +1,4 @@
-package it.jac.ManagementSpring.model;
+package it.jac.management.model;
 
 import java.util.List;
 

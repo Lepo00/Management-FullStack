@@ -1,4 +1,4 @@
-package it.jac.ManagementSpring.model;
+package it.jac.management.model;
 
 import java.util.Date;
 import java.util.List;
@@ -24,9 +24,9 @@ public class Invoice extends AuditModel{
 	@Column(name = "description")
 	private String description;
 	
-	@Column(name = "intestatario")
+	@Column(name = "accountholder")
 	@NotNull
-	private String intestatario;
+	private String accountholder;
 	
 	@Column(name = "date")
 	@NotNull
@@ -40,13 +40,13 @@ public class Invoice extends AuditModel{
 	private Date shipmentDate;
 	
 	@Column(name = "net_price")
-	private int netPrice;
+	private double netPrice;
 	
 	@Column(name = "taxes")
-	private int taxes;
+	private double taxes;
 	
 	@Column(name = "tot_price")
-	private int totPrice;
+	private double totPrice;
 	
 	@Column(name = "payment_type")
 	private String paymentType;
@@ -55,7 +55,7 @@ public class Invoice extends AuditModel{
 	@JoinTable(name="invoice_item", joinColumns = @JoinColumn(name="item_id"),
 	inverseJoinColumns=@JoinColumn(name="invoice_id"))
 	private List<Item> items;
-
+	
 	public String getDescription() {
 		return description;
 	}
@@ -64,12 +64,12 @@ public class Invoice extends AuditModel{
 		this.description = description;
 	}
 
-	public String getIntestatario() {
-		return intestatario;
+	public String getAccountholder() {
+		return accountholder;
 	}
 
-	public void setIntestatario(String intestatario) {
-		this.intestatario = intestatario;
+	public void setAccountholder(String accountholder) {
+		this.accountholder = accountholder;
 	}
 
 	public Date getDate() {
@@ -88,27 +88,27 @@ public class Invoice extends AuditModel{
 		this.shipmentDate = shipmentDate;
 	}
 
-	public int getNetPrice() {
+	public double getNetPrice() {
 		return netPrice;
 	}
 
-	public void setNetPrice(int netPrice) {
+	public void setNetPrice(double netPrice) {
 		this.netPrice = netPrice;
 	}
 
-	public int getTaxes() {
+	public double getTaxes() {
 		return taxes;
 	}
 
-	public void setTaxes(int taxes) {
+	public void setTaxes(double taxes) {
 		this.taxes = taxes;
 	}
 
-	public int getTotPrice() {
+	public double getTotPrice() {
 		return totPrice;
 	}
 
-	public void setTotPrice(int totPrice) {
+	public void setTotPrice(double totPrice) {
 		this.totPrice = totPrice;
 	}
 
