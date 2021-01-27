@@ -9,8 +9,8 @@ INSERT INTO `item` (`id`, `created_at`, `updated_at`, `code`, `description`, `pr
 (NULL, CURRENT_TIME(), CURRENT_TIME(), 'HHH', 'rete', '80', NULL, 5),
 (NULL, CURRENT_TIME(), CURRENT_TIME(), 'III', 'bronzo', '90', NULL, 1),
 (NULL, CURRENT_TIME(), CURRENT_TIME(), 'JJJ', 'oro', '100', NULL, 1),
-(NULL, CURRENT_TIME(), CURRENT_TIME(), 'KKK', 'spago', '60', NULL, 5),
-(NULL, CURRENT_TIME(), CURRENT_TIME(), 'LLL', 'cavo', '70', NULL, 6),
-(NULL, CURRENT_TIME(), CURRENT_TIME(), 'MMM', 'granito', '80', NULL, 5),
-(NULL, CURRENT_TIME(), CURRENT_TIME(), 'NNN', 'marmo', '90', NULL, 1),
-(NULL, CURRENT_TIME(), CURRENT_TIME(), 'OOO', 'diluente', '100', NULL, 4)
+(NULL, CURRENT_TIME(), CURRENT_TIME(), 'KKK', 'spago', '110', NULL, 5),
+(NULL, CURRENT_TIME(), CURRENT_TIME(), 'LLL', 'cavo', '120', NULL, 6),
+(NULL, CURRENT_TIME(), CURRENT_TIME(), 'MMM', 'granito', '130', NULL, 5),
+(NULL, CURRENT_TIME(), CURRENT_TIME(), 'NNN', 'marmo', '140', NULL, 1),
+(NULL, CURRENT_TIME(), CURRENT_TIME(), 'OOO', 'diluente', '150', NULL, 4)
