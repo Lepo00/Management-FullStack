@@ -1,9 +1,12 @@
 package it.jac.management.model;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -34,6 +37,10 @@ public class InvoiceMaster extends AuditModel{
 	
 	@Column(name = "payment_condition")
 	private String paymentCondition;
+	
+	@OneToMany
+	@JoinColumn(name = "invoice_master_id")
+	private List<InvoiceBody> rows;
 
 	public String getAccountholder() {
 		return accountholder;
@@ -73,5 +80,13 @@ public class InvoiceMaster extends AuditModel{
 
 	public void setPaymentCondition(String paymentCondition) {
 		this.paymentCondition = paymentCondition;
+	}
+
+	public List<InvoiceBody> getRows() {
+		return rows;
+	}
+
+	public void setBody(List<InvoiceBody> rows) {
+		this.rows = rows;
 	}
 }

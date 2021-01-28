@@ -19,9 +19,6 @@ public class Item extends AuditModel{
 	@Column(name = "description")
 	private String description;
 	
-	@Column(name = "quantity")
-	private int quantity;
-	
 	@Column(name = "price")
 	private int price;
 	
@@ -43,14 +40,6 @@ public class Item extends AuditModel{
 
 	public void setDescription(String description) {
 		this.description = description;
-	}
-
-	public int getQuantity() {
-		return quantity;
-	}
-
-	public void setQuantity(int quantity) {
-		this.quantity = quantity;
 	}
 
 	public int getPrice() {

@@ -18,16 +18,14 @@ import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @SuppressWarnings("serial")
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
-@JsonIgnoreProperties(value = { "createdAt", "updatedAt" }, allowGetters = true)
+@JsonIgnoreProperties(value = { "id","createdAt", "updatedAt" })
 public abstract class AuditModel implements Serializable {
 
-	@JsonIgnore
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private @Id Long id;
 
@@ -37,7 +35,6 @@ public abstract class AuditModel implements Serializable {
 	@CreatedDate
 	private Date createdAt;
 
-//	@JsonIgnore
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy HH:mm:ss")
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "updated_at", nullable = false)

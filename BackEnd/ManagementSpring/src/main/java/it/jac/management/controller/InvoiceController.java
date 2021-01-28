@@ -14,19 +14,19 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import it.jac.management.model.Invoice;
-import it.jac.management.service.InvoiceService;
+import it.jac.management.model.InvoiceMaster;
+import it.jac.management.service.InvoiceMasterService;
 
 @RestController
 @RequestMapping("/invoice")
 public class InvoiceController {
 	
 	@Autowired
-	InvoiceService invoiceService;
+	InvoiceMasterService invoiceService;
 	
 	@GetMapping("/{id}")
 	public ResponseEntity<?> get(@PathVariable Long id){
-		Optional<Invoice> i = invoiceService.get(id);
+		Optional<InvoiceMaster> i = invoiceService.get(id);
 		if (i.isPresent()) {
 			return ResponseEntity.ok(i.get());
 		} else {
@@ -35,9 +35,9 @@ public class InvoiceController {
 	}
 	
 	@PostMapping("/save")
-	public ResponseEntity<?> newInvoice(@RequestBody Invoice invoice) throws Exception {
+	public ResponseEntity<?> newInvoice(@RequestBody InvoiceMaster invoice) throws Exception {
 		try {
-			Invoice save = invoiceService.create(invoice);
+			InvoiceMaster save = invoiceService.create(invoice);
 			if(save==null)
 				throw new Exception();
 			return ResponseEntity.ok(save);
@@ -48,16 +48,16 @@ public class InvoiceController {
 	
 	@PutMapping(path = "/update/{id}")
 	public ResponseEntity<?> updateInvoice(@PathVariable Long id,
-			@RequestBody Invoice invoice) {
+			@RequestBody InvoiceMaster invoice) {
 		try {
-			Invoice update = invoiceService.update(invoice, id);
+			InvoiceMaster update = invoiceService.update(invoice, id);
 			return ResponseEntity.ok(update);
 		}catch (Exception e) {
 			return ResponseEntity.badRequest().body("Invoice Not Updated!");
 		}
 	}
 	
-	@DeleteMapping(path="delete/{id}")
+	@DeleteMapping(path="/delete/{id}")
     public ResponseEntity<String> deleteInvoice(@PathVariable Long id){
 		try {
 			invoiceService.delete(id);
@@ -67,4 +67,9 @@ public class InvoiceController {
 		}
 	}
 	
+	@GetMapping(path = "/print")
+	public ResponseEntity<InvoiceMaster> printInvoice(@RequestBody InvoiceMaster invoiceMaster){
+		System.out.println("print called");
+		return ResponseEntity.ok(invoiceMaster);
+	}
 }

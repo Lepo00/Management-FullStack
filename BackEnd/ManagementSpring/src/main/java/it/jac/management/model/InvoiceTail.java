@@ -3,57 +3,53 @@ package it.jac.management.model;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
 
 @SuppressWarnings("serial")
 
 @Entity
-@Table(name = "tail")
+@Table(name = "invoice_tail")
 public class InvoiceTail extends AuditModel{
 	@Column(name = "items_value")
-	@NotNull
-	private Float items_value;
+	private Float itemsValue;
 	
 	@Column(name = "service_value")
-	private Float service_value;
+	private Float serviceValue;
 	
 	@Column(name = "discount")
 	private Float discount;
 	
 	@Column(name = "tail_discount")
-	private Float tail_discount;
+	private Float tailDiscount;
 
 	@Column(name = "tail_discount_value")
-	private Float tail_discount_value;
+	private Float tailDiscountValue;
 	
 	@Column(name = "tot_discount")
-	private Float tot_discount;
+	private Float totDiscount;
 	
 	@Column(name = "taxable")
-	@NotNull
 	private Float taxable;
 	
 	@Column(name = "tot_tax")
-	private Float tot_tax;
+	private Float totTax;
 	
 	@Column(name = "net_pay")
-	@NotNull
-	private Float net_pay;
+	private Float netPay;
 
-	public Float getItems_value() {
-		return items_value;
+	public Float getItemsValue() {
+		return itemsValue;
 	}
 
-	public void setItems_value(Float items_value) {
-		this.items_value = items_value;
+	public void setItemsValue(Float itemsValue) {
+		this.itemsValue = itemsValue;
 	}
 
-	public Float getService_value() {
-		return service_value;
+	public Float getServiceValue() {
+		return serviceValue;
 	}
 
-	public void setService_value(Float service_value) {
-		this.service_value = service_value;
+	public void setServiceValue(Float serviceValue) {
+		this.serviceValue = serviceValue;
 	}
 
 	public Float getDiscount() {
@@ -64,28 +60,28 @@ public class InvoiceTail extends AuditModel{
 		this.discount = discount;
 	}
 
-	public Float getTail_discount() {
-		return tail_discount;
+	public Float getTailDiscount() {
+		return tailDiscount;
 	}
 
-	public void setTail_discount(Float tail_discount) {
-		this.tail_discount = tail_discount;
+	public void setTailDiscount(Float tailDiscount) {
+		this.tailDiscount = tailDiscount;
 	}
 
-	public Float getTail_discount_value() {
-		return tail_discount_value;
+	public Float getTailDiscountValue() {
+		return tailDiscountValue;
 	}
 
-	public void setTail_discount_value(Float tail_discount_value) {
-		this.tail_discount_value = tail_discount_value;
+	public void setTailDiscountValue(Float tailDiscountValue) {
+		this.tailDiscountValue = tailDiscountValue;
 	}
 
-	public Float getTot_discount() {
-		return tot_discount;
+	public Float getTotDiscount() {
+		return totDiscount;
 	}
 
-	public void setTot_discount(Float tot_discount) {
-		this.tot_discount = tot_discount;
+	public void setTotDiscount(Float totDiscount) {
+		this.totDiscount = totDiscount;
 	}
 
 	public Float getTaxable() {
@@ -96,21 +92,19 @@ public class InvoiceTail extends AuditModel{
 		this.taxable = taxable;
 	}
 
-	public Float getTot_tax() {
-		return tot_tax;
+	public Float getTotTax() {
+		return totTax;
 	}
 
-	public void setTot_tax(Float tot_tax) {
-		this.tot_tax = tot_tax;
+	public void setTotTax(Float totTax) {
+		this.totTax = totTax;
 	}
 
-	public Float getNet_pay() {
-		return net_pay;
+	public Float getNetPay() {
+		return netPay;
 	}
 
-	public void setNet_pay(Float net_pay) {
-		this.net_pay = net_pay;
+	public void setNetPay(Float netPay) {
+		this.netPay = netPay;
 	}
-	
-	
 }
