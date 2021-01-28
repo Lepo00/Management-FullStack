@@ -1,5 +1,7 @@
 package it.jac.management.controller;
 
+import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,15 +14,17 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import it.jac.management.model.Customer;
+import it.jac.management.model.Invoice;
+import it.jac.management.model.Item;
 import it.jac.management.service.CustomerService;
 
 @RestController
 @RequestMapping("/customer")
 public class CustomerController {
-	
 	@Autowired
 	CustomerService customerService;
 	
@@ -67,4 +71,30 @@ public class CustomerController {
 		}
 	}
 	
+	@PostMapping(path = "order/{id}")
+	public ResponseEntity<String> order(@PathVariable Long id, @RequestParam List<Item> items, @RequestParam String description){
+		Optional<Customer> c = customerService.get(id);
+		if(c.isPresent() && !items.isEmpty()) {
+			Customer cust= c.get();
+			Invoice inv= new Invoice();
+			inv.setDescription(description);
+			inv.setAccountholder(cust.getName()+" "+cust.getSurname());
+			inv.setDate(new Date());
+			inv.setShipmentDate(new Date(new Date().getTime() + 7*24*60*60*1000));
+			inv.setTotPrice(calcPrice(items));
+			inv.setNetPrice(inv.getTotPrice()/1.22);
+			inv.setTaxes(inv.getTotPrice()/1.78);
+			inv.setItems(items);
+			cust.getInvoices().add(inv);
+		}
+		return null;
+	}
+	
+	public int calcPrice(List<Item> items) {
+		int price=0;
+		for(Item i: items) {
+			price+=i.getPrice()*i.getQuantity();
+		}
+		return price;
+	}
 }

@@ -28,6 +28,7 @@ public class Item extends AuditModel{
 	@ManyToOne
 	private UnitOfMeasure unitOfMeasure;
 
+
 	public String getCode() {
 		return code;
 	}
@@ -58,5 +59,13 @@ public class Item extends AuditModel{
 
 	public void setPrice(int price) {
 		this.price = price;
+	}
+	
+	public UnitOfMeasure getUnitOfMeasure() {
+		return unitOfMeasure;
+	}
+	
+	public void setUnitOfMeasure(UnitOfMeasure unitOfMeasure) {
+		this.unitOfMeasure = unitOfMeasure;
 	}
 }
