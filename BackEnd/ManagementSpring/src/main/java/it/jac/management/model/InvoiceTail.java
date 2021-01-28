@@ -9,7 +9,7 @@ import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "tail")
-public class Tail {
+public class InvoiceTail extends AuditModel{
 	@Column(name = "items_value")
 	@NotNull
 	private Float items_value;
