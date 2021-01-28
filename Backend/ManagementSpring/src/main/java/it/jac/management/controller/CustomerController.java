@@ -70,31 +70,4 @@ public class CustomerController {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Customer doesn't exists");
 		}
 	}
-	
-	@PostMapping(path = "order/{id}")
-	public ResponseEntity<String> order(@PathVariable Long id, @RequestParam List<Item> items, @RequestParam String description){
-		Optional<Customer> c = customerService.get(id);
-		if(c.isPresent() && !items.isEmpty()) {
-			Customer cust= c.get();
-			Invoice inv= new Invoice();
-			inv.setDescription(description);
-			inv.setAccountholder(cust.getName()+" "+cust.getSurname());
-			inv.setDate(new Date());
-			inv.setShipmentDate(new Date(new Date().getTime() + 7*24*60*60*1000));
-			inv.setTotPrice(calcPrice(items));
-			inv.setNetPrice(inv.getTotPrice()/1.22);
-			inv.setTaxes(inv.getTotPrice()/1.78);
-			inv.setItems(items);
-			cust.getInvoices().add(inv);
-		}
-		return null;
-	}
-	
-	public int calcPrice(List<Item> items) {
-		int price=0;
-		for(Item i: items) {
-			price+=i.getPrice()*i.getQuantity();
-		}
-		return price;
-	}
 }
