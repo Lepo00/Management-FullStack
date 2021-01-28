@@ -1,3 +1,26 @@
+DELETE FROM item WHERE id=1;
+DELETE FROM item WHERE id=2;
+DELETE FROM item WHERE id=3;
+DELETE FROM item WHERE id=4;
+DELETE FROM item WHERE id=5;
+DELETE FROM item WHERE id=6;
+DELETE FROM item WHERE id=7;
+DELETE FROM item WHERE id=8;
+DELETE FROM item WHERE id=9;
+DELETE FROM item WHERE id=10;
+DELETE FROM item WHERE id=11;
+DELETE FROM item WHERE id=12;
+DELETE FROM item WHERE id=13;
+DELETE FROM item WHERE id=14;
+DELETE FROM item WHERE id=15;
+
+DELETE FROM unit_of_measure WHERE id=1;
+DELETE FROM unit_of_measure WHERE id=2;
+DELETE FROM unit_of_measure WHERE id=3;
+DELETE FROM unit_of_measure WHERE id=4;
+DELETE FROM unit_of_measure WHERE id=5;
+DELETE FROM unit_of_measure WHERE id=6;
+
 INSERT INTO `unit_of_measure` (`id`, `unit`, `name`) VALUES
 (1, 'g', 'grammi'),
 (2, 'kg', 'chilogrammi'),
