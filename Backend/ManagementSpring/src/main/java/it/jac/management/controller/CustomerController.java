@@ -1,7 +1,5 @@
 package it.jac.management.controller;
 
-import java.util.Date;
-import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,12 +12,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import it.jac.management.model.Customer;
-import it.jac.management.model.Invoice;
-import it.jac.management.model.Item;
 import it.jac.management.service.CustomerService;
 
 @RestController
@@ -27,9 +22,9 @@ import it.jac.management.service.CustomerService;
 public class CustomerController {
 	@Autowired
 	CustomerService customerService;
-	
+
 	@GetMapping("/{id}")
-	public ResponseEntity<?> get(@PathVariable Long id){
+	public ResponseEntity<?> get(@PathVariable Long id) {
 		Optional<Customer> c = customerService.get(id);
 		if (c.isPresent()) {
 			return ResponseEntity.ok(c.get());
@@ -37,32 +32,31 @@ public class CustomerController {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Customer doesn't exists");
 		}
 	}
-	
+
 	@PostMapping("/save")
 	public ResponseEntity<?> newCustomer(@RequestBody Customer customer) throws Exception {
 		try {
 			Customer save = customerService.create(customer);
-			if(save==null)
+			if (save == null)
 				throw new Exception();
 			return ResponseEntity.ok(save);
 		} catch (Exception e) {
 			return ResponseEntity.badRequest().body("Customer Not Saved!");
 		}
 	}
-	
+
 	@PutMapping(path = "/update/{id}")
-	public ResponseEntity<?> updateCustomer(@PathVariable Long id,
-			@RequestBody Customer customer) {
+	public ResponseEntity<?> updateCustomer(@PathVariable Long id, @RequestBody Customer customer) {
 		try {
 			Customer update = customerService.update(customer, id);
 			return ResponseEntity.ok(update);
-		}catch (Exception e) {
+		} catch (Exception e) {
 			return ResponseEntity.badRequest().body("Customer Not Updated!");
 		}
 	}
-	
-	@DeleteMapping(path="delete/{id}")
-    public ResponseEntity<String> deleteCustomer(@PathVariable Long id){
+
+	@DeleteMapping(path = "delete/{id}")
+	public ResponseEntity<String> deleteCustomer(@PathVariable Long id) {
 		try {
 			customerService.delete(id);
 			return ResponseEntity.ok().body("Customer deleted");
