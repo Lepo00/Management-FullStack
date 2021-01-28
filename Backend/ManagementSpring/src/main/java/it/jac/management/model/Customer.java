@@ -37,7 +37,7 @@ public class Customer extends AuditModel{
 	
 	@OneToMany
 	@JoinColumn(name = "customer_id")
-	private List<Invoice> invoices;
+	private List<InvoiceMaster> invoices;
 
 	public String getFiscalCode() {
 		return fiscalCode;
@@ -79,11 +79,11 @@ public class Customer extends AuditModel{
 		this.phone = phone;
 	}
 
-	public List<Invoice> getInvoices() {
+	public List<InvoiceMaster> getInvoices() {
 		return invoices;
 	}
 
-	public void setInvoices(List<Invoice> invoices) {
+	public void setInvoices(List<InvoiceMaster> invoices) {
 		this.invoices = invoices;
 	}
 	
