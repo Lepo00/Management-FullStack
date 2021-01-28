@@ -5,4 +5,3 @@ INSERT INTO `unit_of_measure` (`id`, `unit`, `name`) VALUES
 (4, 'l', 'litri'),
 (5, 'm', 'metri'),
 (6, 'km', 'chilometri');
-
