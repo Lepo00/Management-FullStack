@@ -23,7 +23,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @SuppressWarnings("serial")
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
-@JsonIgnoreProperties(value = { "id","createdAt", "updatedAt" })
+@JsonIgnoreProperties(value = { "createdAt", "updatedAt" })
 public abstract class AuditModel implements Serializable {
 
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

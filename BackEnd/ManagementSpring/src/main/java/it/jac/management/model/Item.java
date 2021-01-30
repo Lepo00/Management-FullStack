@@ -4,7 +4,6 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
 
 @SuppressWarnings("serial")
 
@@ -12,8 +11,7 @@ import javax.validation.constraints.NotNull;
 @Table(name = "item")
 public class Item extends AuditModel{
 	
-	@Column(name = "code", unique = true)
-	@NotNull
+	@Column(name = "code")
 	private String code;
 	
 	@Column(name = "description")
