@@ -9,20 +9,19 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "item")
-public class Item extends AuditModel{
-	
+public class Item extends AuditModel {
+
 	@Column(name = "code")
 	private String code;
-	
+
 	@Column(name = "description")
 	private String description;
-	
+
 	@Column(name = "price")
 	private int price;
-	
+
 	@ManyToOne
 	private UnitOfMeasure unitOfMeasure;
-
 
 	public String getCode() {
 		return code;
@@ -47,11 +46,11 @@ public class Item extends AuditModel{
 	public void setPrice(int price) {
 		this.price = price;
 	}
-	
+
 	public UnitOfMeasure getUnitOfMeasure() {
 		return unitOfMeasure;
 	}
-	
+
 	public void setUnitOfMeasure(UnitOfMeasure unitOfMeasure) {
 		this.unitOfMeasure = unitOfMeasure;
 	}

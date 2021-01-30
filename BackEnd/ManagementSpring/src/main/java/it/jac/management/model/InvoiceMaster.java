@@ -18,26 +18,26 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity
 @Table(name = "invoice_master")
-public class InvoiceMaster extends AuditModel{	
+public class InvoiceMaster extends AuditModel {
 	@Column(name = "accountholder")
 	@NotNull
 	private String accountholder;
-	
+
 	@Column(name = "date")
 	@NotNull
 	@Temporal(TemporalType.DATE)
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
 	private Date date;
-	
-	@Column(name="code", unique = true)
+
+	@Column(name = "code", unique = true)
 	private String code;
-	
+
 	@Column(name = "type")
 	private String type;
-	
+
 	@Column(name = "payment_condition")
 	private String paymentCondition;
-	
+
 	@OneToMany
 	@JoinColumn(name = "invoice_master_id")
 	private List<InvoiceBody> rows;

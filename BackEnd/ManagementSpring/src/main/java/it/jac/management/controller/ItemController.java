@@ -20,12 +20,12 @@ import it.jac.management.service.ItemService;
 @RestController
 @RequestMapping("/item")
 public class ItemController {
-	
+
 	@Autowired
 	ItemService itemService;
-	
+
 	@GetMapping("/{id}")
-	public ResponseEntity<?> get(@PathVariable Long id){
+	public ResponseEntity<?> get(@PathVariable Long id) {
 		Optional<Item> i = itemService.get(id);
 		if (i.isPresent()) {
 			return ResponseEntity.ok(i.get());
@@ -33,32 +33,31 @@ public class ItemController {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Item doesn't exists");
 		}
 	}
-	
+
 	@PostMapping("/save")
 	public ResponseEntity<?> newItem(@RequestBody Item item) throws Exception {
 		try {
 			Item save = itemService.create(item);
-			if(save==null)
+			if (save == null)
 				throw new Exception();
 			return ResponseEntity.ok(save);
 		} catch (Exception e) {
 			return ResponseEntity.badRequest().body("Item Not Saved!");
 		}
 	}
-	
+
 	@PutMapping(path = "/update/{id}")
-	public ResponseEntity<?> updateItem(@PathVariable Long id,
-			@RequestBody Item item) {
+	public ResponseEntity<?> updateItem(@PathVariable Long id, @RequestBody Item item) {
 		try {
 			Item update = itemService.update(item, id);
 			return ResponseEntity.ok(update);
-		}catch (Exception e) {
+		} catch (Exception e) {
 			return ResponseEntity.badRequest().body("Item Not Updated!");
 		}
 	}
-	
-	@DeleteMapping(path="delete/{id}")
-    public ResponseEntity<String> deleteItem(@PathVariable Long id){
+
+	@DeleteMapping(path = "delete/{id}")
+	public ResponseEntity<String> deleteItem(@PathVariable Long id) {
 		try {
 			itemService.delete(id);
 			return ResponseEntity.ok().body("Item deleted");
@@ -66,5 +65,5 @@ public class ItemController {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Item doesn't exists");
 		}
 	}
-	
+
 }

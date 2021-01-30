@@ -11,27 +11,27 @@ import it.jac.management.service.ItemService;
 
 @Service
 public class ItemServiceImpl implements ItemService {
-	
+
 	@Autowired
 	ItemRepository itemRepository;
 
 	@Override
-	public Optional<Item> get(Long id){
+	public Optional<Item> get(Long id) {
 		return itemRepository.findById(id);
 	}
 
 	@Override
-	public Item create(Item c){
+	public Item create(Item c) {
 		return itemRepository.save(c);
 	}
 
 	@Override
-	public void delete(Long id){
+	public void delete(Long id) {
 		itemRepository.deleteById(id);
 	}
 
 	@Override
-	public Item update(Item item, Long id){
+	public Item update(Item item, Long id) {
 		return itemRepository.findById(id).map(c -> { // update if entity already exists
 			item.setId(c.getId());
 			return create(item);
@@ -39,6 +39,5 @@ public class ItemServiceImpl implements ItemService {
 			return create(item);
 		});
 	}
-
 
 }

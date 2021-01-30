@@ -11,15 +11,15 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "unit_of_measure")
-public class UnitOfMeasure{
-	
+public class UnitOfMeasure {
+
 	@JsonIgnore
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private @Id Long id;
-	
+
 	@Column(name = "unit")
 	private String unit;
-	
+
 	@Column(name = "name")
 	private String name;
 
@@ -46,5 +46,5 @@ public class UnitOfMeasure{
 	public void setName(String name) {
 		this.name = name;
 	}
-	
+
 }

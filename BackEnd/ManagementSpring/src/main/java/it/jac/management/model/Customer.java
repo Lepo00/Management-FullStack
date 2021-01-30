@@ -13,28 +13,28 @@ import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "customer")
-public class Customer extends AuditModel{
-	
+public class Customer extends AuditModel {
+
 	@Column(name = "fiscal_code", unique = true)
 	@NotNull
 	private String fiscalCode;
-	
+
 	@Column(name = "name")
 	@NotNull
 	private String name;
-	
+
 	@Column(name = "surname")
 	@NotNull
 	private String surname;
-	
+
 	@Column(name = "address")
 	@NotNull
 	private String address;
-	
+
 	@Column(name = "phone")
 	@NotNull
 	private String phone;
-	
+
 	@OneToMany
 	@JoinColumn(name = "customer_id")
 	private List<InvoiceMaster> invoices;
@@ -86,5 +86,5 @@ public class Customer extends AuditModel{
 	public void setInvoices(List<InvoiceMaster> invoices) {
 		this.invoices = invoices;
 	}
-	
+
 }

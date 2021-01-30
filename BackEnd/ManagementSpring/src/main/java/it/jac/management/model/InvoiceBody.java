@@ -9,22 +9,22 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "invoice_body")
-public class InvoiceBody extends AuditModel{	
+public class InvoiceBody extends AuditModel {
 	@ManyToOne
 	private Item item;
-	
+
 	@Column
 	private int quantity;
-	
+
 	@Column(name = "perc_discount")
 	private int percDiscount;
-	
+
 	@Column(name = "total_discount")
 	private int totDiscount;
-	
+
 	@Column(name = "net_price")
 	private double netPrice;
-	
+
 //	@OneToOne
 //	private InvoiceTail tail;
 
@@ -75,5 +75,5 @@ public class InvoiceBody extends AuditModel{
 //	public void setTail(InvoiceTail tail) {
 //		this.tail = tail;
 //	}
-	
+
 }

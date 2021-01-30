@@ -8,31 +8,31 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "invoice_tail")
-public class InvoiceTail extends AuditModel{
+public class InvoiceTail extends AuditModel {
 	@Column(name = "items_value")
 	private Float itemsValue;
-	
+
 	@Column(name = "service_value")
 	private Float serviceValue;
-	
+
 	@Column(name = "discount")
 	private Float discount;
-	
+
 	@Column(name = "tail_discount")
 	private Float tailDiscount;
 
 	@Column(name = "tail_discount_value")
 	private Float tailDiscountValue;
-	
+
 	@Column(name = "tot_discount")
 	private Float totDiscount;
-	
+
 	@Column(name = "taxable")
 	private Float taxable;
-	
+
 	@Column(name = "tot_tax")
 	private Float totTax;
-	
+
 	@Column(name = "net_pay")
 	private Float netPay;
 

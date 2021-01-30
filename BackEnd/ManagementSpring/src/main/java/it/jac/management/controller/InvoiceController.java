@@ -20,12 +20,12 @@ import it.jac.management.service.InvoiceMasterService;
 @RestController
 @RequestMapping("/invoice")
 public class InvoiceController {
-	
+
 	@Autowired
 	InvoiceMasterService invoiceService;
-	
+
 	@GetMapping("/{id}")
-	public ResponseEntity<?> get(@PathVariable Long id){
+	public ResponseEntity<?> get(@PathVariable Long id) {
 		Optional<InvoiceMaster> i = invoiceService.get(id);
 		if (i.isPresent()) {
 			return ResponseEntity.ok(i.get());
@@ -33,43 +33,36 @@ public class InvoiceController {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Invoice doesn't exists");
 		}
 	}
-	
+
 	@PostMapping("/save")
 	public ResponseEntity<?> newInvoice(@RequestBody InvoiceMaster invoice) throws Exception {
 		try {
 			InvoiceMaster save = invoiceService.create(invoice);
-			if(save==null)
+			if (save == null)
 				throw new Exception();
 			return ResponseEntity.ok(save);
 		} catch (Exception e) {
 			return ResponseEntity.badRequest().body("Invoice Not Saved!");
 		}
 	}
-	
+
 	@PutMapping(path = "/update/{id}")
-	public ResponseEntity<?> updateInvoice(@PathVariable Long id,
-			@RequestBody InvoiceMaster invoice) {
+	public ResponseEntity<?> updateInvoice(@PathVariable Long id, @RequestBody InvoiceMaster invoice) {
 		try {
 			InvoiceMaster update = invoiceService.update(invoice, id);
 			return ResponseEntity.ok(update);
-		}catch (Exception e) {
+		} catch (Exception e) {
 			return ResponseEntity.badRequest().body("Invoice Not Updated!");
 		}
 	}
-	
-	@DeleteMapping(path="/delete/{id}")
-    public ResponseEntity<String> deleteInvoice(@PathVariable Long id){
+
+	@DeleteMapping(path = "/delete/{id}")
+	public ResponseEntity<String> deleteInvoice(@PathVariable Long id) {
 		try {
 			invoiceService.delete(id);
 			return ResponseEntity.ok().body("Invoice deleted");
 		} catch (Exception e) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Invoice doesn't exists");
 		}
-	}
-	
-	@GetMapping(path = "/print")
-	public ResponseEntity<InvoiceMaster> printInvoice(@RequestBody InvoiceMaster invoiceMaster){
-		System.out.println("print called");
-		return ResponseEntity.ok(invoiceMaster);
 	}
 }

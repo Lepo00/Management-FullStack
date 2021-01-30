@@ -11,27 +11,27 @@ import it.jac.management.service.InvoiceTailService;
 
 @Service
 public class InvoiceTailServiceImpl implements InvoiceTailService {
-	
+
 	@Autowired
 	InvoiceTailRepository invoiceTailRepository;
 
 	@Override
-	public Optional<InvoiceTail> get(Long id){
+	public Optional<InvoiceTail> get(Long id) {
 		return invoiceTailRepository.findById(id);
 	}
 
 	@Override
-	public InvoiceTail create(InvoiceTail i){
+	public InvoiceTail create(InvoiceTail i) {
 		return invoiceTailRepository.save(i);
 	}
 
 	@Override
-	public void delete(Long id){
+	public void delete(Long id) {
 		invoiceTailRepository.deleteById(id);
 	}
 
 	@Override
-	public InvoiceTail update(InvoiceTail invoiceTail, Long id){
+	public InvoiceTail update(InvoiceTail invoiceTail, Long id) {
 		return invoiceTailRepository.findById(id).map(c -> { // update if entity already exists
 			invoiceTail.setId(c.getId());
 			return create(invoiceTail);
@@ -39,6 +39,5 @@ public class InvoiceTailServiceImpl implements InvoiceTailService {
 			return create(invoiceTail);
 		});
 	}
-
 
 }
