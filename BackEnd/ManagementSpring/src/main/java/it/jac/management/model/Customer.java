@@ -35,12 +35,12 @@ public class Customer extends AuditModel {
 	@NotNull
 	private String phone;
 
-	@Column(name = "username")
+	@Column(name = "username", unique = true)
 	private String username;
-	
+
 	@Column(name = "password")
 	private String password;
-	
+
 	@OneToMany
 	@JoinColumn(name = "customer_id")
 	private List<InvoiceMaster> invoices;
@@ -93,4 +93,19 @@ public class Customer extends AuditModel {
 		this.invoices = invoices;
 	}
 
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
 }

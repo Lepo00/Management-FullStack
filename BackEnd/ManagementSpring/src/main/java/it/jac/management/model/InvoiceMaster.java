@@ -44,7 +44,7 @@ public class InvoiceMaster extends AuditModel {
 	private List<InvoiceBody> rows;
 
 	@OneToOne
-	@JoinColumn(name = "invoice_master_id")
+	@JoinColumn(name = "invoice_tail_id")
 	private InvoiceTail tail;
 
 	public String getAccountholder() {
