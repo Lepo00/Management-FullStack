@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import it.jac.management.model.Customer;
@@ -55,13 +56,24 @@ public class CustomerController {
 		}
 	}
 
-	@DeleteMapping(path = "delete/{id}")
+	@DeleteMapping(path = "/delete/{id}")
 	public ResponseEntity<String> deleteCustomer(@PathVariable Long id) {
 		try {
 			customerService.delete(id);
 			return ResponseEntity.ok().body("Customer deleted");
 		} catch (Exception e) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Customer doesn't exists");
+		}
+	}
+	@PostMapping(path ="/login")
+	public ResponseEntity<?> login(@RequestParam String username,@RequestParam String password) throws Exception {
+		try {
+			Customer login = customerService.login(username, password);
+			if (login == null)
+				throw new Exception();
+			return ResponseEntity.ok(login);
+		} catch (Exception e) {
+			return ResponseEntity.badRequest().body("Customer Not Found!");
 		}
 	}
 }

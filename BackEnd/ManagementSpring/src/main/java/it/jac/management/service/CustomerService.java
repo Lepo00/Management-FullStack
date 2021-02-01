@@ -13,5 +13,6 @@ public interface CustomerService {
 	public void delete(Long id);
 	
 	public Customer update(Customer c, Long id);
-
+	
+	public Customer login(String u, String p);
 }

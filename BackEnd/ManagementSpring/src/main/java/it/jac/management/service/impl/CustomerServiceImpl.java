@@ -41,6 +41,11 @@ public class CustomerServiceImpl implements CustomerService {
 			return create(customer);
 		});
 	}
+	
+	@Override
+	public Customer login(String u, String p) {
+		return customerRepository.findByUsernameAndPassword(u, p);
+	}
 
 
 }

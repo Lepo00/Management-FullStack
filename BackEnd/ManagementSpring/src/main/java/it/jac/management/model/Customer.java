@@ -35,6 +35,12 @@ public class Customer extends AuditModel {
 	@NotNull
 	private String phone;
 
+	@Column(name = "username")
+	private String username;
+	
+	@Column(name = "password")
+	private String password;
+	
 	@OneToMany
 	@JoinColumn(name = "customer_id")
 	private List<InvoiceMaster> invoices;
