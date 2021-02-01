@@ -7,6 +7,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -41,6 +42,10 @@ public class InvoiceMaster extends AuditModel {
 	@OneToMany
 	@JoinColumn(name = "invoice_master_id")
 	private List<InvoiceBody> rows;
+
+	@OneToOne
+	@JoinColumn(name = "invoice_master_id")
+	private InvoiceTail tail;
 
 	public String getAccountholder() {
 		return accountholder;
@@ -86,7 +91,16 @@ public class InvoiceMaster extends AuditModel {
 		return rows;
 	}
 
-	public void setBody(List<InvoiceBody> rows) {
+	public void setRows(List<InvoiceBody> rows) {
 		this.rows = rows;
 	}
+
+	public InvoiceTail getTail() {
+		return tail;
+	}
+
+	public void setTail(InvoiceTail tail) {
+		this.tail = tail;
+	}
+
 }

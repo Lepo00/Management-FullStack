@@ -25,9 +25,6 @@ public class InvoiceBody extends AuditModel {
 	@Column(name = "net_price")
 	private double netPrice;
 
-//	@OneToOne
-//	private InvoiceTail tail;
-
 	public Item getItem() {
 		return item;
 	}
@@ -67,13 +64,5 @@ public class InvoiceBody extends AuditModel {
 	public void setNetPrice(double netPrice) {
 		this.netPrice = netPrice;
 	}
-
-//	public InvoiceTail getTail() {
-//		return tail;
-//	}
-//
-//	public void setTail(InvoiceTail tail) {
-//		this.tail = tail;
-//	}
 
 }

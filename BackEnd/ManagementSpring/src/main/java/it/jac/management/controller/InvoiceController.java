@@ -40,7 +40,7 @@ public class InvoiceController {
 			InvoiceMaster save = invoiceService.create(invoice);
 			if (save == null)
 				throw new Exception();
-			return ResponseEntity.ok(save);
+			return ResponseEntity.ok("Invoice saved with id:"+invoice.getId());
 		} catch (Exception e) {
 			return ResponseEntity.badRequest().body("Invoice Not Saved!");
 		}
