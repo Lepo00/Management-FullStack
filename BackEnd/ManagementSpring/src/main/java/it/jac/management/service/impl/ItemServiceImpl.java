@@ -1,5 +1,6 @@
 package it.jac.management.service.impl;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,11 @@ public class ItemServiceImpl implements ItemService {
 	@Override
 	public Optional<Item> get(Long id) {
 		return itemRepository.findById(id);
+	}
+
+	@Override
+	public List<Item> getAll() {
+		return itemRepository.findAll();
 	}
 
 	@Override

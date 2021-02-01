@@ -1,5 +1,6 @@
 package it.jac.management.controller;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +32,16 @@ public class ItemController {
 			return ResponseEntity.ok(i.get());
 		} else {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Item doesn't exists");
+		}
+	}
+	
+	@GetMapping
+	public ResponseEntity<?> getAll(@PathVariable Long id) {
+		List<Item> items = itemService.getAll();
+		if (items!=null) {
+			return ResponseEntity.ok(items);
+		} else {
+			return ResponseEntity.badRequest().body("No items found!");
 		}
 	}
 

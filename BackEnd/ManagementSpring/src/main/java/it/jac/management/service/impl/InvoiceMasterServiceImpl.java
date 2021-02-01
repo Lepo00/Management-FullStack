@@ -1,5 +1,6 @@
 package it.jac.management.service.impl;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,7 +9,6 @@ import org.springframework.stereotype.Service;
 import it.jac.management.model.InvoiceMaster;
 import it.jac.management.repository.InvoiceBodyRepository;
 import it.jac.management.repository.InvoiceMasterRepository;
-import it.jac.management.repository.ItemRepository;
 import it.jac.management.service.InvoiceMasterService;
 
 @Service
@@ -20,12 +20,14 @@ public class InvoiceMasterServiceImpl implements InvoiceMasterService {
 	@Autowired
 	InvoiceBodyRepository invoiceBodyRepository;
 
-	@Autowired
-	ItemRepository itemRepository;
-
 	@Override
 	public Optional<InvoiceMaster> get(Long id) {
 		return invoiceMasterRepository.findById(id);
+	}
+
+	@Override
+	public List<InvoiceMaster> getAll() {
+		return invoiceMasterRepository.findAll();
 	}
 
 	@Override
