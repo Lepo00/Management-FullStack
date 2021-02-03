@@ -1,0 +1,41 @@
+<div class="container" style="width: 100%;">
+
+    <div class="row" style="width: 100% !important;">
+        <div class="col-12 col-sm-12 col-md-6 col-lg-6">
+
+            <form [formGroup]="loginForm" class="signup" (ngSubmit)="doLogin()" ngNativeValidate>
+                <img src="../../../assets/logo3.png" alt="" style="width: 70%; margin-left: 10%; margin-top: -5%; margin-bottom: 5%;">
+                <div>
+                    <i class="fas fa-user" style="margin-right: 10px;"></i>
+                    <label for="exampleInputEmail1">Username</label>
+                    <input type="text" class="form-control" id="exampleInputEmail1" formControlName="username" aria-describedby="emailHelp" placeholder="Username">
+                </div>
+                <div class="form-group">
+                    <i class="fas fa-key" style="margin-right: 10px;"></i>
+                    <label for="exampleInputPassword1">Password</label>
+                    <input type="password" class="form-control" id="togglePassword" formControlName="password" placeholder="Password">
+                </div>
+                <div class="form-check ">
+                    <input type="checkbox" onclick="showHidePassword()" class="showHide">Mostra Password
+                    <BR>
+                    <BR>
+                </div>
+                <button type="submit" class="btn btn-primary">Accedi</button>
+            </form>
+        </div>
+
+        <div class="col-12 col-sm-12 col-md-6 col-lg-6 carousel" style="padding-top: 18%;  ">
+            <figure class="icon-cards mt-3" style="margin-left: 15%;">
+                <div class="icon-cards__content">
+                    <div class="icon-cards__item d-flex align-items-center justify-content-center" style="background-image: url(' ../../../assets/wearhouse.png '); background-repeat: no-repeat; width: 100%;"></div>
+                    <div class="icon-cards__item d-flex align-items-center justify-content-center" style="background-image: url(' ../../../assets/invoices.png '); background-repeat: no-repeat;"></div>
+                    <div class="icon-cards__item d-flex align-items-center justify-content-center" style="background-image: url(' ../../../assets/management.png '); background-repeat: no-repeat; "></div>
+                </div>
+            </figure>
+
+
+
+
+        </div>
+    </div>
+</div>

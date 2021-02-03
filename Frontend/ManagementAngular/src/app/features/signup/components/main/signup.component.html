@@ -1,0 +1,18 @@
+<div class="container">
+    <form [formGroup]="signUpForm" class="signup" (ngSubmit)="doSignUp()" ngNativeValidate>
+        <button type="button" class="bottone-registrati" routerLink="/login">×</button>
+        <div>
+            <img src="../../assets/logo.png" alt="logo" class="logo">
+            <p class="title">Registrati</p>
+            <input id="username" placeholder="username" formControlName="username" class="input" required minlength="8">
+        </div>
+        <div>
+            <input id="password" placeholder="password" formControlName="password" class="input-password" required minlength="8">
+            <img src="../../../assets/icone/eye.png" alt="occhio" class="eye">
+        </div>
+        <br><br>
+        <button type="submit">
+            <span>Registrati</span>
+        </button>
+    </form>
+</div>
