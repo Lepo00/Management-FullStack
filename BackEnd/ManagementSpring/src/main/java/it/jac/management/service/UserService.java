@@ -9,10 +9,10 @@ public interface UserService {
 	public Optional<User> get(Long id);
 
 	public User create(User c);
-	
+
 	public void delete(Long id);
-	
+
 	public User update(User c, Long id);
-	
+
 	public User login(String u, String p);
 }

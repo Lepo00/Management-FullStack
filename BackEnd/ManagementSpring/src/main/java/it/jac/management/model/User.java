@@ -34,12 +34,9 @@ public class User extends AuditModel {
 	@OneToMany
 	@JoinColumn(name = "user_id")
 	private List<InvoiceMaster> invoices;
-	
-	
+
 	@ManyToMany
-	@JoinTable(name = "user_customer", 
-	joinColumns = @JoinColumn(name = "user_id"), 
-	inverseJoinColumns = @JoinColumn(name = "customer_id"))
+	@JoinTable(name = "user_customer", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "customer_id"))
 	private List<Customer> customers;
 
 	public String getIvaCode() {

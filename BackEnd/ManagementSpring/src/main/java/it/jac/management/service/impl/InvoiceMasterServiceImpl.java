@@ -6,7 +6,9 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import it.jac.management.model.Customer;
 import it.jac.management.model.InvoiceMaster;
+import it.jac.management.repository.CustomerRepository;
 import it.jac.management.repository.InvoiceBodyRepository;
 import it.jac.management.repository.InvoiceMasterRepository;
 import it.jac.management.service.InvoiceMasterService;
@@ -19,6 +21,9 @@ public class InvoiceMasterServiceImpl implements InvoiceMasterService {
 
 	@Autowired
 	InvoiceBodyRepository invoiceBodyRepository;
+
+	@Autowired
+	CustomerRepository customerRepository;
 
 	@Override
 	public Optional<InvoiceMaster> get(Long id) {
@@ -34,6 +39,13 @@ public class InvoiceMasterServiceImpl implements InvoiceMasterService {
 	public InvoiceMaster create(InvoiceMaster i) {
 		invoiceBodyRepository.saveAll(i.getRows());
 		return invoiceMasterRepository.save(i);
+	}
+
+	@Override
+	public InvoiceMaster createWithCustomer(Long idCustomer, InvoiceMaster invoice) {
+		Customer customer = customerRepository.getOne(idCustomer);
+		invoice.setAccountholder(customer.getName() + " " + customer.getSurname());
+		return create(invoice);
 	}
 
 	@Override

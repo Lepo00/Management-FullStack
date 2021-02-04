@@ -9,9 +9,9 @@ public interface InvoiceBodyService {
 	public Optional<InvoiceBody> get(Long id);
 
 	public InvoiceBody create(InvoiceBody i);
-	
+
 	public void delete(Long id);
-	
+
 	public InvoiceBody update(InvoiceBody i, Long id);
 
 }

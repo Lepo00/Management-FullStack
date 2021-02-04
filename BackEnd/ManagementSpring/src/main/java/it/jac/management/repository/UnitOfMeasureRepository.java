@@ -5,7 +5,7 @@ import org.springframework.stereotype.Repository;
 
 import it.jac.management.model.UnitOfMeasure;
 
-@Repository("UnitOfMeasureRepository")
+@Repository("unitOfMeasureRepository")
 public interface UnitOfMeasureRepository extends JpaRepository<UnitOfMeasure, Long> {
 
 }

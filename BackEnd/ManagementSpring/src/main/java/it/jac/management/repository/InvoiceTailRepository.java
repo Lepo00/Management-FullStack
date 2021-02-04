@@ -5,7 +5,7 @@ import org.springframework.stereotype.Repository;
 
 import it.jac.management.model.InvoiceTail;
 
-@Repository("InvoiceTailRepository")
+@Repository("invoiceTailRepository")
 public interface InvoiceTailRepository extends JpaRepository<InvoiceTail, Long> {
 
 }

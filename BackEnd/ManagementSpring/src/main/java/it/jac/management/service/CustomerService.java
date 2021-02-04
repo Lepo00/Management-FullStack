@@ -9,11 +9,11 @@ public interface CustomerService {
 	public Optional<Customer> get(Long id);
 
 	public Customer create(Customer c);
-	
+
 	public void createAll(List<Customer> c);
-	
+
 	public void delete(Long id);
-	
+
 	public Customer update(Customer c, Long id);
-	
+
 }

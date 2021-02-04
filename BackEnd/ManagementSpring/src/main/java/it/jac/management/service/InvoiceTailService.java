@@ -9,9 +9,9 @@ public interface InvoiceTailService {
 	public Optional<InvoiceTail> get(Long id);
 
 	public InvoiceTail create(InvoiceTail i);
-	
+
 	public void delete(Long id);
-	
+
 	public InvoiceTail update(InvoiceTail i, Long id);
 
 }

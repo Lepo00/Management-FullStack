@@ -1,4 +1,5 @@
 package it.jac.management.model;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
@@ -7,23 +8,23 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "customer")
-public class Customer extends AuditModel{
-	
+public class Customer extends AuditModel {
+
 	@Column(name = "iva_code")
 	private String ivaCode;
-		
+
 	@Column(name = "name")
 	private String name;
-	
+
 	@Column(name = "surname")
 	private String surname;
 
 	@Column(name = "address")
 	private String address;
-	
+
 	@Column(name = "phone")
 	private String phone;
-	
+
 	public String getIvaCode() {
 		return ivaCode;
 	}
@@ -63,6 +64,5 @@ public class Customer extends AuditModel{
 	public void setPhone(String phone) {
 		this.phone = phone;
 	}
-	
-	
+
 }

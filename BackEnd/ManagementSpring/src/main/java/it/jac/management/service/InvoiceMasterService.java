@@ -13,6 +13,8 @@ public interface InvoiceMasterService {
 
 	public InvoiceMaster create(InvoiceMaster i);
 
+	public InvoiceMaster createWithCustomer(Long idCustomer, InvoiceMaster invoice);
+
 	public void delete(Long id);
 
 	public InvoiceMaster update(InvoiceMaster i, Long id);

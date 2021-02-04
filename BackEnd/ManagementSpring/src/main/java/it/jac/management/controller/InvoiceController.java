@@ -40,7 +40,18 @@ public class InvoiceController {
 			InvoiceMaster save = invoiceService.create(invoice);
 			if (save == null)
 				throw new Exception();
-			return ResponseEntity.ok("Invoice saved with id:"+invoice.getId());
+			return ResponseEntity.ok("Invoice saved with id:" + invoice.getId());
+		} catch (Exception e) {
+			return ResponseEntity.badRequest().body("Invoice Not Saved!");
+		}
+	}
+
+	@PostMapping("/save/{idCustomer}")
+	public ResponseEntity<?> newInvoice(@PathVariable Long idCustomer, @RequestBody InvoiceMaster invoice)
+			throws Exception {
+		try {
+			invoiceService.createWithCustomer(idCustomer, invoice);
+			return ResponseEntity.ok("Invoice saved with id:" + invoice.getId());
 		} catch (Exception e) {
 			return ResponseEntity.badRequest().body("Invoice Not Saved!");
 		}
@@ -65,4 +76,5 @@ public class InvoiceController {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Invoice doesn't exists");
 		}
 	}
+
 }
