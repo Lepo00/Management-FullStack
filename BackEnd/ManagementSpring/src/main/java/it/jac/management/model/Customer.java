@@ -2,7 +2,6 @@ package it.jac.management.model;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
 
 @SuppressWarnings("serial")
 
@@ -11,7 +10,6 @@ import javax.validation.constraints.NotNull;
 public class Customer extends AuditModel{
 	
 	@Column(name = "iva_code")
-	@NotNull
 	private String ivaCode;
 		
 	@Column(name = "name")
@@ -19,6 +17,12 @@ public class Customer extends AuditModel{
 	
 	@Column(name = "surname")
 	private String surname;
+
+	@Column(name = "address")
+	private String address;
+	
+	@Column(name = "phone")
+	private String phone;
 	
 	public String getIvaCode() {
 		return ivaCode;
@@ -59,16 +63,6 @@ public class Customer extends AuditModel{
 	public void setPhone(String phone) {
 		this.phone = phone;
 	}
-
-	@Column(name = "address")
-	@NotNull
-	private String address;
-	
-	@Column(name = "phone")
-	@NotNull
-	private String phone;
-	
-
 	
 	
 }
