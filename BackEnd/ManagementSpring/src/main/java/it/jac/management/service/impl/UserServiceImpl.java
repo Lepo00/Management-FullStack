@@ -22,7 +22,7 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public User create(User c){
-		if(userRepository.findByIvaCode(c.getIvaCode())==null)
+		if(userRepository.findByIvaCode(c.getIvaCode())==null && userRepository.findByUsername(c.getUsername())==null)
 			return userRepository.save(c);
 		return null;
 	}

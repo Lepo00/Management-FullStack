@@ -8,6 +8,6 @@ import it.jac.management.model.User;
 @Repository("userRepository")
 public interface UserRepository extends JpaRepository<User, Long> {
 	User findByIvaCode(String ivaCode);
-
 	User findByUsernameAndPassword(String username, String password);
+	User findByUsername(String username);
 }
