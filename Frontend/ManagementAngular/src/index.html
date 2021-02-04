@@ -1,0 +1,381 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+
+
+    <!-- JQuery-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <!-- Favicon-->
+    <link rel="icon" type="image/png" href="assets/favicon2.png" />
+
+    <meta charset="utf-8">
+    <title>Gestionale </title>
+    <base href="/">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+</head>
+
+<div id="loading">
+    <img src="https://hackernoon.com/images/0*4Gzjgh9Y7Gu8KEtZ.gif" alt="">
+</div>
+
+<body>
+    <canvas></canvas>
+    <canvas></canvas>
+
+    <app-root></app-root>
+</body>
+
+</html>
+
+<script>
+    /* because me lazy */
+    Object.getOwnPropertyNames(Math).map(function(p) {
+        window[p] = Math[p];
+    });
+
+    var HEX_CRAD = 32,
+        HEX_BG = 'var(--colorbg)',
+        HEX_HL = '#2a2a2a',
+        HEX_HLW = 2,
+        HEX_GAP = 4,
+        NEON_PALETE = [
+            '#cb3301', '#ff0066',
+            '#ff6666', '#feff99',
+            '#ffff67', '#ccff66',
+            '#99fe00', '#fe99ff',
+            '#ff99cb', '#fe349a',
+            '#cc99fe', '#6599ff',
+            '#00ccff', '#ffffff'
+        ],
+        T_SWITCH = 64,
+
+        unit_x = 3 * HEX_CRAD + HEX_GAP * sqrt(3),
+        unit_y = HEX_CRAD * sqrt(3) * .5 + .5 * HEX_GAP,
+        off_x = 1.5 * HEX_CRAD + HEX_GAP * sqrt(3) * .5,
+
+        /* extract a work palette */
+        wp = NEON_PALETE.map(function(c) {
+            var num = parseInt(c.replace('#', ''), 16);
+
+            return {
+                'r': num >> 16 & 0xFF,
+                'g': num >> 8 & 0xFF,
+                'b': num & 0xFF
+            };
+        }),
+        nwp = wp.length,
+        csi = 0,
+
+        f = 1 / T_SWITCH,
+
+        c = document.querySelectorAll('canvas'),
+        n = c.length,
+        w, h, _min,
+        ctx = [],
+        grid, source = null,
+        t = 0,
+        request_id = null;
+
+    var GridItem = function(x, y) {
+        this.x = x || 0;
+        this.y = y || 0;
+        this.points = {
+            'hex': [],
+            'hl': []
+        };
+
+        this.init = function() {
+            var x, y, a, ba = PI / 3,
+                ri = HEX_CRAD - .5 * HEX_HLW;
+
+            for (var i = 0; i < 6; i++) {
+                a = i * ba;
+                x = this.x + HEX_CRAD * cos(a);
+                y = this.y + HEX_CRAD * sin(a);
+
+                this.points.hex.push({
+                    'x': x,
+                    'y': y
+                });
+
+                if (i > 2) {
+                    x = this.x + ri * cos(a);
+                    y = this.y + ri * sin(a);
+
+                    this.points.hl.push({
+                        'x': x,
+                        'y': y
+                    });
+                }
+            }
+        };
+
+        this.draw = function(ct) {
+            for (var i = 0; i < 6; i++) {
+                ct[(i === 0 ? 'move' : 'line') + 'To'](
+                    this.points.hex[i].x,
+                    this.points.hex[i].y
+                );
+            }
+        };
+
+        this.highlight = function(ct) {
+            for (var i = 0; i < 3; i++) {
+                ct[(i === 0 ? 'move' : 'line') + 'To'](
+                    this.points.hl[i].x,
+                    this.points.hl[i].y
+                );
+            }
+        };
+
+        this.init();
+    };
+
+    var Grid = function(rows, cols) {
+        this.cols = cols || 16;
+        this.rows = rows || 16;
+        this.items = [];
+        this.n = this.items.length;
+
+        this.init = function() {
+            var x, y;
+
+            for (var row = 0; row < this.rows; row++) {
+                y = row * unit_y;
+
+                for (var col = 0; col < this.cols; col++) {
+                    x = ((row % 2 == 0) ? 0 : off_x) + col * unit_x;
+
+                    this.items.push(new GridItem(x, y));
+                }
+            }
+
+            this.n = this.items.length;
+        };
+
+        this.draw = function(ct) {
+            ct.fillStyle = HEX_BG;
+            ct.beginPath();
+
+            for (var i = 0; i < this.n; i++) {
+                this.items[i].draw(ct);
+            }
+
+            ct.closePath();
+            ct.fill();
+
+            ct.strokeStyle = HEX_HL;
+            ct.beginPath();
+
+            for (var i = 0; i < this.n; i++) {
+                this.items[i].highlight(ct);
+            }
+
+            ct.closePath();
+            ct.stroke();
+        };
+
+        this.init();
+    };
+
+    var init = function() {
+        var s = getComputedStyle(c[0]),
+            rows, cols;
+
+        w = ~~s.width.split('px')[0];
+        h = ~~s.height.split('px')[0];
+        _min = .75 * min(w, h);
+
+        rows = ~~(h / unit_y) + 2;
+        cols = ~~(w / unit_x) + 2;
+
+        for (var i = 0; i < n; i++) {
+            c[i].width = w;
+            c[i].height = h;
+            ctx[i] = c[i].getContext('2d');
+        }
+
+        grid = new Grid(rows, cols);
+        grid.draw(ctx[1]);
+
+        if (!source) {
+            source = {
+                'x': ~~(w / 2),
+                'y': ~~(h / 2)
+            };
+        }
+
+        neon();
+    };
+
+    var neon = function() {
+        var k = (t % T_SWITCH) * f,
+            rgb = {
+                'r': ~~(wp[csi].r * (1 - k) +
+                    wp[(csi + 1) % nwp].r * k),
+                'g': ~~(wp[csi].g * (1 - k) +
+                    wp[(csi + 1) % nwp].g * k),
+                'b': ~~(wp[csi].b * (1 - k) +
+                    wp[(csi + 1) % nwp].b * k)
+            },
+            rgb_str = 'rgb(' + rgb.r + ',' + rgb.g + ',' + rgb.b + ')',
+            light = ctx[0].createRadialGradient(
+                source.x, source.y, 0,
+                source.x, source.y, .875 * _min
+            ),
+            stp;
+
+        stp = .5 - .5 * sin(7 * t * f) * cos(5 * t * f) * sin(3 * t * f);
+
+        light.addColorStop(0, rgb_str);
+        light.addColorStop(stp, 'rgba(0,0,0,.03)');
+
+        fillBackground('rgba(0,0,0,.02)');
+        fillBackground(light);
+
+        t++;
+
+        if (t % T_SWITCH === 0) {
+            csi++;
+
+            if (csi === nwp) {
+                csi = 0;
+                t = 0;
+            }
+        }
+
+        request_id = requestAnimationFrame(neon);
+    };
+
+    var fillBackground = function(bg_fill) {
+        ctx[0].fillStyle = bg_fill;
+        ctx[0].beginPath();
+        ctx[0].rect(0, 0, w, h);
+        ctx[0].closePath();
+        ctx[0].fill();
+    };
+
+    init();
+
+    addEventListener('resize', init, false);
+
+    addEventListener('load', init, false);
+
+    addEventListener('mousemove', function(e) {
+        source = {
+            'x': e.clientX,
+            'y': e.clientY
+        };
+    }, false);
+</script>
+
+<script>
+    window.addEventListener('load', () => {
+        var
+            carousels = document.querySelectorAll('.carousel');
+
+        for (var i = 0; i < carousels.length; i++) {
+            carousel(carousels[i]);
+        }
+    });
+
+    function carousel(root) {
+        var
+            figure = root.querySelector('figure'),
+            nav = root.querySelector('nav'),
+            images = figure.children,
+            n = images.length,
+            gap = root.dataset.gap || 0,
+            bfc = 'bfc' in root.dataset,
+
+            theta = 2 * Math.PI / n,
+            currImage = 0;
+
+        setupCarousel(n, parseFloat(getComputedStyle(images[0]).width));
+        window.addEventListener('resize', () => {
+            setupCarousel(n, parseFloat(getComputedStyle(images[0]).width))
+        });
+
+        setupNavigation();
+
+        function setupCarousel(n, s) {
+            var
+                apothem = s / (2 * Math.tan(Math.PI / n));
+
+            figure.style.transformOrigin = `50% 50% ${- apothem}px`;
+
+            for (var i = 0; i < n; i++)
+                images[i].style.padding = `${gap}px`;
+            for (i = 1; i < n; i++) {
+                images[i].style.transformOrigin = `50% 50% ${- apothem}px`;
+                images[i].style.transform = `rotateY(${i * theta}rad)`;
+            }
+            if (bfc)
+                for (i = 0; i < n; i++)
+                    images[i].style.backfaceVisibility = 'hidden';
+
+            rotateCarousel(currImage);
+        }
+
+        function setupNavigation() {
+            nav.addEventListener('click', onClick, true);
+
+            function onClick(e) {
+                e.stopPropagation();
+
+                var t = e.target;
+                if (t.tagName.toUpperCase() != 'BUTTON')
+                    return;
+
+                if (t.classList.contains('next')) {
+                    currImage++;
+                } else {
+                    currImage--;
+                }
+
+                rotateCarousel(currImage);
+            }
+
+        }
+
+        function rotateCarousel(imageIndex) {
+            figure.style.transform = `rotateY(${imageIndex * -theta}rad)`;
+        }
+
+    }
+</script>
+
+
+<script>
+    window.addEventListener('load', (event) => {
+        document.getElementById('loading').style.display = 'none';
+    });
+</script>
+
+
+<script>
+    function showHidePassword() {
+        var x = document.getElementById("togglePassword");
+        if (x.type === "password") {
+            x.type = "text";
+        } else {
+            x.type = "password";
+        }
+    }
+</script>

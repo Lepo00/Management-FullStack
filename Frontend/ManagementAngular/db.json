@@ -1,0 +1,50 @@
+{
+    "users": [{
+            "id": 0,
+            "username": "a",
+            "name": "Andrea",
+            "surname": "Bonardi",
+            "password": "1"
+        },
+        {
+            "username": "provaesame",
+            "surname": "",
+            "name": "",
+            "password": "provaesame",
+            "id": 1
+        }
+    ],
+    "product": [{
+            "id": 0,
+            "nome": "Xiaomi Mi Note 10",
+            "immagine": "/assets/xiaomi.jpg",
+            "colore": "bianco",
+            "testo": " ",
+            "cover": "bianco"
+        },
+        {
+            "id": 1,
+            "nome": "Samsung Tab A",
+            "immagine": "assets/tablet.jpg",
+            "colore": "nero",
+            "testo": " ",
+            "cover": "nero"
+        },
+        {
+            "id": 2,
+            "nome": "Huawei Matebook X Pro",
+            "immagine": "/assets/pc.jpg",
+            "colore": "blu",
+            "testo": " ",
+            "cover": ""
+        },
+        {
+            "id": 3,
+            "nome": "Logitech Cuffie G432",
+            "immagine": "/assets/logitech.jpg",
+            "colore": "bianco",
+            "testo": " ",
+            "cover": "bianco"
+        }
+    ]
+}

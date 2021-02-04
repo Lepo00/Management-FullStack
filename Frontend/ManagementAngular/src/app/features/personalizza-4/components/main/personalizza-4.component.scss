@@ -1,0 +1,497 @@
+    //---------------------    inizio stile header    --------------------------
+    .header {
+        display: grid;
+        grid-template-columns: 20% 60% 20%;
+        grid-template-rows: 100%;
+        width: 100%;
+        height: 100px;
+        padding-top: 40px;
+        color: white;
+        background-image: linear-gradient(90deg, rgba(171, 225, 250) 0%, rgba(214, 171, 255, ) 100%);
+        position: absolute;
+        top: 0vh;
+        left: 0vh;
+        font-size: 6vh;
+        z-index: -1;
+    }
+    
+    .home {
+        grid-column-start: 1;
+        grid-column-end: 2;
+        grid-row-start: 1;
+        grid-row-end: 1;
+        padding-left: 55px;
+        cursor: pointer;
+        outline: none;
+    }
+    
+    .home:hover {
+        grid-column-start: 1;
+        grid-column-end: 2;
+        grid-row-start: 1;
+        grid-row-end: 1;
+        padding-left: 55px;
+        color: rgb(194, 128, 255);
+        cursor: pointer;
+        outline: none;
+    }
+    
+    .home:hover i {
+        color: rgb(194, 128, 255);
+        cursor: pointer;
+    }
+    
+    .scritta-home {
+        float: right;
+        margin-top: 8px;
+        margin-right: 95px;
+        font-size: 3vh;
+        cursor: pointer;
+        outline: none;
+        margin-top: 13px;
+    }
+    
+    .scritta-home:hover {
+        color: rgb(194, 128, 255);
+        float: right;
+        margin-top: 13px;
+        margin-right: 95px;
+        font-size: 3vh;
+        cursor: pointer;
+        outline: none;
+    }
+    
+    .welcome {
+        grid-column-start: 2;
+        grid-column-end: 3;
+        grid-row-start: 1;
+        grid-row-end: 1;
+        text-align: center;
+        font-weight: bold;
+    }
+    
+    .cart {
+        grid-column-start: 3;
+        grid-column-end: 3;
+        color: white;
+        text-align: right;
+        z-index: 999999;
+        padding-right: 55px;
+        margin-top: 0px;
+        outline: none;
+    }
+    
+    .cart:hover {
+        grid-column-start: 3;
+        grid-column-end: 3;
+        color: rgb(194, 128, 255);
+        text-align: right;
+        z-index: 999999;
+        padding-right: 55px;
+        margin-top: 0px;
+    }
+    
+    .cart:hover i {
+        color: rgb(194, 128, 255);
+        cursor: pointer;
+    }
+    
+    i {
+        color: white;
+        outline: none;
+        font-size: 5vh;
+        top: -200px;
+    }
+    
+    .scritta-carrello {
+        float: right;
+        outline: none;
+        margin-top: 7px;
+        margin-left: 10px;
+        font-size: 3vh;
+        cursor: pointer;
+    }
+    
+    .scritta-carrello:hover {
+        float: right;
+        margin-top: 7px;
+        margin-left: 10px;
+        font-size: 3vh;
+        color: rgb(194, 128, 255);
+        cursor: pointer;
+        outline: none;
+    }
+    
+    //---------------------     fine header      ---------------------------------
+    //-------------------- inizio div personalizzazione prodotto--------------------
+    .container-personalizza {
+        background-color: white;
+        width: 60%;
+        margin: 170px auto;
+        display: grid;
+    }
+    
+    .img-prodotto,
+    .img-prodotto-4 {
+        width: 50%;
+        height: 100%;
+        float: left;
+        padding-left: 5%;
+        padding-top: 5%;
+        margin-bottom: -20px;
+    }
+    
+    .img-prodotto-2 {
+        width: 30%;
+        height: 60%;
+        float: left;
+        padding-left: 5%;
+        padding-top: 5%;
+        margin-bottom: -20px;
+    }
+    
+    .img-prodotto-2 img {
+        width: 300px;
+        height: 320px;
+    }
+    
+    .img-prodotto-4 img {
+        width: 300px;
+        height: 320px;
+    }
+    
+    .img-prodotto img:hover {
+        cursor: pointer;
+    }
+    
+    .first-li {
+        margin-left: -37px;
+    }
+    
+    .prodotto,
+    .prodotto-2,
+    .prodotto-3,
+    .prodotto-4 {
+        margin-left: 50%;
+        margin-top: -280px;
+    }
+    
+    .prodotto ul li,
+    .prodotto-2 ul li,
+    .prodotto-3 ul li,
+    .prodotto-4 ul li {
+        list-style-type: none;
+        display: inline-block;
+        color: black;
+        padding-bottom: 10px;
+    }
+    
+    .prodotto ul li a,
+    .prodotto-2 ul li a,
+    .prodotto-3 ul li a,
+    .prodotto-4 ul li a {
+        color: black;
+        text-decoration: none;
+    }
+    
+    .elenco {
+        padding-left: 5%;
+        padding-right: 5%;
+    }
+    
+    .over {
+        border-bottom: 2px solid rgb(194, 128, 255);
+    }
+    
+    .cerchio1 {
+        margin-right: 18px;
+        height: 35px;
+        width: 35px;
+        background-color: white;
+        border: 1px solid gray;
+        cursor: pointer;
+        border-radius: 50%;
+        display: inline-block;
+    }
+    
+    .cerchio1:hover,
+    .cerchio2:hover,
+    .cerchio3:hover,
+    .cerchio4:hover,
+    .cerchio5:hover,
+    .cerchio6:hover,
+    .cerchio1-text:hover,
+    .cerchio2-text:hover {
+        border: 2px solid rgb(193, 129, 255);
+    }
+    
+    .cerchio2 {
+        margin-right: 20px;
+        height: 35px;
+        width: 35px;
+        border: 1px solid gray;
+        cursor: pointer;
+        background-color: black;
+        border-radius: 50%;
+        display: inline-block;
+    }
+    
+    .cerchio3 {
+        margin-right: 20px;
+        height: 35px;
+        width: 35px;
+        cursor: pointer;
+        border: 1px solid gray;
+        background-color: lightgray;
+        border-radius: 50%;
+        display: inline-block;
+    }
+    
+    .cerchio4 {
+        margin-right: 20px;
+        height: 35px;
+        width: 35px;
+        border: 1px solid gray;
+        cursor: pointer;
+        background-color: rgb(149, 242, 4);
+        border-radius: 50%;
+        display: inline-block;
+    }
+    
+    .cerchio5 {
+        margin-right: 20px;
+        height: 35px;
+        width: 35px;
+        cursor: pointer;
+        border: 1px solid gray;
+        background-color: rgb(0, 255, 255);
+        border-radius: 50%;
+        display: inline-block;
+    }
+    
+    .cerchio6 {
+        margin-right: 20px;
+        height: 35px;
+        width: 35px;
+        border: 1px solid gray;
+        cursor: pointer;
+        background-color: rgb(2, 167, 240);
+        border-radius: 50%;
+        display: inline-block;
+    }
+    
+    .cerchio1-text {
+        margin-right: 18px;
+        height: 35px;
+        width: 35px;
+        background-color: white;
+        border: 1px solid gray;
+        cursor: pointer;
+        border-radius: 50%;
+        display: inline-block;
+    }
+    
+    .cerchio2-text {
+        margin-right: 18px;
+        height: 35px;
+        width: 35px;
+        background-color: black;
+        border: 1px solid gray;
+        cursor: pointer;
+        border-radius: 50%;
+        display: inline-block;
+    }
+    
+    .btn-aggiungi {
+        background-color: rgb(194, 128, 255);
+        text-align: center;
+        width: 30vh;
+        height: 7vh;
+        border: 0px solid rgb(194, 128, 255);
+        border-radius: 5px;
+        color: white;
+        font-weight: bold;
+        cursor: pointer;
+        outline: none;
+        float: right;
+        margin-bottom: 10px;
+        margin-right: 10px;
+        vertical-align: middle;
+    }
+    
+    .btn-aggiungi:hover {
+        background-color: rgb(194, 128, 255);
+        animation: rotate 0.5s ease-in-out both;
+        text-align: center;
+        width: 30vh;
+        height: 7vh;
+        border: 0px solid rgb(194, 128, 255);
+        border-radius: 5px;
+        color: white;
+        font-weight: bold;
+        cursor: pointer;
+        outline: none;
+        float: right;
+        margin-bottom: 10px;
+        margin-right: 10px;
+        vertical-align: middle;
+    }
+    
+    .btn-ripristina {
+        background-color: white;
+        text-align: center;
+        width: 30vh;
+        height: 7vh;
+        border: 1px solid rgb(194, 128, 255);
+        border-radius: 5px;
+        color: rgb(194, 128, 255);
+        font-size: 15px;
+        font-weight: bold;
+        cursor: pointer;
+        outline: none;
+        margin-left: 10px;
+        float: left;
+    }
+    
+    .btn-ripristina:hover {
+        background-color: white;
+        animation: rotate 0.5s ease-in-out both;
+        text-align: center;
+        width: 30vh;
+        height: 7vh;
+        border: 1px solid rgb(194, 128, 255);
+        border-radius: 5px;
+        color: rgb(194, 128, 255);
+        font-size: 15px;
+        font-weight: bold;
+        cursor: pointer;
+        outline: none;
+        margin-left: 10px;
+        float: left;
+    }
+    
+    input {
+        outline: none;
+        background-color: rgb(242, 242, 242);
+        border: none;
+        width: 90%;
+        height: 7vh;
+        color: grey;
+        padding-left: 10px;
+    }
+    
+    //start animazioni
+    @keyframes rotate {
+        0% {
+            transform: rotate(0deg) translate3d(0, 0, 0);
+        }
+        25% {
+            transform: rotate(3deg) translate3d(0, 0, 0);
+        }
+        50% {
+            transform: rotate(-3deg) translate3d(0, 0, 0);
+        }
+        75% {
+            transform: rotate(1deg) translate3d(0, 0, 0);
+        }
+        100% {
+            transform: rotate(0deg) translate3d(0, 0, 0);
+        }
+    }
+    
+    @keyframes storm {
+        0% {
+            transform: translate3d(0, 0, 0) translateZ(0);
+        }
+        25% {
+            transform: translate3d(4px, 0, 0) translateZ(0);
+        }
+        50% {
+            transform: translate3d(-3px, 0, 0) translateZ(0);
+        }
+        75% {
+            transform: translate3d(2px, 0, 0) translateZ(0);
+        }
+        100% {
+            transform: translate3d(0, 0, 0) translateZ(0);
+        }
+    }
+    /*end animazioni*/
+    
+    @media screen and (max-width: 1120px) {
+        .scritta-carrello {
+            display: none;
+        }
+        .scritta-home {
+            display: none;
+        }
+        .btn-aggiungi {
+            width: 90%;
+            float: none;
+            margin-left: 5%;
+            margin-right: 5%;
+        }
+        .btn-aggiungi:hover {
+            width: 90%;
+            animation: rotate 0.5s ease-in-out both;
+            float: none;
+            margin-left: 5%;
+            margin-right: 5%;
+        }
+        .btn-ripristina {
+            margin-bottom: 10px;
+            margin-top: 20px;
+            width: 90%;
+            float: none;
+            margin-left: 5%;
+            margin-right: 5%;
+        }
+        .btn-ripristina:hover {
+            width: 90%;
+            margin-top: 20px;
+            animation: rotate 0.5s ease-in-out both;
+            float: none;
+            margin-left: 5%;
+            margin-right: 5%;
+        }
+    }
+    
+    @media screen and (max-width: 800px) {
+        .scritta-carrello {
+            display: none;
+        }
+        .scritta-home {
+            display: none;
+        }
+        .container-personalizza {
+            width: 90%;
+            margin-left: 5%;
+            margin-right: 5%;
+        }
+        .btn-aggiungi {
+            width: 90%;
+            float: none;
+            margin-left: 5%;
+            margin-right: 5%;
+        }
+        .btn-aggiungi:hover {
+            width: 90%;
+            animation: rotate 0.5s ease-in-out both;
+            float: none;
+            margin-left: 5%;
+            margin-right: 5%;
+        }
+        .btn-ripristina {
+            width: 90%;
+            float: none;
+            margin-left: 5%;
+            margin-right: 5%;
+        }
+        .btn-ripristina:hover {
+            width: 90%;
+            animation: rotate 0.5s ease-in-out both;
+            float: none;
+            margin-left: 5%;
+            margin-right: 5%;
+        }
+    }
