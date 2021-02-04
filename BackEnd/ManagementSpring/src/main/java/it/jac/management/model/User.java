@@ -9,7 +9,6 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
 
 @SuppressWarnings("serial")
 
@@ -18,15 +17,12 @@ import javax.validation.constraints.NotNull;
 public class User extends AuditModel {
 
 	@Column(name = "iva_code", unique = true)
-	@NotNull
 	private String ivaCode;
 
 	@Column(name = "address")
-	@NotNull
 	private String address;
 
 	@Column(name = "phone")
-	@NotNull
 	private String phone;
 
 	@Column(name = "username", unique = true)
@@ -42,8 +38,8 @@ public class User extends AuditModel {
 	
 	@ManyToMany
 	@JoinTable(name = "user_customer", 
-	joinColumns = @JoinColumn(name = "customer_id"), 
-	inverseJoinColumns = @JoinColumn(name = "user_id"))
+	joinColumns = @JoinColumn(name = "user_id"), 
+	inverseJoinColumns = @JoinColumn(name = "customer_id"))
 	private List<Customer> customers;
 
 	public String getIvaCode() {

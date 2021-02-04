@@ -1,5 +1,6 @@
 package it.jac.management.service.impl;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,11 @@ public class CustomerServiceImpl implements CustomerService {
 		if (customerRepository.findByIvaCode(c.getIvaCode()) == null)
 			return customerRepository.save(c);
 		return null;
+	}
+	
+	@Override
+	public void createAll(List<Customer> c) {
+		customerRepository.saveAll(c);
 	}
 
 	@Override

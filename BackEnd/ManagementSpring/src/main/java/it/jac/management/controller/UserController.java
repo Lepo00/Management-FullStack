@@ -1,5 +1,6 @@
 package it.jac.management.controller;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +16,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import it.jac.management.model.Customer;
 import it.jac.management.model.User;
+import it.jac.management.service.CustomerService;
 import it.jac.management.service.UserService;
 
 @RestController
@@ -23,6 +26,8 @@ import it.jac.management.service.UserService;
 public class UserController {
 	@Autowired
 	UserService userService;
+	@Autowired
+	CustomerService customerService;
 
 	@GetMapping("/{id}")
 	public ResponseEntity<?> get(@PathVariable Long id) {
@@ -65,8 +70,9 @@ public class UserController {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User doesn't exists");
 		}
 	}
-	@PostMapping(path ="/login")
-	public ResponseEntity<?> login(@RequestParam String username,@RequestParam String password) throws Exception {
+
+	@PostMapping(path = "/login")
+	public ResponseEntity<?> login(@RequestParam String username, @RequestParam String password) throws Exception {
 		try {
 			User login = userService.login(username, password);
 			if (login == null)
@@ -76,4 +82,21 @@ public class UserController {
 			return ResponseEntity.badRequest().body("User Not Found!");
 		}
 	}
+
+	@PostMapping(path = "/{id}/addCustomers")
+	public ResponseEntity<?> addCustomers(@PathVariable Long id, @RequestBody List<Customer> customers)
+			throws Exception {
+		User user = userService.get(id).get();
+		try {
+			if (user.getCustomers().addAll(customers)) {
+				customerService.createAll(customers);
+				userService.create(user);
+				return ResponseEntity.ok("Customers added");
+			} else
+				throw new Exception();
+		} catch (Exception e) {
+			return ResponseEntity.badRequest().body("User Not Found!");
+		}
+	}
+
 }
