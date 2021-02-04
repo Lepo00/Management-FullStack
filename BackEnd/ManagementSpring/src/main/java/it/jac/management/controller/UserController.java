@@ -1,6 +1,7 @@
 package it.jac.management.controller;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -86,16 +87,16 @@ public class UserController {
 	@PostMapping(path = "/{id}/addCustomers")
 	public ResponseEntity<?> addCustomers(@PathVariable Long id, @RequestBody List<Customer> customers)
 			throws Exception {
-		User user = userService.get(id).get();
 		try {
-			if (user.getCustomers().addAll(customers)) {
-				customerService.createAll(customers);
-				userService.create(user);
-				return ResponseEntity.ok("Customers added");
-			} else
-				throw new Exception();
-		} catch (Exception e) {
+			User user = userService.get(id).get();
+			user.getCustomers().addAll(customers);
+			customerService.createAll(customers);
+			userService.create(user);
+			return ResponseEntity.ok("Customers added");
+		} catch (NoSuchElementException e) {
 			return ResponseEntity.badRequest().body("User Not Found!");
+		} catch (Exception e) {
+			return ResponseEntity.badRequest().body("Customers Not Added!");
 		}
 	}
 
