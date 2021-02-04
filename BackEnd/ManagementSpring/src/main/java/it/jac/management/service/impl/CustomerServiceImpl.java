@@ -11,29 +11,28 @@ import it.jac.management.service.CustomerService;
 
 @Service
 public class CustomerServiceImpl implements CustomerService {
-	
 	@Autowired
 	CustomerRepository customerRepository;
 
 	@Override
-	public Optional<Customer> get(Long id){
+	public Optional<Customer> get(Long id) {
 		return customerRepository.findById(id);
 	}
 
 	@Override
-	public Customer create(Customer c){
-		if(customerRepository.findByFiscalCode(c.getFiscalCode())==null)
+	public Customer create(Customer c) {
+		if (customerRepository.findByIvaCode(c.getIvaCode()) == null)
 			return customerRepository.save(c);
 		return null;
 	}
 
 	@Override
-	public void delete(Long id){
+	public void delete(Long id) {
 		customerRepository.deleteById(id);
 	}
 
 	@Override
-	public Customer update(Customer customer, Long id){
+	public Customer update(Customer customer, Long id) {
 		return customerRepository.findById(id).map(c -> { // update if entity already exists
 			customer.setId(c.getId());
 			return create(customer);
@@ -41,11 +40,4 @@ public class CustomerServiceImpl implements CustomerService {
 			return create(customer);
 		});
 	}
-	
-	@Override
-	public Customer login(String u, String p) {
-		return customerRepository.findByUsernameAndPassword(u, p);
-	}
-
-
 }

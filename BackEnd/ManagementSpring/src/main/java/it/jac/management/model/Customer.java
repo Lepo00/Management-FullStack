@@ -1,11 +1,6 @@
 package it.jac.management.model;
-
-import java.util.List;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
@@ -13,44 +8,24 @@ import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "customer")
-public class Customer extends AuditModel {
-
-	@Column(name = "fiscal_code", unique = true)
+public class Customer extends AuditModel{
+	
+	@Column(name = "iva_code")
 	@NotNull
-	private String fiscalCode;
-
+	private String ivaCode;
+		
 	@Column(name = "name")
-	@NotNull
 	private String name;
-
+	
 	@Column(name = "surname")
-	@NotNull
 	private String surname;
-
-	@Column(name = "address")
-	@NotNull
-	private String address;
-
-	@Column(name = "phone")
-	@NotNull
-	private String phone;
-
-	@Column(name = "username", unique = true)
-	private String username;
-
-	@Column(name = "password")
-	private String password;
-
-	@OneToMany
-	@JoinColumn(name = "customer_id")
-	private List<InvoiceMaster> invoices;
-
-	public String getFiscalCode() {
-		return fiscalCode;
+	
+	public String getIvaCode() {
+		return ivaCode;
 	}
 
-	public void setFiscalCode(String fiscalCode) {
-		this.fiscalCode = fiscalCode;
+	public void setIvaCode(String ivaCode) {
+		this.ivaCode = ivaCode;
 	}
 
 	public String getName() {
@@ -85,27 +60,15 @@ public class Customer extends AuditModel {
 		this.phone = phone;
 	}
 
-	public List<InvoiceMaster> getInvoices() {
-		return invoices;
-	}
+	@Column(name = "address")
+	@NotNull
+	private String address;
+	
+	@Column(name = "phone")
+	@NotNull
+	private String phone;
+	
 
-	public void setInvoices(List<InvoiceMaster> invoices) {
-		this.invoices = invoices;
-	}
-
-	public String getUsername() {
-		return username;
-	}
-
-	public void setUsername(String username) {
-		this.username = username;
-	}
-
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
-	}
+	
+	
 }

@@ -30,9 +30,6 @@ public class InvoiceMaster extends AuditModel {
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
 	private Date date;
 
-	@Column(name = "code", unique = true)
-	private String code;
-
 	@Column(name = "type")
 	private String type;
 
@@ -61,14 +58,6 @@ public class InvoiceMaster extends AuditModel {
 
 	public void setDate(Date date) {
 		this.date = date;
-	}
-
-	public String getCode() {
-		return code;
-	}
-
-	public void setCode(String code) {
-		this.code = code;
 	}
 
 	public String getType() {

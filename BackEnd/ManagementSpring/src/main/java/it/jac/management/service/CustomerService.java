@@ -5,7 +5,6 @@ import java.util.Optional;
 import it.jac.management.model.Customer;
 
 public interface CustomerService {
-
 	public Optional<Customer> get(Long id);
 
 	public Customer create(Customer c);
@@ -14,5 +13,4 @@ public interface CustomerService {
 	
 	public Customer update(Customer c, Long id);
 	
-	public Customer login(String u, String p);
 }

@@ -6,8 +6,8 @@ import org.springframework.stereotype.Repository;
 import it.jac.management.model.Customer;
 
 @Repository("customerRepository")
-public interface CustomerRepository extends JpaRepository<Customer, Long> {
-	Customer findByFiscalCode(String fiscalCode);
-	Customer findByUsernameAndPassword(String username, String password);
+public interface CustomerRepository extends JpaRepository<Customer, Long>{
+	Customer findByIvaCode(String ivaCode);	
+	Customer findByNameAndSurname(String name,String surname);
+	
 }
-
