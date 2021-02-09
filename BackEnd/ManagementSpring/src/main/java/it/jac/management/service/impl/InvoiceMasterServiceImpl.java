@@ -9,7 +9,9 @@ import org.springframework.stereotype.Service;
 import it.jac.management.model.InvoiceMaster;
 import it.jac.management.repository.InvoiceBodyRepository;
 import it.jac.management.repository.InvoiceMasterRepository;
+import it.jac.management.repository.InvoiceTailRepository;
 import it.jac.management.service.InvoiceMasterService;
+import it.jac.management.service.InvoiceTailService;
 
 @Service
 public class InvoiceMasterServiceImpl implements InvoiceMasterService {
@@ -19,6 +21,12 @@ public class InvoiceMasterServiceImpl implements InvoiceMasterService {
 
 	@Autowired
 	InvoiceBodyRepository invoiceBodyRepository;
+	
+	@Autowired
+	InvoiceTailRepository InvoiceTailRepository;
+	
+	@Autowired
+	InvoiceTailService tailService;
 
 	@Override
 	public Optional<InvoiceMaster> get(Long id) {
@@ -33,6 +41,8 @@ public class InvoiceMasterServiceImpl implements InvoiceMasterService {
 	@Override
 	public InvoiceMaster create(InvoiceMaster i) {
 		invoiceBodyRepository.saveAll(i.getRows());
+		i.setTail(tailService.calc(i));
+		InvoiceTailRepository.save(i.getTail());
 		return invoiceMasterRepository.save(i);
 	}
 

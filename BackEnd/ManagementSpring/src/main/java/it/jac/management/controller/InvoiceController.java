@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import it.jac.management.model.InvoiceMaster;
+import it.jac.management.service.InvoiceTailService;
 import it.jac.management.service.InvoiceMasterService;
 
 @RestController
@@ -23,7 +24,8 @@ public class InvoiceController {
 
 	@Autowired
 	InvoiceMasterService invoiceService;
-
+	
+	
 	@GetMapping("/{id}")
 	public ResponseEntity<?> get(@PathVariable Long id) {
 		Optional<InvoiceMaster> i = invoiceService.get(id);
@@ -37,6 +39,7 @@ public class InvoiceController {
 	@PostMapping("/save")
 	public ResponseEntity<?> newInvoice(@RequestBody InvoiceMaster invoice) throws Exception {
 		try {
+			
 			InvoiceMaster save = invoiceService.create(invoice);
 			if (save == null)
 				throw new Exception();
