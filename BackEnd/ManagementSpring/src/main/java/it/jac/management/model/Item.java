@@ -18,7 +18,7 @@ public class Item extends AuditModel {
 	private String description;
 
 	@Column(name = "price")
-	private int price;
+	private double price;
 
 	@ManyToOne
 	private UnitOfMeasure unitOfMeasure;
@@ -39,11 +39,11 @@ public class Item extends AuditModel {
 		this.description = description;
 	}
 
-	public int getPrice() {
+	public double getPrice() {
 		return price;
 	}
 
-	public void setPrice(int price) {
+	public void setPrice(double price) {
 		this.price = price;
 	}
 
