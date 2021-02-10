@@ -1,10 +1,11 @@
-export interface Invoice{
+import { UnitOfMeasure } from "./unit-of-measure.interface";
+
+export interface InvoiceTail{
     id?: number;
     itemsValue : number;
     serviceValue : number;
-    discount : number;
-    tailDiscount : number;
-    tailDiscountValue : number;
+    percDiscount : number;
+    discountValue : number;
     totDiscount : number;
     taxable : number;
     totTax : number;
