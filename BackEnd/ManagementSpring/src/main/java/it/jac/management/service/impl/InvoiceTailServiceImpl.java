@@ -46,14 +46,14 @@ public class InvoiceTailServiceImpl implements InvoiceTailService {
 	@Override
 	public InvoiceTail calc(InvoiceMaster i) {
 		float tot = 0;
-		float totDisc;
 		List<InvoiceBody> body = i.getRows();
 		for (InvoiceBody item : body) {
-			tot += ((item.getQuantity()*item.getItem().getPrice())*(item.getPercDiscount()/100));
+
+			tot += item.getNetPrice();
 		}
 		i.getTail().setItemsValue(tot);
-		i.getTail().setDiscount(10.0f);
-		i.getTail().setTaxable(tot*i.getTail().getDiscount()/100);
+		i.getTail().setTailDiscountValue(tot*i.getTail().getTailDiscount()/100);
+		i.getTail().setTaxable(tot - i.getTail().getTailDiscountValue());
 		i.getTail().setTotTax(i.getTail().getTaxable()*22/100);
 		i.getTail().setNetPay(i.getTail().getTaxable()+i.getTail().getTotTax());
 		return i.getTail();
