@@ -19,9 +19,21 @@ public class InvoiceBody extends AuditModel {
 	@Column(name = "perc_discount")
 	private int percDiscount;
 
-	@Column(name = "total_discount")
-	private int totDiscount;
+	@Column(name = "discount_value")
+	private double totDiscount;
 
+	@Column(name = "net_price")
+	private double netPrice;
+
+	@Column(name = "taxable")
+	private double taxable;
+
+	@Column(name = "taxed")
+	private double taxed;
+
+	@Column(name = "final_amount")
+	private double finalAmount;
+	
 	public Item getItem() {
 		return item;
 	}
@@ -46,12 +58,43 @@ public class InvoiceBody extends AuditModel {
 		this.percDiscount = percDiscount;
 	}
 
-	public int getTotDiscount() {
+	public double getTotDiscount() {
 		return totDiscount;
 	}
 
-	public void setTotDiscount(int totDiscount) {
+	public void setTotDiscount(double totDiscount) {
 		this.totDiscount = totDiscount;
 	}
 
+	public double getNetPrice() {
+		return netPrice;
+	}
+
+	public void setNetPrice(double netPrice) {
+		this.netPrice = netPrice;
+	}
+
+	public double getTaxable() {
+		return taxable;
+	}
+
+	public void setTaxable(double taxable) {
+		this.taxable = taxable;
+	}
+
+	public double getTaxed() {
+		return taxed;
+	}
+
+	public void setTaxed(double taxed) {
+		this.taxed = taxed;
+	}
+
+	public double getFinalAmount() {
+		return finalAmount;
+	}
+
+	public void setFinalAmount(double finalAmount) {
+		this.finalAmount = finalAmount;
+	}
 }

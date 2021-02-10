@@ -40,6 +40,7 @@ public class InvoiceMasterServiceImpl implements InvoiceMasterService {
 
 	@Override
 	public InvoiceMaster create(InvoiceMaster i) {
+		i.setRows(invoiceBodyService.calc(i.getRows()));
 		invoiceBodyService.createAll(i.getRows());
 		i.setTail(tailService.calc(i));
 		tailService.create(i.getTail());

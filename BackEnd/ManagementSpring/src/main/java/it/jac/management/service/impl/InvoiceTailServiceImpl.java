@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 import it.jac.management.model.InvoiceBody;
 import it.jac.management.model.InvoiceMaster;
 import it.jac.management.model.InvoiceTail;
-import it.jac.management.model.Item;
 import it.jac.management.repository.InvoiceTailRepository;
 import it.jac.management.service.InvoiceTailService;
 import it.jac.management.service.ItemService;
@@ -18,7 +17,7 @@ public class InvoiceTailServiceImpl implements InvoiceTailService {
 
 	@Autowired
 	InvoiceTailRepository invoiceTailRepository;
-	
+
 	@Autowired
 	ItemService itemService;
 
@@ -46,21 +45,24 @@ public class InvoiceTailServiceImpl implements InvoiceTailService {
 			return create(invoiceTail);
 		});
 	}
-	
+
 	@Override
 	public InvoiceTail calc(InvoiceMaster i) {
+		InvoiceTail tail = i.getTail();
 		double tot = 0;
-		for (InvoiceBody rows : i.getRows()) {
-			Item item= itemService.getOne(rows.getItem().getId());
-			tot += item.getPrice()*rows.getQuantity();
-			tot*=(100-rows.getPercDiscount());
+		double rowdisc = 0;
+		for (InvoiceBody row : i.getRows()) {
+			tot += row.getTaxable();
+			rowdisc += row.getTotDiscount();
 		}
-		i.getTail().setItemsValue(tot);
-		i.getTail().setTailDiscountValue(tot*i.getTail().getTailDiscount()/100);
-		i.getTail().setTaxable(tot - i.getTail().getTailDiscountValue());
-		i.getTail().setTotTax(i.getTail().getTaxable()*22/100);
-		i.getTail().setNetPay(i.getTail().getTaxable()+i.getTail().getTotTax());
-		return i.getTail();
+		tail.setItemsValue(tot);
+		tail.setRowsDiscount(rowdisc);
+		tail.setDiscountValue(tot * tail.getDiscountPerc() / 100);
+		tail.setTotDiscount(tail.getDiscountValue() + rowdisc);
+		tail.setTaxable(tot - tail.getDiscountValue());
+		tail.setTaxed(tail.getTaxable() * 22 / 100);
+		tail.setFinalAmount(tail.getTaxable() + tail.getTaxed());
+		return tail;
 	}
 
 }

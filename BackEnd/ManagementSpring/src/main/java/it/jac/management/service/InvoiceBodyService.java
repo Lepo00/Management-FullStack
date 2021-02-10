@@ -16,5 +16,7 @@ public interface InvoiceBodyService {
 	public void delete(Long id);
 
 	public InvoiceBody update(InvoiceBody i, Long id);
+	
+	public List<InvoiceBody> calc(List<InvoiceBody> rows);
 
 }

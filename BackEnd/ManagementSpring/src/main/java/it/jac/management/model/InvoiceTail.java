@@ -15,14 +15,14 @@ public class InvoiceTail extends AuditModel {
 	@Column(name = "service_value")
 	private double serviceValue;
 
-	@Column(name = "discount")
-	private double discount;
+	@Column(name = "rows_discount")
+	private double rowsDiscount;
 
-	@Column(name = "tail_discount")
-	private double tailDiscount;
+	@Column(name = "discount_perc")
+	private double discountPerc;
 
-	@Column(name = "tail_discount_value")
-	private double tailDiscountValue;
+	@Column(name = "discount_value")
+	private double discountValue;	
 
 	@Column(name = "tot_discount")
 	private double totDiscount;
@@ -30,12 +30,19 @@ public class InvoiceTail extends AuditModel {
 	@Column(name = "taxable")
 	private double taxable;
 
-	@Column(name = "tot_tax")
-	private double totTax;
+	@Column(name = "taxed")
+	private double taxed;
 
-	@Column(name = "net_pay")
-	private double netPay;
+	@Column(name = "final_amount")
+	private double finalAmount;
+	
+	public double getRowsDiscount() {
+		return rowsDiscount;
+	}
 
+	public void setRowsDiscount(double rowsDiscount) {
+		this.rowsDiscount = rowsDiscount;
+	}
 	public double getItemsValue() {
 		return itemsValue;
 	}
@@ -51,29 +58,21 @@ public class InvoiceTail extends AuditModel {
 	public void setServiceValue(double serviceValue) {
 		this.serviceValue = serviceValue;
 	}
-
-	public double getDiscount() {
-		return discount;
+	
+	public double getDiscountPerc() {
+		return discountPerc;
 	}
 
-	public void setDiscount(double discount) {
-		this.discount = discount;
+	public void setDiscountPerc(double discountPerc) {
+		this.discountPerc = discountPerc;
 	}
 
-	public double getTailDiscount() {
-		return tailDiscount;
+	public double getDiscountValue() {
+		return discountValue;
 	}
 
-	public void setTailDiscount(double tailDiscount) {
-		this.tailDiscount = tailDiscount;
-	}
-
-	public double getTailDiscountValue() {
-		return tailDiscountValue;
-	}
-
-	public void setTailDiscountValue(double tailDiscountValue) {
-		this.tailDiscountValue = tailDiscountValue;
+	public void setDiscountValue(double discountValue) {
+		this.discountValue = discountValue;
 	}
 
 	public double getTotDiscount() {
@@ -92,19 +91,21 @@ public class InvoiceTail extends AuditModel {
 		this.taxable = taxable;
 	}
 
-	public double getTotTax() {
-		return totTax;
+	public double getTaxed() {
+		return taxed;
 	}
 
-	public void setTotTax(double totTax) {
-		this.totTax = totTax;
+	public void setTaxed(double taxed) {
+		this.taxed = taxed;
 	}
 
-	public double getNetPay() {
-		return netPay;
+	public double getFinalAmount() {
+		return finalAmount;
 	}
 
-	public void setNetPay(double netPay) {
-		this.netPay = netPay;
+	public void setFinalAmount(double finalAmount) {
+		this.finalAmount = finalAmount;
 	}
+
+	
 }
