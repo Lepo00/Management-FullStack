@@ -396,6 +396,7 @@
     }
     /* gestione layer edit on click sulla matita*/
     function toggleLayerZoom() {
+        window.scrollTo(0, 0);
         var x = document.getElementById("div-detail");
         var y = document.getElementById("overlay");
         if (x.style.display === "none") {
@@ -500,11 +501,11 @@
 
 <!-- Script to print the content of a div -->
 <script>
-    function printDiv() {
-        var divContents = document.getElementById("div-detail").innerHTML;
-        var a = window.open('', '', 'height=1000px, width=500px');
-        a.document.write(divContents);
-
-        a.print();
+    function printDiv(printpage) {
+        printEl = window.open(); //nuova finestra
+        printEl.document.write('<style> table{width:80%; margin-left:10%; margin-top: 100px;} img{width:55%; height:20% } #x-icon{display:none} .print{display:none;} .info{float:right; margin-top:-80px} </style>'); // aggiungo eventuale style di stampa
+        printEl.document.write($('#div-detail').html()); //popolo la finestra con il contenuto del div
+        printEl.print(); //Stampo
+        printEl.close(); // Chiudo finestra di stampa
     }
 </script>
