@@ -2,6 +2,7 @@ package it.jac.management.service;
 
 import java.util.Optional;
 
+import it.jac.management.model.InvoiceMaster;
 import it.jac.management.model.InvoiceTail;
 
 public interface InvoiceTailService {
@@ -14,4 +15,5 @@ public interface InvoiceTailService {
 
 	public InvoiceTail update(InvoiceTail i, Long id);
 
+	public InvoiceTail calc(InvoiceMaster i);
 }
