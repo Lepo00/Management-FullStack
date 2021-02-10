@@ -53,19 +53,15 @@ public class InvoiceBodyServiceImpl implements InvoiceBodyService {
 
 	@Override
 	public List<InvoiceBody> calc(List<InvoiceBody> rows) {
-
+		Item item;
 		for (InvoiceBody row : rows) {
-			Item item = itemService.getOne(row.getItem().getId());
-			
-			double discount =(item.getPrice() *row.getPercDiscount() / 100);
+			item = itemService.getOne(row.getItem().getId());
+			double discount = (item.getPrice() * row.getPercDiscount() / 100);
+
 			row.setTotDiscount(item.getPrice() * row.getQuantity() * row.getPercDiscount() / 100);
-			
-			row.setNetPrice(item.getPrice()-discount);
-			
-			row.setTaxable(row.getNetPrice()*row.getQuantity());
-			
-			row.setTaxed(row.getTaxable()*22/100);
-			
+			row.setNetPrice(item.getPrice() - discount);
+			row.setTaxable(row.getNetPrice() * row.getQuantity());
+			row.setTaxed(row.getTaxable() * 22 / 100);
 			row.setFinalAmount(row.getTaxable() + row.getTaxed());
 		}
 		return rows;

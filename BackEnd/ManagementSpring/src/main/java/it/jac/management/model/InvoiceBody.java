@@ -33,7 +33,7 @@ public class InvoiceBody extends AuditModel {
 
 	@Column(name = "final_amount")
 	private double finalAmount;
-	
+
 	public Item getItem() {
 		return item;
 	}

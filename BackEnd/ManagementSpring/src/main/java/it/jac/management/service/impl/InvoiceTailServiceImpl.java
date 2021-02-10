@@ -49,8 +49,7 @@ public class InvoiceTailServiceImpl implements InvoiceTailService {
 	@Override
 	public InvoiceTail calc(InvoiceMaster i) {
 		InvoiceTail tail = i.getTail();
-		double tot = 0;
-		double rowdisc = 0;
+		double tot = 0, rowdisc = 0;
 		for (InvoiceBody row : i.getRows()) {
 			tot += row.getTaxable();
 			rowdisc += row.getTotDiscount();

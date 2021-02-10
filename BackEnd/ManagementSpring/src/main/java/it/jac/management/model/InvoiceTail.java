@@ -8,7 +8,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "invoice_tail")
-public class InvoiceTail extends AuditModel {	
+public class InvoiceTail extends AuditModel {
 	@Column(name = "items_value")
 	private double itemsValue;
 
@@ -22,7 +22,7 @@ public class InvoiceTail extends AuditModel {
 	private double discountPerc;
 
 	@Column(name = "discount_value")
-	private double discountValue;	
+	private double discountValue;
 
 	@Column(name = "tot_discount")
 	private double totDiscount;
@@ -35,14 +35,7 @@ public class InvoiceTail extends AuditModel {
 
 	@Column(name = "final_amount")
 	private double finalAmount;
-	
-	public double getRowsDiscount() {
-		return rowsDiscount;
-	}
 
-	public void setRowsDiscount(double rowsDiscount) {
-		this.rowsDiscount = rowsDiscount;
-	}
 	public double getItemsValue() {
 		return itemsValue;
 	}
@@ -58,7 +51,15 @@ public class InvoiceTail extends AuditModel {
 	public void setServiceValue(double serviceValue) {
 		this.serviceValue = serviceValue;
 	}
-	
+
+	public double getRowsDiscount() {
+		return rowsDiscount;
+	}
+
+	public void setRowsDiscount(double rowsDiscount) {
+		this.rowsDiscount = rowsDiscount;
+	}
+
 	public double getDiscountPerc() {
 		return discountPerc;
 	}
@@ -106,6 +107,4 @@ public class InvoiceTail extends AuditModel {
 	public void setFinalAmount(double finalAmount) {
 		this.finalAmount = finalAmount;
 	}
-
-	
 }

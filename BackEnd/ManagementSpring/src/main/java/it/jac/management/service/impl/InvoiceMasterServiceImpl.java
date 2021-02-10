@@ -21,7 +21,7 @@ public class InvoiceMasterServiceImpl implements InvoiceMasterService {
 
 	@Autowired
 	InvoiceBodyService invoiceBodyService;
-	
+
 	@Autowired
 	InvoiceTailService tailService;
 

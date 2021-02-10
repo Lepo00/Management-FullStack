@@ -23,8 +23,7 @@ public class InvoiceController {
 
 	@Autowired
 	InvoiceMasterService invoiceService;
-	
-	
+
 	@GetMapping("/{id}")
 	public ResponseEntity<?> get(@PathVariable Long id) {
 		Optional<InvoiceMaster> i = invoiceService.get(id);
@@ -38,7 +37,7 @@ public class InvoiceController {
 	@PostMapping("/save")
 	public ResponseEntity<?> newInvoice(@RequestBody InvoiceMaster invoice) throws Exception {
 		try {
-			
+
 			InvoiceMaster save = invoiceService.create(invoice);
 			if (save == null)
 				throw new Exception();
