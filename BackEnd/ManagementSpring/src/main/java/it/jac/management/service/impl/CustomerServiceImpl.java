@@ -19,6 +19,11 @@ public class CustomerServiceImpl implements CustomerService {
 	public Optional<Customer> get(Long id) {
 		return customerRepository.findById(id);
 	}
+	
+	@Override
+	public Customer getOne(Long id) {
+		return customerRepository.getOne(id);
+	}
 
 	@Override
 	public Customer create(Customer c) {

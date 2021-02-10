@@ -8,30 +8,25 @@ import org.springframework.stereotype.Service;
 
 import it.jac.management.model.Customer;
 import it.jac.management.model.InvoiceMaster;
-import it.jac.management.repository.CustomerRepository;
-import it.jac.management.repository.InvoiceBodyRepository;
 import it.jac.management.repository.InvoiceMasterRepository;
-import it.jac.management.repository.InvoiceTailRepository;
+import it.jac.management.service.CustomerService;
+import it.jac.management.service.InvoiceBodyService;
 import it.jac.management.service.InvoiceMasterService;
 import it.jac.management.service.InvoiceTailService;
 
 @Service
 public class InvoiceMasterServiceImpl implements InvoiceMasterService {
-
 	@Autowired
 	InvoiceMasterRepository invoiceMasterRepository;
 
 	@Autowired
-	InvoiceBodyRepository invoiceBodyRepository;
-	
-	@Autowired
-	InvoiceTailRepository InvoiceTailRepository;
+	InvoiceBodyService invoiceBodyService;
 	
 	@Autowired
 	InvoiceTailService tailService;
 
 	@Autowired
-	CustomerRepository customerRepository;
+	CustomerService customerService;
 
 	@Override
 	public Optional<InvoiceMaster> get(Long id) {
@@ -45,15 +40,15 @@ public class InvoiceMasterServiceImpl implements InvoiceMasterService {
 
 	@Override
 	public InvoiceMaster create(InvoiceMaster i) {
-		invoiceBodyRepository.saveAll(i.getRows());
+		invoiceBodyService.createAll(i.getRows());
 		i.setTail(tailService.calc(i));
-		InvoiceTailRepository.save(i.getTail());
+		tailService.create(i.getTail());
 		return invoiceMasterRepository.save(i);
 	}
 
 	@Override
 	public InvoiceMaster createWithCustomer(Long idCustomer, InvoiceMaster invoice) {
-		Customer customer = customerRepository.getOne(idCustomer);
+		Customer customer = customerService.getOne(idCustomer);
 		invoice.setAccountholder(customer.getName() + " " + customer.getSurname());
 		return create(invoice);
 	}

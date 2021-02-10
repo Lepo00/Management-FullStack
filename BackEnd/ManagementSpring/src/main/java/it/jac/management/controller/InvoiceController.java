@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import it.jac.management.model.InvoiceMaster;
-import it.jac.management.service.InvoiceTailService;
 import it.jac.management.service.InvoiceMasterService;
 
 @RestController
