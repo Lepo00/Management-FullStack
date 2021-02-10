@@ -1,3 +1,6 @@
+import { Customer } from "./customer.interface";
+import { InvoiceMaster } from "./invoice-master.interface";
+
 export interface User {
     id?: number;
     ivaCode: string;
@@ -5,4 +8,6 @@ export interface User {
     phone: string;
     username: string;
     password: string;
+    invoices: InvoiceMaster[];
+    customers: Customer[];
 }
