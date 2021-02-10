@@ -1,6 +1,5 @@
 package it.jac.management.service.impl;
 
-import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,14 +8,19 @@ import org.springframework.stereotype.Service;
 import it.jac.management.model.InvoiceBody;
 import it.jac.management.model.InvoiceMaster;
 import it.jac.management.model.InvoiceTail;
+import it.jac.management.model.Item;
 import it.jac.management.repository.InvoiceTailRepository;
 import it.jac.management.service.InvoiceTailService;
+import it.jac.management.service.ItemService;
 
 @Service
 public class InvoiceTailServiceImpl implements InvoiceTailService {
 
 	@Autowired
 	InvoiceTailRepository invoiceTailRepository;
+	
+	@Autowired
+	ItemService itemService;
 
 	@Override
 	public Optional<InvoiceTail> get(Long id) {
@@ -45,11 +49,11 @@ public class InvoiceTailServiceImpl implements InvoiceTailService {
 	
 	@Override
 	public InvoiceTail calc(InvoiceMaster i) {
-		float tot = 0;
-		List<InvoiceBody> body = i.getRows();
-		for (InvoiceBody item : body) {
-
-			tot += item.getNetPrice();
+		double tot = 0;
+		for (InvoiceBody rows : i.getRows()) {
+			Item item= itemService.getOne(rows.getItem().getId());
+			tot += item.getPrice()*rows.getQuantity();
+			tot*=(100-rows.getPercDiscount());
 		}
 		i.getTail().setItemsValue(tot);
 		i.getTail().setTailDiscountValue(tot*i.getTail().getTailDiscount()/100);

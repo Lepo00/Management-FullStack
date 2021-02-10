@@ -8,103 +8,103 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "invoice_tail")
-public class InvoiceTail extends AuditModel {
+public class InvoiceTail extends AuditModel {	
 	@Column(name = "items_value")
-	private Float itemsValue;
+	private double itemsValue;
 
 	@Column(name = "service_value")
-	private Float serviceValue;
+	private double serviceValue;
 
 	@Column(name = "discount")
-	private Float discount;
+	private double discount;
 
 	@Column(name = "tail_discount")
-	private Float tailDiscount;
+	private double tailDiscount;
 
 	@Column(name = "tail_discount_value")
-	private Float tailDiscountValue;
+	private double tailDiscountValue;
 
 	@Column(name = "tot_discount")
-	private Float totDiscount;
+	private double totDiscount;
 
 	@Column(name = "taxable")
-	private Float taxable;
+	private double taxable;
 
 	@Column(name = "tot_tax")
-	private Float totTax;
+	private double totTax;
 
 	@Column(name = "net_pay")
-	private Float netPay;
+	private double netPay;
 
-	public Float getItemsValue() {
+	public double getItemsValue() {
 		return itemsValue;
 	}
 
-	public void setItemsValue(Float itemsValue) {
+	public void setItemsValue(double itemsValue) {
 		this.itemsValue = itemsValue;
 	}
 
-	public Float getServiceValue() {
+	public double getServiceValue() {
 		return serviceValue;
 	}
 
-	public void setServiceValue(Float serviceValue) {
+	public void setServiceValue(double serviceValue) {
 		this.serviceValue = serviceValue;
 	}
 
-	public Float getDiscount() {
+	public double getDiscount() {
 		return discount;
 	}
 
-	public void setDiscount(Float discount) {
+	public void setDiscount(double discount) {
 		this.discount = discount;
 	}
 
-	public Float getTailDiscount() {
+	public double getTailDiscount() {
 		return tailDiscount;
 	}
 
-	public void setTailDiscount(Float tailDiscount) {
+	public void setTailDiscount(double tailDiscount) {
 		this.tailDiscount = tailDiscount;
 	}
 
-	public Float getTailDiscountValue() {
+	public double getTailDiscountValue() {
 		return tailDiscountValue;
 	}
 
-	public void setTailDiscountValue(Float tailDiscountValue) {
+	public void setTailDiscountValue(double tailDiscountValue) {
 		this.tailDiscountValue = tailDiscountValue;
 	}
 
-	public Float getTotDiscount() {
+	public double getTotDiscount() {
 		return totDiscount;
 	}
 
-	public void setTotDiscount(Float totDiscount) {
+	public void setTotDiscount(double totDiscount) {
 		this.totDiscount = totDiscount;
 	}
 
-	public Float getTaxable() {
+	public double getTaxable() {
 		return taxable;
 	}
 
-	public void setTaxable(Float taxable) {
+	public void setTaxable(double taxable) {
 		this.taxable = taxable;
 	}
 
-	public Float getTotTax() {
+	public double getTotTax() {
 		return totTax;
 	}
 
-	public void setTotTax(Float totTax) {
+	public void setTotTax(double totTax) {
 		this.totTax = totTax;
 	}
 
-	public Float getNetPay() {
+	public double getNetPay() {
 		return netPay;
 	}
 
-	public void setNetPay(Float netPay) {
+	public void setNetPay(double netPay) {
 		this.netPay = netPay;
 	}
 }

@@ -22,9 +22,6 @@ public class InvoiceBody extends AuditModel {
 	@Column(name = "total_discount")
 	private int totDiscount;
 
-	@Column(name = "net_price")
-	private double netPrice;
-
 	public Item getItem() {
 		return item;
 	}
@@ -55,14 +52,6 @@ public class InvoiceBody extends AuditModel {
 
 	public void setTotDiscount(int totDiscount) {
 		this.totDiscount = totDiscount;
-	}
-
-	public double getNetPrice() {
-		return netPrice;
-	}
-
-	public void setNetPrice(double netPrice) {
-		this.netPrice = netPrice;
 	}
 
 }

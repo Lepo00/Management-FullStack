@@ -8,6 +8,8 @@ import it.jac.management.model.Item;
 public interface ItemService {
 
 	public Optional<Item> get(Long id);
+	
+	public Item getOne(Long id);
 
 	public List<Item> getAll();
 
