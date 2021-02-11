@@ -21,18 +21,20 @@
                 <table class="table">
                     <tr class="tr">
                         <td class="th">Numero</td>
-                        <td class="th">Cliente</td>
+                        <td class="th">Ragione Sociale</td>
                         <td class="th">Data</td>
                         <td class="th">Pagamento</td>
                         <td class="th">Totale</td>
+                        <td class="th">Valuta</td>
                         <td class="th">Azioni</td>
                     </tr>
                     <tr *ngFor="let item of arrayOne(28); let i = index;" class="tr">
                         <td class="td">{{i+1}}</td>
-                        <td class="td">F.lli </td>
+                        <td class="td">F.lli Belometti</td>
                         <td class="td">24/02/2020</td>
                         <td class="td">Bonifico</td>
                         <td class="td">130</td>
+                        <td class="td">Euro</td>
                         <td class="td">
                             <button onclick="toggleLayer()"><i class="fas fa-edit" id="edit"></i></button>
                             <button onclick="toggleLayerZoom()"><i class="fas fa-search" id="zoom"></i></button>
@@ -67,23 +69,53 @@
         <button id="x-icon" onclick="toggleLayerX()"><i class="fas fa-times"></i></button>
         <h1>Modifica Fattura</h1>
         <form>
-            <div class="form-group">
-                <label for="exampleFormControlInput1">Codice</label>
-                <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="Codice" readonly disabled>
+            <div class="row">
+                <div class="col-4 col-sm-4 col-md-4 col-lg-4 ">
+                    <div class="form-group">
+                        <label for="exampleFormControlInput1">Codice</label>
+                        <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="Codice" required>
+                    </div>
+                </div>
+                <div class="col-8 col-sm-8 col-md-8 col-lg-8">
+                    <div class="form-group">
+                        <label for="exampleFormControlSelect1">Ragione Sociale</label>
+                        <input class="form-control" id="exampleFormControlSelect1" placeholder="Ragione Sociale" required>
+                    </div>
+                </div>
 
             </div>
-            <div class="form-group">
-                <label for="exampleFormControlSelect1">Data</label>
-                <input class="form-control" id="exampleFormControlSelect1">
-            </div>
-            <div class="form-group">
-                <label for="exampleFormControlSelect2">Example multiple select</label>
-                <input multiple class="form-control" id="exampleFormControlSelect2">
+
+            <div class="row">
+                <div class="col-4 col-sm-4 col-md-4 col-lg-4 ">
+                    <div class="form-group">
+                        <label for="exampleFormControlInput1">Data</label>
+                        <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="Data" required>
+                    </div>
+                </div>
+                <div class="col-8 col-sm-8 col-md-8 col-lg-8">
+                    <div class="form-group">
+                        <label for="exampleFormControlSelect1">Pagamento</label>
+                        <input class="form-control" id="exampleFormControlSelect1" placeholder="Pagamento" required>
+                    </div>
+                </div>
 
             </div>
-            <div class="form-group">
-                <label for="exampleFormControlTextarea1">Example textarea</label>
-                <input class="form-control" id="exampleFormControlTextarea1" rows="3">
+
+
+            <div class="row">
+                <div class="col-6 col-sm-6 col-md-6 col-lg-6 ">
+                    <div class="form-group">
+                        <label for="exampleFormControlInput1">Totale</label>
+                        <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="Totale">
+                    </div>
+                </div>
+                <div class="col-6 col-sm-6 col-md-6 col-lg-6">
+                    <div class="form-group">
+                        <label for="exampleFormControlSelect1">Valuta</label>
+                        <input class="form-control" id="exampleFormControlSelect1" placeholder="Valuta" required>
+                    </div>
+                </div>
+
             </div>
             <div class="form-group">
                 <button type="submit">Modifica Fattura</button>
@@ -100,23 +132,53 @@
         <button id="x-icon" onclick="toggleLayerX()"><i class="fas fa-times" ></i></button>
         <h1>Crea Nuova Fattura</h1>
         <form>
-            <div class="form-group">
-                <label for="exampleFormControlInput1">Codice</label>
-                <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="Codice" readonly disabled>
+            <div class="row">
+                <div class="col-4 col-sm-4 col-md-4 col-lg-4 ">
+                    <div class="form-group">
+                        <label for="exampleFormControlInput1">Codice</label>
+                        <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="Codice" required>
+                    </div>
+                </div>
+                <div class="col-8 col-sm-8 col-md-8 col-lg-8">
+                    <div class="form-group">
+                        <label for="exampleFormControlSelect1">Ragione Sociale</label>
+                        <input class="form-control" id="exampleFormControlSelect1" placeholder="Ragione Sociale" required>
+                    </div>
+                </div>
 
             </div>
-            <div class="form-group">
-                <label for="exampleFormControlSelect1">Data</label>
-                <input class="form-control" id="exampleFormControlSelect1">
-            </div>
-            <div class="form-group">
-                <label for="exampleFormControlSelect2">Example multiple select</label>
-                <input multiple class="form-control" id="exampleFormControlSelect2">
+
+            <div class="row">
+                <div class="col-4 col-sm-4 col-md-4 col-lg-4 ">
+                    <div class="form-group">
+                        <label for="exampleFormControlInput1">Data</label>
+                        <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="Data" required>
+                    </div>
+                </div>
+                <div class="col-8 col-sm-8 col-md-8 col-lg-8">
+                    <div class="form-group">
+                        <label for="exampleFormControlSelect1">Pagamento</label>
+                        <input class="form-control" id="exampleFormControlSelect1" placeholder="Pagamento" required>
+                    </div>
+                </div>
 
             </div>
-            <div class="form-group">
-                <label for="exampleFormControlTextarea1">Example textarea</label>
-                <input class="form-control" id="exampleFormControlTextarea1" rows="3">
+
+
+            <div class="row">
+                <div class="col-6 col-sm-6 col-md-6 col-lg-6 ">
+                    <div class="form-group">
+                        <label for="exampleFormControlInput1">Totale</label>
+                        <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="Totale">
+                    </div>
+                </div>
+                <div class="col-6 col-sm-6 col-md-6 col-lg-6">
+                    <div class="form-group">
+                        <label for="exampleFormControlSelect1">Valuta</label>
+                        <input class="form-control" id="exampleFormControlSelect1" placeholder="Valuta" required>
+                    </div>
+                </div>
+
             </div>
             <div class="form-group">
                 <button type="submit">Crea Fattura</button>
