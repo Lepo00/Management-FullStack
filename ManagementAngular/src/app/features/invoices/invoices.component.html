@@ -226,26 +226,50 @@
 
             </div>
         </div>
+
         <div class="row">
+            <div class="col-6 col-sm-6 col-md-6 col-lg-6 rif">
+
+                <table class="table">
+                    <tr class="tr">
+                        <td class="th">Numero</td>
+                        <td class="th">Data</td>
+                    </tr>
+                    <tr class="tr">
+                        <td class="td">1</td>
+                        <td class="td">Penna</td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="row">
+                <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+
+                    <table class="table">
+                        <tr class="tr" style="width: 100%;">
+                            <td class="th" colspan="5">Riepilogo generale</td>
+                        </tr>
+                        <tr class="tr">
+                            <td class="th">Codice</td>
+                            <td class="th">Descrizione</td>
+                            <td class="th">Unità di misura</td>
+                            <td class="th">Prezzo</td>
+                            <td class="th">IVA</td>
+
+                        </tr>
+                        <tr *ngFor="let item of arrayOne(28); let i = index;" class="tr">
+                            <td class="td">{{i+1}}</td>
+                            <td class="td">Penna</td>
+                            <td class="td">PZ</td>
+                            <td class="td">20</td>
+                            <td class="td">22</td>
+
+                        </tr>
+                    </table>
+                </div>
 
 
-            <table class="table">
-                <tr class="tr">
-                    <td class="th">Numero</td>
-                    <td class="th">Articolo</td>
-                    <td class="th">Costo</td>
 
-                </tr>
-                <tr *ngFor="let item of arrayOne(28); let i = index;" class="tr">
-                    <td class="td">{{i+1}}</td>
-                    <td class="td">Penna</td>
-                    <td class="td">20</td>
-
-                </tr>
-            </table>
-
-
+            </div>
 
         </div>
-
-    </div>

@@ -503,7 +503,7 @@
 <script>
     function printDiv(printpage) {
         printEl = window.open(); //nuova finestra
-        printEl.document.write('<style> table{width:80%; margin-left:10%; margin-top: 100px;} img{width:55%; height:20% } #x-icon{display:none} .print{display:none;} .info{float:right; margin-top:-80px} </style>'); // aggiungo eventuale style di stampa
+        printEl.document.write('<style> table{width:80%; margin-left:10%; margin-top: 100px;} img{width:55%; height:20% } #x-icon{display:none} .print{display:none;} .info{float:right; margin-top:-80px} .th{background-color: #c0c0c0; !important; border: 1px solid black;} td{border: 2px solid black;}  tr{border: 2px solid black;} table{border: 2px solid black;} .rif{width: 20% !important; margin-left: 57px;margin-bottom: -90px;}</style>'); // aggiungo eventuale style di stampa
         printEl.document.write($('#div-detail').html()); //popolo la finestra con il contenuto del div
         printEl.print(); //Stampo
         printEl.close(); // Chiudo finestra di stampa
