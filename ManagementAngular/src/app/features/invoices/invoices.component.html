@@ -207,39 +207,45 @@
 
 <div id="div-detail" style="display: none; ">
     <div class="form-container">
-        <button id="x-icon" onclick="toggleLayerX()"><i class="fas fa-times" ></i></button>
-        <button onclick="window.printDiv('div-detail')" class="print"><i class="fas fa-print"></i></button>
-
-        <div class="row testa">
-
-            <div class="col-6 col-sm-6 col-md-6 col-lg-6 logo">
-
-                <img src="../../../assets/logo-fatture.png" alt="">
-
-            </div>
-
-            <div class="col-6 col-sm-6 col-md-6 col-lg-6 info">
-
-                Ragione Sociale: F.lli De Vignani <br><br> Partita IVA: 7593057385937483<br><br> Sede Spedizione: Via G.Rossi, 22<br><br> Villongo (BG), 24060
-
-
-
-            </div>
+        <div class="action">
+            <span class="title">Dettaglio Fattura</span>
+            <button id="x-icon" onclick="toggleLayerX()"><i class="fas fa-times" ></i></button>
+            <button onclick="window.printDiv('div-detail')" class="print"><i class="fas fa-print"></i></button>
         </div>
 
-        <div class="row">
-            <div class="col-6 col-sm-6 col-md-6 col-lg-6 rif">
+        <div class="fattura">
+            <div class="row testa">
 
-                <table class="table">
-                    <tr class="tr">
-                        <td class="th">Numero</td>
-                        <td class="th">Data</td>
-                    </tr>
-                    <tr class="tr">
-                        <td class="td">1</td>
-                        <td class="td">Penna</td>
-                    </tr>
-                </table>
+                <div class="col-6 col-sm-6 col-md-6 col-lg-6 logo">
+
+                    <img src="../../../assets/logo-fatture.png" alt="">
+
+                </div>
+
+                <div class="col-6 col-sm-6 col-md-6 col-lg-6 info">
+
+                    Ragione Sociale: F.lli De Vignani <br><br> Partita IVA: 7593057385937483<br><br> Sede Spedizione: Via G.Rossi, 22<br><br> Villongo (BG), 24060
+
+
+
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-6 col-sm-6 col-md-6 col-lg-6 rif">
+
+                    <table class="table" style="width: 76%;">
+                        <tr class="tr">
+                            <td class="th">Numero</td>
+                            <td class="th">Data</td>
+                        </tr>
+                        <tr class="tr">
+                            <td class="td">1</td>
+                            <td class="td">24/02/2020</td>
+                        </tr>
+
+                    </table>
+                </div>
             </div>
 
             <div class="row">
@@ -247,7 +253,7 @@
 
                     <table class="table">
                         <tr class="tr" style="width: 100%;">
-                            <td class="th" colspan="5">Riepilogo generale</td>
+                            <td colspan="5">Riepilogo generale</td>
                         </tr>
                         <tr class="tr">
                             <td class="th">Codice</td>
@@ -257,13 +263,12 @@
                             <td class="th">IVA</td>
 
                         </tr>
-                        <tr *ngFor="let item of arrayOne(28); let i = index;" class="tr">
+                        <tr *ngFor="let item of arrayOne(10); let i = index;" class="tr">
                             <td class="td">{{i+1}}</td>
                             <td class="td">Penna</td>
                             <td class="td">PZ</td>
                             <td class="td">20</td>
                             <td class="td">22</td>
-
                         </tr>
                     </table>
                 </div>
@@ -272,4 +277,32 @@
 
             </div>
 
+            <div class="row">
+                <div class="col-6 col-sm-6 col-md-6 col-lg-6">
+
+
+                </div>
+                <div class="col-6 col-sm-6 col-md-6 col-lg-6 totale">
+
+                    <table class="table">
+                        <tr class="tr">
+                            <td class="th">Totale Senza IVA</td>
+                        </tr>
+                        <tr class="tr">
+                            <td class="td">1</td>
+                        </tr>
+                        <table class="table">
+                            <tr class="tr">
+                                <td class="th">Totale con IVA</td>
+                            </tr>
+                            <tr class="tr">
+                                <td class="td">1</td>
+                            </tr>
+                        </table>
+                    </table>
+                </div>
+            </div>
         </div>
+
+
+    </div>
