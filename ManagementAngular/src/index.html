@@ -507,11 +507,11 @@
         printEl.document.write($('#div-detail').html()); //popolo la finestra con il contenuto del div
         printEl.print(); //Stampo
         printEl.close(); // Chiudo finestra di stampa
-        updateDiv();
+        updateDiv(); //ricarico il div per ripristinare lo stile originale
+    }
 
-        function updateDiv() {
-            document.getElementById("div-detail").innerHTML = document.getElementById("div-detail").innerHTML;
-        }
-        ow.location.reload();
+    /* funzione refresh div*/
+    function updateDiv() {
+        document.getElementById("div-detail").innerHTML = document.getElementById("div-detail").innerHTML;
     }
 </script>
