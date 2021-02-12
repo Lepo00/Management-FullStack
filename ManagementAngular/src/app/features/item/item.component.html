@@ -1,37 +1,35 @@
 <!-- corpo  base-->
 <app-menu [search]=true></app-menu>
 <div class="container-page">
-    <div class="row container-row ">
-        <div class="col-12 col-sm-12 col-md-12 col-lg-12 table-container ">
-            <div class="container table-responsive py-5 table-container-responsive">
-                <div class="title-container">
-                    <h1>Oggetti.</h1> <i class="fas fa-file-invoice"></i>
-                </div>
-                <table class="table">
-                    <tr class="tr">
-                        <td class="th">Codice</td>
-                        <td class="th">Descrizione</td>
-                        <td class="th">Prezzo</td>
-                        <td class="th">Unità di misura</td>
-                        <td class="th">Azioni</td>
-                    </tr>
-                    <tr *ngFor="let item of items" class="tr">
-                        <td class="td">{{item.code}}</td>
-                        <td class="td">{{item.description}}</td>
-                        <td class="td">{{item.price}}</td>
-                        <td class="td">{{item.unitOfMeasure.unit}}</td>
-                        <td class="td">
-                            <button onclick="toggleLayer()"><i class="fas fa-edit" id="edit"></i></button>
-                            <button onclick="toggleLayerZoom()"><i class="fas fa-search" id="zoom"></i></button>
-                            <button onclick="toggleLayerConfirm()"><i class="fas fa-times"></i></button>
-                        </td>
-                    </tr>
-                </table>
+    <div class="row container-row">
+        <div class="container table-responsive py-5 table-container-responsive">
+            <div class="title-container">
+                <h1>Oggetti.</h1> <i class="fas fa-file-invoice"></i>
             </div>
-            <button onclick="toggleLayerOverlay()"><div id="overlay">
-            </div>
-        </button>
+            <table class="table">
+                <tr class="tr">
+                    <td class="th">Codice</td>
+                    <td class="th">Descrizione</td>
+                    <td class="th">Prezzo</td>
+                    <td class="th">Unità di misura</td>
+                    <td class="th">Azioni</td>
+                </tr>
+                <tr *ngFor="let item of items" class="tr">
+                    <td class="td">{{item.code}}</td>
+                    <td class="td">{{item.description}}</td>
+                    <td class="td">{{item.price}}</td>
+                    <td class="td">{{item.unitOfMeasure.unit}}</td>
+                    <td class="td">
+                        <button onclick="toggleLayer()"><i class="fas fa-edit" id="edit"></i></button>
+                        <button onclick="toggleLayerZoom()"><i class="fas fa-search" id="zoom"></i></button>
+                        <button onclick="toggleLayerConfirm()"><i class="fas fa-times"></i></button>
+                    </td>
+                </tr>
+            </table>
         </div>
+        <button onclick="toggleLayerOverlay()">
+            <div id="overlay"></div>
+        </button>
     </div>
 </div>
 <app-footer></app-footer>
