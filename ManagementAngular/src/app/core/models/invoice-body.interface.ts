@@ -2,9 +2,12 @@ import { Item } from "./item.interface";
 
 export interface InvoiceBody{
     id?: number;
-    item: number;
+    item: Item;
     quantity: number;
     percDiscount : number;
     totDiscount : number;
-    items: Item;
+    netPrice:number;
+    taxable:number;
+    taxed:number;
+    finalAmount:number;
 }

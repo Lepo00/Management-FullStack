@@ -23,7 +23,7 @@ button:hover i {
     width: 100%;
     margin: 0 auto;
     background-color: var(--colorbglight);
-    margin-top: 5vh;
+    margin-top: 2vh;
 }
 
 .tr {
@@ -104,9 +104,13 @@ th:last-child {
 
 .table-container {
     background-color: var(--color2);
-    padding-top: 10vh;
+    padding-top: 9vh;
     height: auto;
+<<<<<<< HEAD
     min-height: 73.3vh;
+=======
+    padding-bottom: 3vh;
+>>>>>>> origin/master
 }
 
 .table-container-responsive {
