@@ -106,6 +106,7 @@ th:last-child {
     background-color: var(--color2);
     padding-top: 10vh;
     height: auto;
+    min-height: 73.3vh;
 }
 
 .table-container-responsive {
@@ -131,7 +132,7 @@ th:last-child {
 
 .button-container-new {
     float: right;
-    margin-bottom: 4vh;
+    margin-top: 2.5vh;
 }
 
 .button-container-new button {
