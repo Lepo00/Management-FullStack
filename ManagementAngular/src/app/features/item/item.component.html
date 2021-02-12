@@ -1,1 +1,103 @@
-<p>item works!</p>
+<!-- corpo  base-->
+<app-menu [search]=true></app-menu>
+<div class="container-page">
+    <div class="row container-row ">
+        <div class="col-12 col-sm-12 col-md-12 col-lg-12 table-container ">
+            <div class="container table-responsive py-5 table-container-responsive">
+                <div class="title-container">
+                    <h1>Oggetti.</h1> <i class="fas fa-file-invoice"></i>
+                </div>
+                <table class="table">
+                    <tr class="tr">
+                        <td class="th">Codice</td>
+                        <td class="th">Descrizione</td>
+                        <td class="th">Prezzo</td>
+                        <td class="th">Unità di misura</td>
+                        <td class="th">Azioni</td>
+                    </tr>
+                    <tr *ngFor="let item of items" class="tr">
+                        <td class="td">{{item.code}}</td>
+                        <td class="td">{{item.description}}</td>
+                        <td class="td">{{item.price}}</td>
+                        <td class="td">{{item.unitOfMeasure.unit}}</td>
+                        <td class="td">
+                            <button onclick="toggleLayer()"><i class="fas fa-edit" id="edit"></i></button>
+                            <button onclick="toggleLayerZoom()"><i class="fas fa-search" id="zoom"></i></button>
+                            <button onclick="toggleLayerConfirm()"><i class="fas fa-times"></i></button>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <button onclick="toggleLayerOverlay()"><div id="overlay">
+            </div>
+        </button>
+        </div>
+    </div>
+</div>
+<app-footer></app-footer>
+<div id="div-edit" style="display: none;">
+    <div class="form-container">
+        <button id="x-icon" onclick="toggleLayerX()"><i class="fas fa-times"></i></button>
+        <h1>Modifica Fattura</h1>
+        <form>
+            <div class="form-group">
+                <label for="exampleFormControlInput1">Codice</label>
+                <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="Codice" readonly disabled>
+
+            </div>
+            <div class="form-group">
+                <label for="exampleFormControlSelect1">Data</label>
+                <input class="form-control" id="exampleFormControlSelect1">
+            </div>
+            <div class="form-group">
+                <label for="exampleFormControlSelect2">Example multiple select</label>
+                <input multiple class="form-control" id="exampleFormControlSelect2">
+
+            </div>
+            <div class="form-group">
+                <label for="exampleFormControlTextarea1">Example textarea</label>
+                <input class="form-control" id="exampleFormControlTextarea1" rows="3">
+            </div>
+            <div class="form-group">
+                <button type="submit">Modifica Fattura</button>
+            </div>
+        </form>
+    </div>
+</div>
+<div id="div-new" style="display: none;">
+    <div class="form-container">
+        <button id="x-icon" onclick="toggleLayerX()"><i class="fas fa-times" ></i></button>
+        <h1>Crea Nuova Fattura</h1>
+        <form>
+            <div class="form-group">
+                <label for="exampleFormControlInput1">Codice</label>
+                <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="Codice" readonly disabled>
+            </div>
+            <div class="form-group">
+                <label for="exampleFormControlSelect1">Data</label>
+                <input class="form-control" id="exampleFormControlSelect1">
+            </div>
+            <div class="form-group">
+                <label for="exampleFormControlSelect2">Example multiple select</label>
+                <input multiple class="form-control" id="exampleFormControlSelect2">
+            </div>
+            <div class="form-group">
+                <label for="exampleFormControlTextarea1">Example textarea</label>
+                <input class="form-control" id="exampleFormControlTextarea1" rows="3">
+            </div>
+            <div class="form-group">
+                <button type="submit">Crea Fattura</button>
+            </div>
+        </form>
+    </div>
+</div>
+<div id="div-delete" style="display: none; ">
+    <div class="form-container">
+        <button id="x-icon" onclick="toggleLayerX()"><i class="fas fa-times" ></i></button>
+        <h1>Sei sicuro di voler eliminare la fattura?</h1>
+        <br> <br>
+        <button class="confirm-button" style="margin-right: 20px;" type="submit">Si</button>
+        <button onclick="cancelConfirmLayer()" class="confirm-button" id="annulla" type="submit">No</button>
+        <br><br><br>
+    </div>
+</div>
