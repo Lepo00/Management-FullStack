@@ -46,7 +46,8 @@ tr:first-child {
     font-weight: bold;
 }
 
-tr:hover {
+tr:hover,
+tr:focus {
     background-color: var(--color1);
     color: var(--colorbglight);
 }
@@ -66,7 +67,7 @@ tr:hover {
 }
 
 #x-icon:hover i {
-    color: var(--colorbg) !important;
+    color: var(--colorbglight) !important;
 }
 
 input:focus {

@@ -394,12 +394,27 @@
             y.style.display = "none";
         }
     }
+    /* gestione layer edit on click sulla matita*/
+    function toggleLayerZoom() {
+        window.scrollTo(0, 0);
+        var x = document.getElementById("div-detail");
+        var y = document.getElementById("overlay");
+        if (x.style.display === "none") {
+            x.style.display = "block";
+            y.style.display = "block";
+        } else {
+            x.style.display = "none";
+            y.style.display = "none";
+        }
+    }
     /* gestione layer edit on click sulla X*/
     function toggleLayerX() {
+        var v = document.getElementById("div-detail");
         var w = document.getElementById("div-delete");
         var x = document.getElementById("div-edit");
         var y = document.getElementById("overlay");
         var z = document.getElementById("div-new");
+        v.style.display = "none";
         w.style.display = "none";
         x.style.display = "none";
         y.style.display = "none";
@@ -408,10 +423,12 @@
 
     /* gestione layer edit on click sull'overlay*/
     function toggleLayerOverlay() {
+        var v = document.getElementById("div-detail");
         var w = document.getElementById("div-delete");
         var x = document.getElementById("div-edit");
         var y = document.getElementById("overlay");
         var z = document.getElementById("div-new");
+        v.style.display = "none";
         w.style.display = "none";
         x.style.display = "none";
         y.style.display = "none";
@@ -480,4 +497,21 @@
             document.getElementById('slider').checked = true;
         }
     })();
+</script>
+
+<!-- Script to print the content of a div -->
+<script>
+    function printDiv(printpage) {
+        printEl = window.open(); //nuova finestra
+        printEl.document.write('<style> table{width:80%; margin-left:10%; margin-top: 100px;} img{width:55%; height:20% } #x-icon{display:none} .print{display:none;} .info{float:right; margin-top:-80px} .th{background-color: #c0c0c0; !important; border: 1px solid black;} td{border: 2px solid black;}  tr{border: 2px solid black;} table{border: 2px solid black;} .rif{width: 20% !important; margin-left: 57px;margin-bottom: -90px;} .totale{width: 30%; margin-right: 50px; float: right; margin-top: -70px;} .title{display:none;} </style>'); // aggiungo eventuale style di stampa
+        printEl.document.write($('#div-detail').html()); //popolo la finestra con il contenuto del div
+        printEl.print(); //Stampo
+        printEl.close(); // Chiudo finestra di stampa
+        updateDiv(); //ricarico il div per ripristinare lo stile originale
+    }
+
+    /* funzione refresh div*/
+    function updateDiv() {
+        document.getElementById("div-detail").innerHTML = document.getElementById("div-detail").innerHTML;
+    }
 </script>

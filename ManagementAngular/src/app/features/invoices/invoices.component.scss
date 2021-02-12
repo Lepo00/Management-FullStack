@@ -46,7 +46,8 @@ tr:first-child {
     font-weight: bold;
 }
 
-tr:hover {
+tr:hover,
+tr:focus {
     background-color: var(--color1);
     color: var(--colorbglight);
 }
@@ -66,7 +67,7 @@ tr:hover {
 }
 
 #x-icon:hover i {
-    color: var(--colorbg) !important;
+    color: var(--colorbglight) !important;
 }
 
 input:focus {
@@ -82,7 +83,7 @@ th:last-child {
 #overlay {
     display: none;
     position: fixed;
-    width: 218vh;
+    width: 100%;
     height: 110vh;
     background: #0A0903;
     opacity: 0.8;
@@ -285,3 +286,81 @@ th:last-child {
 
 
 /*end media*/
+
+
+/*detail layer*/
+
+#div-detail {
+    width: 100%;
+    display: none;
+    color: black;
+    text-align: center;
+}
+
+#div-detail .form-container {
+    position: absolute;
+    top: 2vh;
+    background-color: white;
+    transform: unset;
+    width: 80%;
+    left: 10%;
+}
+
+#div-detail .fattura {
+    padding-top: 4%;
+    padding-bottom: 3%;
+}
+
+#div-detail #x-icon i {
+    color: white;
+}
+
+#div-detail .action {
+    background-color: #323639;
+    width: 100%;
+    height: 11vh;
+    padding-top: 2vh;
+}
+
+#div-detail .title {
+    float: left;
+    color: white;
+    vertical-align: middle;
+    font-size: 2rem;
+    margin-left: 20px;
+    padding-top: 10px;
+}
+
+.print {
+    float: right;
+    color: white;
+}
+
+.print:hover i {
+    float: right;
+    color: var(--colorbglight);
+}
+
+#div-detail .print i {
+    float: right;
+    margin-right: 10px;
+    margin-top: 10px;
+    font-size: 3rem;
+}
+
+#div-detail table {
+    width: 80%;
+    background-color: #c0c0c0;
+    color: black !important;
+}
+
+#div-detail .rif {
+    margin-left: 48px;
+}
+
+.totale {
+    width: 45%;
+}
+
+
+/*end*/
