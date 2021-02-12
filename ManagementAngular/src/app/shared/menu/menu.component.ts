@@ -15,7 +15,6 @@ export class MenuComponent implements OnInit {
   }
 
   logout(): void{
-    this.search=false;
     console.log("logout da implementare");
   }
 
