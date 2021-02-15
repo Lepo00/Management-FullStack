@@ -44,7 +44,7 @@ public class UserServiceImpl implements UserService {
 			user.setId(c.getId());
 			return create(user);
 		}).orElseGet(() -> { // create if entity not exists
-			return create(user);
+			return userRepository.save(user);
 		});
 	}
 

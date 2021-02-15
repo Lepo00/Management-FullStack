@@ -53,7 +53,7 @@ public class CustomerServiceImpl implements CustomerService {
 			customer.setId(c.getId());
 			return create(customer);
 		}).orElseGet(() -> { // create if entity not exists
-			return create(customer);
+			return customerRepository.save(customer);
 		});
 	}
 }
