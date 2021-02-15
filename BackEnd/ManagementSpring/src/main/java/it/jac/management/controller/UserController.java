@@ -85,6 +85,22 @@ public class UserController {
 			return ResponseEntity.badRequest().body("User Not Found!");
 		}
 	}
+	
+	@PostMapping(path = "/{id}/addCustomer")
+	public ResponseEntity<?> addCustomer(@PathVariable Long id, @RequestBody Customer customer)
+			throws Exception {
+		try {
+			User user = userService.get(id).get();
+			user.getCustomers().add(customer);
+			customerService.create(customer);
+			userService.create(user);
+			return ResponseEntity.ok("Customers added");
+		} catch (NoSuchElementException e) {
+			return ResponseEntity.badRequest().body("User Not Found!");
+		} catch (Exception e) {
+			return ResponseEntity.badRequest().body("Customers Not Added!");
+		}
+	}
 
 	@PostMapping(path = "/{id}/addCustomers")
 	public ResponseEntity<?> addCustomers(@PathVariable Long id, @RequestBody List<Customer> customers)
