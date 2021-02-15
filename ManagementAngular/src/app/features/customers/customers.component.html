@@ -1,11 +1,7 @@
 <app-menu [search]=true></app-menu>
 <div class="container-page">
     <div class="row container-row ">
-
-
         <div class="col-12 col-sm-12 col-md-12 col-lg-12 table-container ">
-            <!-- end copro base-->
-
             <div class="container table-responsive py-5 table-container-responsive">
                 <div class="title-container">
                     <h1>Clienti.</h1> <i class="fas fa-users"></i>
@@ -13,9 +9,6 @@
                         <button onclick="toggleNewLayer()"><a>Nuovo Cliente</a></button>
                     </div>
                 </div>
-
-
-
                 <table class="table">
                     <tr class="tr">
                         <td class="th">Codice</td>
@@ -26,7 +19,7 @@
                         <td class="th">Indirizzo</td>
                         <td class="th">Azioni</td>
                     </tr>
-                    <tr *ngFor="let item of arrayOne(1); let i = index;" class="tr">
+                    <tr *ngFor="let item of arrayOne(10); let i = index;" class="tr">
                         <td class="td">{{i+1}}</td>
                         <td class="td">F.lli Belometti</td>
                         <td class="td">4253617384927364</td>
@@ -37,39 +30,10 @@
                             <button onclick="toggleLayer()"><i class="fas fa-edit" id="edit"></i></button>
                             <button onclick="toggleLayerZoom()"><i class="fas fa-search" id="zoom"></i></button>
                             <button onclick="toggleLayerConfirm()"><i class="fas fa-times"></i></button>
-
                         </td>
                     </tr>
                 </table>
-
             </div>
-            <div class="button-container-new">
-                <button onclick="toggleNewLayer()"><a>Nuovo Cliente</a></button>
-            </div>
-            <table class="table">
-                <tr class="tr">
-                    <td class="th">Codice</td>
-                    <td class="th">Ragione Sociale</td>
-                    <td class="th">Partita IVA</td>
-                    <td class="th">Codice Fiscale</td>
-                    <td class="th">E-mail</td>
-                    <td class="th">Indirizzo</td>
-                    <td class="th">Azioni</td>
-                </tr>
-                <tr *ngFor="let item of arrayOne(28); let i = index;" class="tr">
-                    <td class="td">{{i+1}}</td>
-                    <td class="td">F.lli Belometti</td>
-                    <td class="td">4253617384927364</td>
-                    <td class="td">2435161830427462</td>
-                    <td class="td">flli@belometti.it</td>
-                    <td class="td">Via Roma, 18, Villongo (BG), 24060</td>
-                    <td class="td">
-                        <button onclick="toggleLayer()"><i class="fas fa-edit" id="edit"></i></button>
-                        <button onclick="toggleLayerZoom()"><i class="fas fa-search" id="zoom"></i></button>
-                        <button onclick="toggleLayerConfirm()"><i class="fas fa-times"></i></button>
-                    </td>
-                </tr>
-            </table>
         </div>
         <button onclick="toggleLayerOverlay()">
             <div id="overlay"></div>

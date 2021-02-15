@@ -1,22 +1,14 @@
 <app-menu [search]=true></app-menu>
 <div class="container-page">
     <div class="row container-row ">
-
-
         <div class="col-12 col-sm-12 col-md-12 col-lg-12 table-container ">
-            <!-- end copro base-->
-
             <div class="container table-responsive py-5 table-container-responsive">
                 <div class="title-container">
                     <h1>Fatture.</h1> <i class="fas fa-file-invoice"></i>
-
                     <div class="button-container-new" style="display: inline-block;">
                         <button onclick="toggleNewLayer()"><a>Nuova Fattura</a></button>
                     </div>
                 </div>
-
-
-
                 <table class="table">
                     <tr class="tr">
                         <td class="th">Numero</td>
@@ -38,49 +30,18 @@
                             <button onclick="toggleLayer()"><i class="fas fa-edit" id="edit"></i></button>
                             <button onclick="toggleLayerZoom()"><i class="fas fa-search" id="zoom"></i></button>
                             <button onclick="toggleLayerConfirm()"><i class="fas fa-times"></i></button>
-
                         </td>
                     </tr>
                 </table>
-
             </div>
-            <div class="button-container-new">
-                <button onclick="toggleNewLayer()"><a>Nuova Fattura</a></button>
-            </div>
-            <table class="table">
-                <tr class="tr">
-                    <td class="th">Numero</td>
-                    <td class="th">Ragione Sociale</td>
-                    <td class="th">Data</td>
-                    <td class="th">Pagamento</td>
-                    <td class="th">Totale</td>
-                    <td class="th">Valuta</td>
-                    <td class="th">Azioni</td>
-                </tr>
-                <tr *ngFor="let item of arrayOne(28); let i = index;" class="tr">
-                    <td class="td">{{i+1}}</td>
-                    <td class="td">F.lli Belometti</td>
-                    <td class="td">24/02/2020</td>
-                    <td class="td">Bonifico</td>
-                    <td class="td">130</td>
-                    <td class="td">Euro</td>
-                    <td class="td">
-                        <button onclick="toggleLayer()"><i class="fas fa-edit" id="edit"></i></button>
-                        <button onclick="toggleLayerZoom()"><i class="fas fa-search" id="zoom"></i></button>
-                        <button onclick="toggleLayerConfirm()"><i class="fas fa-times"></i></button>
-                    </td>
-                </tr>
-            </table>
         </div>
         <button onclick="toggleLayerOverlay()">
             <div id="overlay"></div>
         </button>
     </div>
 </div>
-<!-- end copro base-->
 <app-footer></app-footer>
 
-<!--DIV MODIFICA FATTURA-->
 <div id="div-edit" style="display: none;">
     <div class="form-container">
         <button id="x-icon" onclick="toggleLayerX()"><i class="fas fa-times"></i></button>
@@ -218,8 +179,6 @@
 
     </div>
 </div>
-
-
 <!--DIV DETTAGLIO FATTURA-->
 
 <div id="div-detail" style="display: none; ">
