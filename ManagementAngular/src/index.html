@@ -495,7 +495,8 @@
                 document.getElementById('slider').checked = false;
         } else {
             setTheme('theme-2');
-            document.getElementById('slider').checked = true;
+            if (document.getElementById('slider'))
+                document.getElementById('slider').checked = true;
         }
     })();
 </script>
