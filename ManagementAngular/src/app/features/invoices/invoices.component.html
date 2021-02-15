@@ -1,9 +1,48 @@
 <app-menu [search]=true></app-menu>
 <div class="container-page">
-    <div class="row container-row">
-        <div class="container table-responsive py-5 table-container-responsive">
-            <div class="title-container">
-                <h1>Fatture.</h1> <i class="fas fa-file-invoice"></i>
+    <div class="row container-row ">
+
+
+        <div class="col-12 col-sm-12 col-md-12 col-lg-12 table-container ">
+            <!-- end copro base-->
+
+            <div class="container table-responsive py-5 table-container-responsive">
+                <div class="title-container">
+                    <h1>Fatture.</h1> <i class="fas fa-file-invoice"></i>
+
+                    <div class="button-container-new" style="display: inline-block;">
+                        <button onclick="toggleNewLayer()"><a>Nuova Fattura</a></button>
+                    </div>
+                </div>
+
+
+
+                <table class="table">
+                    <tr class="tr">
+                        <td class="th">Numero</td>
+                        <td class="th">Ragione Sociale</td>
+                        <td class="th">Data</td>
+                        <td class="th">Pagamento</td>
+                        <td class="th">Totale</td>
+                        <td class="th">Valuta</td>
+                        <td class="th">Azioni</td>
+                    </tr>
+                    <tr *ngFor="let item of arrayOne(28); let i = index;" class="tr">
+                        <td class="td">{{i+1}}</td>
+                        <td class="td">F.lli Belometti</td>
+                        <td class="td">24/02/2020</td>
+                        <td class="td">Bonifico</td>
+                        <td class="td">130</td>
+                        <td class="td">Euro</td>
+                        <td class="td">
+                            <button onclick="toggleLayer()"><i class="fas fa-edit" id="edit"></i></button>
+                            <button onclick="toggleLayerZoom()"><i class="fas fa-search" id="zoom"></i></button>
+                            <button onclick="toggleLayerConfirm()"><i class="fas fa-times"></i></button>
+
+                        </td>
+                    </tr>
+                </table>
+
             </div>
             <div class="button-container-new">
                 <button onclick="toggleNewLayer()"><a>Nuova Fattura</a></button>
@@ -50,14 +89,14 @@
             <div class="row">
                 <div class="col-4 col-sm-4 col-md-4 col-lg-4 ">
                     <div class="form-group">
-                        <label for="exampleFormControlInput1">Codice</label>
-                        <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="Codice" required>
+                        <label for="codice">Codice</label>
+                        <input type="email" class="form-control" id="codice" placeholder="Codice" required>
                     </div>
                 </div>
                 <div class="col-8 col-sm-8 col-md-8 col-lg-8">
                     <div class="form-group">
-                        <label for="exampleFormControlSelect1">Ragione Sociale</label>
-                        <input class="form-control" id="exampleFormControlSelect1" placeholder="Ragione Sociale" required>
+                        <label for="ragione-sociale">Ragione Sociale</label>
+                        <input class="form-control" id="ragione-sociale" placeholder="Ragione Sociale" required>
                     </div>
                 </div>
 
@@ -66,14 +105,14 @@
             <div class="row">
                 <div class="col-4 col-sm-4 col-md-4 col-lg-4 ">
                     <div class="form-group">
-                        <label for="exampleFormControlInput1">Data</label>
-                        <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="Data" required>
+                        <label for="data">Data</label>
+                        <input type="email" class="form-control" id="data" placeholder="Data" required>
                     </div>
                 </div>
                 <div class="col-8 col-sm-8 col-md-8 col-lg-8">
                     <div class="form-group">
-                        <label for="exampleFormControlSelect1">Pagamento</label>
-                        <input class="form-control" id="exampleFormControlSelect1" placeholder="Pagamento" required>
+                        <label for="pagamento">Pagamento</label>
+                        <input class="form-control" id="pagamento" placeholder="Pagamento" required>
                     </div>
                 </div>
 
@@ -83,14 +122,14 @@
             <div class="row">
                 <div class="col-6 col-sm-6 col-md-6 col-lg-6 ">
                     <div class="form-group">
-                        <label for="exampleFormControlInput1">Totale</label>
-                        <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="Totale">
+                        <label for="totale">Totale</label>
+                        <input type="email" class="form-control" id="totale" placeholder="Totale">
                     </div>
                 </div>
                 <div class="col-6 col-sm-6 col-md-6 col-lg-6">
                     <div class="form-group">
-                        <label for="exampleFormControlSelect1">Valuta</label>
-                        <input class="form-control" id="exampleFormControlSelect1" placeholder="Valuta" required>
+                        <label for="valuta">Valuta</label>
+                        <input class="form-control" id="valuta" placeholder="Valuta" required>
                     </div>
                 </div>
 
@@ -113,14 +152,14 @@
             <div class="row">
                 <div class="col-4 col-sm-4 col-md-4 col-lg-4 ">
                     <div class="form-group">
-                        <label for="exampleFormControlInput1">Codice</label>
-                        <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="Codice" required>
+                        <label for="codice">Codice</label>
+                        <input type="email" class="form-control" id="codice" placeholder="Codice" required>
                     </div>
                 </div>
                 <div class="col-8 col-sm-8 col-md-8 col-lg-8">
                     <div class="form-group">
-                        <label for="exampleFormControlSelect1">Ragione Sociale</label>
-                        <input class="form-control" id="exampleFormControlSelect1" placeholder="Ragione Sociale" required>
+                        <label for="ragione-sociale">Ragione Sociale</label>
+                        <input class="form-control" id="ragione-sociale" placeholder="Ragione Sociale" required>
                     </div>
                 </div>
 
@@ -129,14 +168,14 @@
             <div class="row">
                 <div class="col-4 col-sm-4 col-md-4 col-lg-4 ">
                     <div class="form-group">
-                        <label for="exampleFormControlInput1">Data</label>
-                        <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="Data" required>
+                        <label for="data">Data</label>
+                        <input type="email" class="form-control" id="data" placeholder="Data" required>
                     </div>
                 </div>
                 <div class="col-8 col-sm-8 col-md-8 col-lg-8">
                     <div class="form-group">
-                        <label for="exampleFormControlSelect1">Pagamento</label>
-                        <input class="form-control" id="exampleFormControlSelect1" placeholder="Pagamento" required>
+                        <label for="pagamento">Pagamento</label>
+                        <input class="form-control" id="pagamento" placeholder="Pagamento" required>
                     </div>
                 </div>
 
@@ -146,14 +185,14 @@
             <div class="row">
                 <div class="col-6 col-sm-6 col-md-6 col-lg-6 ">
                     <div class="form-group">
-                        <label for="exampleFormControlInput1">Totale</label>
-                        <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="Totale">
+                        <label for="totale">Totale</label>
+                        <input type="email" class="form-control" id="totale" placeholder="Totale">
                     </div>
                 </div>
                 <div class="col-6 col-sm-6 col-md-6 col-lg-6">
                     <div class="form-group">
-                        <label for="exampleFormControlSelect1">Valuta</label>
-                        <input class="form-control" id="exampleFormControlSelect1" placeholder="Valuta" required>
+                        <label for="valuta">Valuta</label>
+                        <input class="form-control" id="valuta" placeholder="Valuta" required>
                     </div>
                 </div>
 
