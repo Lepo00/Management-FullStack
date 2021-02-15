@@ -8,6 +8,8 @@ public interface UserService {
 
 	public Optional<User> get(Long id);
 
+	public User getOne(Long id);
+	
 	public User create(User c);
 
 	public void delete(Long id);
