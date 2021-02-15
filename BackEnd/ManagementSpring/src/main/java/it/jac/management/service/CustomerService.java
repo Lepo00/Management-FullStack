@@ -10,6 +10,8 @@ public interface CustomerService {
 
 	public Customer getOne(Long id);
 
+	public Customer getByIvaCode(String ivaCode);
+
 	public Customer create(Customer c);
 
 	public void createAll(List<Customer> c);

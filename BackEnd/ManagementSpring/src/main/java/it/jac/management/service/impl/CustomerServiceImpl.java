@@ -24,6 +24,11 @@ public class CustomerServiceImpl implements CustomerService {
 	public Customer getOne(Long id) {
 		return customerRepository.getOne(id);
 	}
+	
+	@Override
+	public Customer getByIvaCode(String ivaCode) {
+		return customerRepository.findByIvaCode(ivaCode);
+	}
 
 	@Override
 	public Customer create(Customer c) {
