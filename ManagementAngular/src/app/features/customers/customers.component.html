@@ -14,18 +14,18 @@
                         <td class="th">Codice</td>
                         <td class="th">Ragione Sociale</td>
                         <td class="th">Partita IVA</td>
-                        <td class="th">Codice Fiscale</td>
+                        <td class="th">Num. Telefono</td>
                         <td class="th">E-mail</td>
                         <td class="th">Indirizzo</td>
                         <td class="th">Azioni</td>
                     </tr>
-                    <tr *ngFor="let item of arrayOne(10); let i = index;" class="tr">
+                    <tr *ngFor="let item of customers; let i = index;" class="tr">
                         <td class="td">{{i+1}}</td>
-                        <td class="td">F.lli Belometti</td>
-                        <td class="td">4253617384927364</td>
-                        <td class="td">2435161830427462</td>
-                        <td class="td">flli@belometti.it</td>
-                        <td class="td">Via Roma, 18, Villongo (BG), 24060</td>
+                        <td class="td">{{item.name}} {{item?.surname}}</td>
+                        <td class="td">{{item.ivaCode}}</td>
+                        <td class="td">{{item.phone}}</td>
+                        <td class="td">{{item.email}}</td>
+                        <td class="td">{{item.address}}</td>
                         <td class="td">
                             <button onclick="toggleLayer()"><i class="fas fa-edit" id="edit"></i></button>
                             <button onclick="toggleLayerZoom()"><i class="fas fa-search" id="zoom"></i></button>
