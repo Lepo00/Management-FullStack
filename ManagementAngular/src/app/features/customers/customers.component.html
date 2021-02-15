@@ -1,8 +1,8 @@
 <app-menu [search]=true></app-menu>
 <div class="container-page">
     <div class="row container-row ">
-        <div class="col-12 col-sm-12 col-md-12 col-lg-12 table-container ">
-            <div class="container table-responsive py-5 table-container-responsive">
+        <div class="col-12 col-sm-12 col-md-12 col-lg-12 table-container">
+            <div class="container table-responsive py-5 table-container-responsive" *ngIf="customers.length>0; else empty">
                 <div class="title-container">
                     <h1>Clienti.</h1> <i class="fas fa-users"></i>
                     <div class="button-container-new">
@@ -34,6 +34,12 @@
                     </tr>
                 </table>
             </div>
+            <ng-template #empty>
+                <div class="empty">
+                    <h2>Non hai nessun cliente.<br>Aggiungine uno ora!</h2>
+                    <button onclick="toggleNewLayer()" class="add">Nuovo Cliente</button>
+                </div>
+            </ng-template>
         </div>
         <button onclick="toggleLayerOverlay()">
             <div id="overlay"></div>
@@ -41,6 +47,7 @@
     </div>
 </div>
 <app-footer></app-footer>
+
 <!--DIV MODIFICA CLIENTE-->
 <div id="div-edit" style="display: none;">
     <div class="form-container">
@@ -51,49 +58,43 @@
                 <div class="col-4 col-sm-4 col-md-4 col-lg-4 ">
                     <div class="form-group">
                         <label for="codice">Codice</label>
-                        <input type="email" class="form-control" id="codice" placeholder="Codice" required>
+                        <input type="email" class="form-control" placeholder="Codice" required>
                     </div>
                 </div>
                 <div class="col-8 col-sm-8 col-md-8 col-lg-8">
                     <div class="form-group">
                         <label for="ragione-sociale">Ragione Sociale</label>
-                        <input class="form-control" id="ragione-sociale" placeholder="Ragione Sociale" required>
+                        <input class="form-control" placeholder="Ragione Sociale" required>
                     </div>
                 </div>
-
             </div>
-
             <div class="row">
                 <div class="col-6 col-sm-6 col-md-6 col-lg-6 ">
                     <div class="form-group">
                         <label for="partita-iva">Partita IVA</label>
-                        <input type="email" class="form-control" id="partita-iva" placeholder="Partita IVA" required>
+                        <input type="email" class="form-control" placeholder="Partita IVA" required>
                     </div>
                 </div>
                 <div class="col-6 col-sm-6 col-md-6 col-lg-6">
                     <div class="form-group">
                         <label for="codice-fiscale">Codice Fiscale</label>
-                        <input class="form-control" id="codice-fiscale" placeholder="Codice Fiscale" required>
+                        <input class="form-control" placeholder="Codice Fiscale" required>
                     </div>
                 </div>
-
             </div>
-
-
             <div class="row">
                 <div class="col-6 col-sm-6 col-md-6 col-lg-6 ">
                     <div class="form-group">
                         <label for="e-mail">E-mail</label>
-                        <input type="email" class="form-control" id="e-mail" placeholder="E-mail">
+                        <input type="email" class="form-control" placeholder="E-mail">
                     </div>
                 </div>
                 <div class="col-6 col-sm-6 col-md-6 col-lg-6">
                     <div class="form-group">
                         <label for="indirizzo">Indirizzo</label>
-                        <input class="form-control" id="indirizzo" placeholder="Indirizzo" required>
+                        <input class="form-control" placeholder="Indirizzo" required>
                     </div>
                 </div>
-
             </div>
             <div class="form-group">
                 <button type="submit">Modifica Cliente</button>
@@ -101,145 +102,123 @@
         </form>
     </div>
 </div>
-<!--END DIV MODIFICA CLIENTE-->
 
 <!--DIV CREA CLIENTE-->
-
 <div id="div-new" style="display: none;">
     <div class="form-container">
         <button id="x-icon" onclick="toggleLayerX()"><i class="fas fa-times" ></i></button>
         <h1>Crea Nuovo Cliente</h1>
-        <form>
+        <form [formGroup]="customerForm" (ngSubmit)="add()">
             <div class="row">
-                <div class="col-4 col-sm-4 col-md-4 col-lg-4 ">
-                    <div class="form-group">
-                        <label for="codice">Codice</label>
-                        <input type="email" class="form-control" id="codice" placeholder="Codice" required>
-                    </div>
-                </div>
                 <div class="col-8 col-sm-8 col-md-8 col-lg-8">
                     <div class="form-group">
-                        <label for="ragione-sociale">Ragione Sociale</label>
-                        <input class="form-control" id="ragione-sociale" placeholder="Ragione Sociale" required>
+                        <label for="ragione-sociale">Ragione Sociale*</label>
+                        <input class="form-control" placeholder="Ragione Sociale" formControlName="name">
                     </div>
                 </div>
-
+                <div class="col-4 col-sm-4 col-md-4 col-lg-4 ">
+                    <div class="form-group">
+                        <label for="codice">Cognome</label>
+                        <input type="text" class="form-control" placeholder="Cognome" formControlName="surname">
+                    </div>
+                </div>
             </div>
-
             <div class="row">
                 <div class="col-6 col-sm-6 col-md-6 col-lg-6 ">
                     <div class="form-group">
-                        <label for="partita-iva">Partita IVA</label>
-                        <input type="email" class="form-control" id="partita-iva" placeholder="Partita IVA" required>
+                        <label for="partita-iva">Partita IVA*</label>
+                        <input type="email" class="form-control" placeholder="Partita IVA" formControlName="ivaCode">
                     </div>
                 </div>
                 <div class="col-6 col-sm-6 col-md-6 col-lg-6">
                     <div class="form-group">
-                        <label for="codice-fiscale">Codice Fiscale</label>
-                        <input class="form-control" id="codice-fiscale" placeholder="Codice Fiscale" required>
+                        <label for="codice-fiscale">Numero di telefono</label>
+                        <input type="tel" class="form-control" placeholder="Numero di telefono" formControlName="phone">
                     </div>
                 </div>
-
             </div>
-
-
             <div class="row">
-                <div class="col-6 col-sm-6 col-md-6 col-lg-6 ">
+                <div class="col-5 col-sm-5 col-md-5 col-lg-5 ">
                     <div class="form-group">
-                        <label for="e-mail">E-mail</label>
-                        <input type="email" class="form-control" id="e-mail" placeholder="E-mail">
+                        <label for="e-mail">E-mail*</label>
+                        <input type="email" class="form-control" placeholder="E-mail" formControlName="email">
                     </div>
                 </div>
-                <div class="col-6 col-sm-6 col-md-6 col-lg-6">
+                <div class="col-7 col-sm-7 col-md-7 col-lg-7">
                     <div class="form-group">
-                        <label for="indirizzo">Indirizzo</label>
-                        <input class="form-control" id="indirizzo" placeholder="Indirizzo" required>
+                        <label for="indirizzo">Indirizzo*</label>
+                        <input class="form-control" placeholder="Indirizzo" formControlName="address">
                     </div>
                 </div>
-
             </div>
+            <p>* Campi obbligatori</p>
             <div class="form-group">
                 <button type="submit">Crea Cliente</button>
             </div>
         </form>
     </div>
 </div>
-<!--END DIV CREA CLIENTE-->
 
 <!--DIV SEI SICURO DI VOLER ELIMINARE IL CLIENTE?-->
-
 <div id="div-delete" style="display: none; ">
     <div class="form-container">
         <button id="x-icon" onclick="toggleLayerX()"><i class="fas fa-times" ></i></button>
         <h1>Sei sicuro di voler eliminare il Cliente?</h1>
         <br> <br>
         <button class="confirm-button" style="margin-right: 20px;" type="submit">Si</button>
-        <button onclick="cancelConfirmLayer()" class="confirm-button" id="annulla" type="submit">No</button>
+        <button onclick="cancelConfirmLayer()" class="confirm-button" type="submit">No</button>
         <br><br><br>
-
     </div>
 </div>
 
 <!--DIV DETTAGLIO CLIENTE-->
-
 <div id="div-detail" style="display: none; color: white;">
     <div class="form-container">
         <button id="x-icon" onclick="toggleLayerX()"><i class="fas fa-times" ></i></button>
-
         <h1>Visualizza Cliente</h1>
         <form>
             <div class="row">
                 <div class="col-4 col-sm-4 col-md-4 col-lg-4 ">
                     <div class="form-group">
                         <label for="codice">Codice</label>
-                        <input type="email" class="form-control" id="codice" placeholder="Codice" readonly disabled>
+                        <input type="email" class="form-control" placeholder="Codice" readonly disabled>
                     </div>
                 </div>
                 <div class="col-8 col-sm-8 col-md-8 col-lg-8">
                     <div class="form-group">
                         <label for="ragione-sociale">Ragione Sociale</label>
-                        <input class="form-control" id="ragione-sociale" placeholder="Ragione Sociale" readonly disabled>
+                        <input class="form-control" placeholder="Ragione Sociale" readonly disabled>
                     </div>
                 </div>
-
             </div>
-
             <div class="row">
                 <div class="col-6 col-sm-6 col-md-6 col-lg-6 ">
                     <div class="form-group">
                         <label for="partita-iva">Partita IVA</label>
-                        <input type="email" class="form-control" id="partita-iva" placeholder="Partita IVA" readonly disabled>
+                        <input type="email" class="form-control" placeholder="Partita IVA" readonly disabled>
                     </div>
                 </div>
                 <div class="col-6 col-sm-6 col-md-6 col-lg-6">
                     <div class="form-group">
                         <label for="codice-fiscale">Codice Fiscale</label>
-                        <input class="form-control" id="codice-fiscale" placeholder="Codice Fiscale" readonly disabled>
+                        <input class="form-control" placeholder="Codice Fiscale" readonly disabled>
                     </div>
                 </div>
-
             </div>
-
-
             <div class="row">
                 <div class="col-6 col-sm-6 col-md-6 col-lg-6 ">
                     <div class="form-group">
                         <label for="e-mail">E-mail</label>
-                        <input type="email" class="form-control" id="e-mail" placeholder="E-mail" readonly disabled>
+                        <input type="email" class="form-control" placeholder="E-mail" readonly disabled>
                     </div>
                 </div>
                 <div class="col-6 col-sm-6 col-md-6 col-lg-6">
                     <div class="form-group">
                         <label for="indirizzo">Indirizzo</label>
-                        <input class="form-control" id="indirizzo" placeholder="Indirizzo" readonly disabled>
+                        <input class="form-control" placeholder="Indirizzo" readonly disabled>
                     </div>
                 </div>
-
             </div>
-
         </form>
-
-
     </div>
-
 </div>

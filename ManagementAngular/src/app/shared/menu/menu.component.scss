@@ -267,9 +267,9 @@ input:focus+.slider {
 }
 
 input:checked+.slider:before {
-    -webkit-transform: translateX(29px);
-    -ms-transform: translateX(29px);
-    transform: translateX(29px);
+    -webkit-transform: translateX(30px);
+    -ms-transform: translateX(30px);
+    transform: translateX(30px);
     background: var(--colorbg) url('../../../assets/switch.png');
     background-repeat: no-repeat;
     background-position: center;

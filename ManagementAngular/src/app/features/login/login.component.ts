@@ -28,10 +28,6 @@ export class LoginComponent implements OnInit {
     let body = new HttpParams();
     body = body.set('username', this.loginForm.get('username').value);
     body = body.set('password', this.loginForm.get('password').value);
-    if(this.loginForm.get('username').value==="admin", this.loginForm.get('password').value==="password"){
-      sessionStorage.setItem('user', "test");
-      this.router.navigateByUrl('home');
-    }
     this.httpService.retrievePostCall<User>("user/login", body).subscribe(response=>{
       if(response!=null){
         sessionStorage.setItem("user",JSON.stringify(response));

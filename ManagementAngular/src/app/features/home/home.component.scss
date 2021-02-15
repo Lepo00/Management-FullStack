@@ -52,12 +52,15 @@
 
 /*media*/
 
-@media screen and (max-width: 800px) {
+@media screen and (max-width: 1200px) {
     .cont-page {
         height: 140vh !important;
     }
     .row {
-        width: 102.6% !important;
+        width: 100% !important;
+    }
+    .block-function {
+        margin: 30px;
     }
 }
 

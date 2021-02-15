@@ -92,27 +92,24 @@ th:last-child {
 
 .container-page {
     background-color: var(--color2) !important;
-    height: auto;
-    min-height: 60%;
+    //min-height: 60%;
 }
 
 .container-row {
     width: 100%;
     background-color: var(--color2) !important;
-    min-height: 60%;
     position: relative;
     background-color: var(--color2);
     padding-top: 9vh;
     height: auto;
     padding-bottom: 3vh;
     margin: 0;
-    min-height: 73.3vh;
+    height: auto;
+    min-height: 69.8vh;
 }
 
 .table-container-responsive {
     background-color: var(--color2) !important;
-    min-height: 51.5vh;
-    height: auto;
 }
 
 .title-container {
@@ -270,20 +267,16 @@ th:last-child {
     background-color: var(--colorbglight);
 }
 
-
-/*end*/
-
-
-/*media*/
-
-@media screen and (max-width: 800px) {
-    .cont-page {
-        height: 140vh !important;
-    }
-    .row {
-        width: 102.6% !important;
-    }
+.empty {
+    margin: 10% auto 5%;
+    color: white;
+    text-align: center;
 }
 
-
-/*end media*/
+.add {
+    color: white;
+    font-size: 30px;
+    background-color: var(--colorbglight);
+    border-radius: 30px;
+    padding: 5px;
+}

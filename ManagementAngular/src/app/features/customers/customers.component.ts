@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Customer } from 'src/app/core/models/customer.interface';
 import { User } from 'src/app/core/models/user';
 import { HttpCommunicationsService } from 'src/app/core/services/http-communications.service';
@@ -9,16 +10,37 @@ import { HttpCommunicationsService } from 'src/app/core/services/http-communicat
   styleUrls: ['./customers.component.scss']
 })
 export class CustomersComponent implements OnInit {
-  arrayOne(n: number): any[] {
-    return Array(n);
-  }
+  customerForm: FormGroup;
   currentUser:User;
   customers:Customer[];
-  constructor(private httpService: HttpCommunicationsService) { }
+
+  constructor(private httpService: HttpCommunicationsService, fb: FormBuilder) {
+    this.customerForm = fb.group({
+      name: ['', Validators.required],
+      surname: '',
+      ivaCode: ['', Validators.required],
+      phone: ['', Validators.required],
+      email: ['', Validators.required],
+      address: ['', Validators.required],
+    })
+   }
 
   ngOnInit(): void {
-  this.currentUser= JSON.parse(sessionStorage.getItem("user"));
-  this.customers=this.currentUser.customers;
+    this.currentUser= JSON.parse(sessionStorage.getItem("user"));
+    this.customers=this.currentUser.customers;
+  }
+
+  add(){
+    //localhost:8080/management/user/{id}/addCustomer
+    console.log(this.currentUser);
+    this.httpService.retrievePostCall<string>('user/'+this.currentUser.id+'/addCustomer', this.customerForm.value).subscribe();
+  }
+
+  updateUser(){
+    this.httpService.retrieveGetCall<User>(this.currentUser.id+'').subscribe(response=>{
+        this.currentUser=response
+        this.customers=response.customers;
+    })
   }
 
 }
