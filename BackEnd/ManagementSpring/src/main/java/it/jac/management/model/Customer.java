@@ -19,6 +19,9 @@ public class Customer extends AuditModel {
 	@Column(name = "surname")
 	private String surname;
 
+	@Column(name = "email")
+	private String email;
+	
 	@Column(name = "address")
 	private String address;
 
@@ -36,7 +39,14 @@ public class Customer extends AuditModel {
 	public String getName() {
 		return name;
 	}
+	
+	public String getEmail() {
+		return email;
+	}
 
+	public void setEmail(String email) {
+		this.email = email;
+	}
 	public void setName(String name) {
 		this.name = name;
 	}
