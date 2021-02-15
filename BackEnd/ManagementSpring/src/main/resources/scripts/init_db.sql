@@ -1,27 +1,9 @@
---INSERT INTO `unit_of_measure` (`id`, `unit`, `name`) VALUES
---(1, 'g', 'grammi'),
---(2, 'kg', 'chilogrammi'),
---(3, 'ml', 'millilitri'),
---(4, 'l', 'litri'),
---(5, 'm', 'metri'),
---(6, 'km', 'chilometri');
-
---INSERT INTO `item` (`id`, `created_at`, `updated_at`, `code`, `description`, `price`, `unit_of_measure_id`) VALUES 
----(1, CURRENT_TIME(), CURRENT_TIME(), 'AAA', 'legno', '10',  2),
---(2, CURRENT_TIME(), CURRENT_TIME(), 'BBB', 'roccia', '20',  2),
---(3, CURRENT_TIME(), CURRENT_TIME(), 'CCC', 'acqua', '30',  4),
---(4, CURRENT_TIME(), CURRENT_TIME(), 'DDD', 'pietra', '40',  2),
---(5, CURRENT_TIME(), CURRENT_TIME(), 'EEE', 'fango', '50',  2),
---(6, CURRENT_TIME(), CURRENT_TIME(), 'FFF', 'sabbia', '60',  2),
---(7, CURRENT_TIME(), CURRENT_TIME(), 'GGG', 'veleno', '70',  3),
---(8, CURRENT_TIME(), CURRENT_TIME(), 'HHH', 'rete', '80',  5),
---(9, CURRENT_TIME(), CURRENT_TIME(), 'III', 'bronzo', '90',  1),
---(10, CURRENT_TIME(), CURRENT_TIME(), 'JJJ', 'oro', '100',  1),
---(11, CURRENT_TIME(), CURRENT_TIME(), 'KKK', 'spago', '110',  5),
---(12, CURRENT_TIME(), CURRENT_TIME(), 'LLL', 'cavo', '120',  6),
---(13, CURRENT_TIME(), CURRENT_TIME(), 'MMM', 'granito', '130',  5),
---(14, CURRENT_TIME(), CURRENT_TIME(), 'NNN', 'marmo', '140',  1),
---(15, CURRENT_TIME(), CURRENT_TIME(), 'OOO', 'diluente', '150',  4)
+INSERT INTO `customer` (`id`, `created_at`, `updated_at`, `iva_code`, `name`, `surname`, `email`, `address`, `phone`)
+SELECT * FROM
+(SELECT '1' `id`, CURRENT_TIME() `created_at`, CURRENT_TIME() `updated_at`, 'prova_1' `iva_code`, 'prova' `name`,'prova1' `surname`, 'prova1@mail.it' `email`, 'Milano, Via A. De Gasperi 32' `address`, '3293456156' `phone` UNION ALL
+SELECT '2' `id`, CURRENT_TIME() `created_at`, CURRENT_TIME() `updated_at`, 'prova_2' `iva_code`, 'provaa' `name`, 'prova2' `surname`, 'prova2@mail.it' `email`, 'Milano, Via A. De Gasperi 32' `address`, '3293456156' `phone`  UNION ALL
+SELECT '3' `id`, CURRENT_TIME() `created_at`, CURRENT_TIME() `updated_at`, 'prova_3' `iva_code`, 'provaaa' `name`,'prova3' `surname`,  'prova3@mail.it' `email`, 'Milano, Via A. De Gasperi 32' `address`,  '3293456156' `phone`) A
+WHERE NOT EXISTS (SELECT NULL FROM customer B WHERE A.id=B.id);
 
 INSERT INTO `user` (`id`, `created_at`, `updated_at`, `address`, `iva_code`, `password`, `phone`, `username`)
 SELECT * FROM
@@ -31,7 +13,7 @@ SELECT '3' `id`, CURRENT_TIME() `created_at`, CURRENT_TIME() `updated_at`, 'Mila
 SELECT '4' `id`, CURRENT_TIME() `created_at`, CURRENT_TIME() `updated_at`, 'Milano, Via A. De Gasperi 32' `address`, 'iva_code_example_4' `iva_code`, '123' `password`, '3293456156' `phone`, 'amanpreet' `username` UNION ALL
 SELECT '5' `id`, CURRENT_TIME() `created_at`, CURRENT_TIME() `updated_at`, 'Milano, Via A. De Gasperi 32' `address`, 'iva_code_example_5' `iva_code`, '123' `password`, '3293456156' `phone`, 'matteo' `username` UNION ALL
 SELECT '6' `id`, CURRENT_TIME() `created_at`, CURRENT_TIME() `updated_at`, 'Milano, Via A. De Gasperi 32' `address`, 'iva_code_example_6' `iva_code`, '123' `password`, '3293456156' `phone`, 'prova' `username`) A
-WHERE NOT EXISTS (SELECT NULL FROM unit_of_measure B WHERE A.id=B.id);
+WHERE NOT EXISTS (SELECT NULL FROM user B WHERE A.id=B.id);
 
 INSERT INTO `unit_of_measure`(`id`, `unit`, `name`)
 SELECT * FROM
