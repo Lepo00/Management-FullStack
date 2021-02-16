@@ -31,9 +31,8 @@ export class CustomersComponent implements OnInit {
   }
 
   add(){
-    //localhost:8080/management/user/{id}/addCustomer
-    console.log(this.currentUser);
-    this.httpService.retrievePostCall<string>('user/'+this.currentUser.id+'/addCustomer', this.customerForm.value).subscribe();
+    let url:string='user/'+this.currentUser.id+'/addCustomer';
+    this.httpService.retrievePostCall<string>(url, this.customerForm.value).subscribe();
   }
 
   updateUser(){
