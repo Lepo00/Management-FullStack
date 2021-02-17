@@ -3,6 +3,7 @@ import { InvoiceTail } from "./invoice-tail.interface";
 
 export interface InvoiceMaster{
     id?: number;
+    number:number;
     accountholder: string;
     date: Date;
     paymentMethod: string;

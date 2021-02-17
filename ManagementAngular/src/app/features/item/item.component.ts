@@ -14,7 +14,6 @@ export class ItemComponent implements OnInit {
 
   ngOnInit(): void {
     this.httpService.retrieveGetCall<Item[]>("item").subscribe(response => {
-      console.log(response);
       this.items = response;
     });
   }
