@@ -10,6 +10,7 @@ import { HttpCommunicationsService } from 'src/app/core/services/http-communicat
   styleUrls: ['./customers.component.scss']
 })
 export class CustomersComponent implements OnInit, OnDestroy {
+  idDelete: number;
   customerForm: FormGroup;
   currentUser:User;
   customers:Customer[];
@@ -40,14 +41,16 @@ export class CustomersComponent implements OnInit, OnDestroy {
     );
   }
 
-  detail(id:Number){
-    console.log('detail: '+id);
-    console.log(this.customers.find((c) => c.id === id));
+  detail(id:number){
     this.customer=this.customers.find((c) => c.id === id);
   }
 
   delete(){
-    console.log('delete');
+    let url:string="user/"+this.currentUser.id+"/customer/"+this.idDelete;
+    this.httpService.retrieveDeleteCall<User>(url).subscribe(response=>{
+      sessionStorage.setItem("user",JSON.stringify(response));
+      this.customers=response.customers;
+    });
   }
 
   resetForm(){

@@ -29,7 +29,7 @@
                         <td class="td">
                             <button onclick="toggleLayer()"><i class="fas fa-edit" id="edit"></i></button>
                             <button onclick="toggleLayerZoom()" (click)="detail(item.id)"><i class="fas fa-search" id="zoom"></i></button>
-                            <button onclick="toggleLayerConfirm()"><i class="fas fa-times"></i></button>
+                            <button onclick="toggleLayerConfirm()" (click)="idDelete=item.id"><i class="fas fa-times"></i></button>
                         </td>
                     </tr>
                 </table>
