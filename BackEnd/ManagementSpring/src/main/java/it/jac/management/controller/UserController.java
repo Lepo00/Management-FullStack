@@ -89,7 +89,7 @@ public class UserController {
 	@PostMapping(path = "/{id}/addCustomer")
 	public ResponseEntity<?> addCustomer(@PathVariable Long id, @RequestBody Customer customer) throws Exception {
 		try {
-			User user = userService.getOne(id);
+			User user = userService.get(id).get();
 			Customer exists = customerService.getByIvaCode(customer.getIvaCode());
 			if (exists != null) {
 				user.getCustomers().add(exists);
@@ -99,7 +99,7 @@ public class UserController {
 				customerService.create(customer);
 			}
 			userService.update(user, user.getId());
-			return ResponseEntity.ok("Customer added");
+			return ResponseEntity.ok(user);
 		} catch (NoSuchElementException e) {
 			return ResponseEntity.badRequest().body("User Not Found!");
 		} catch (Exception e) {
@@ -115,7 +115,7 @@ public class UserController {
 			user.getCustomers().addAll(customers);
 			customerService.createAll(customers);
 			userService.create(user);
-			return ResponseEntity.ok("Customers added");
+			return ResponseEntity.ok(user);
 		} catch (NoSuchElementException e) {
 			return ResponseEntity.badRequest().body("User Not Found!");
 		} catch (Exception e) {
