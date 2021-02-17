@@ -38,7 +38,7 @@ public class UserController {
 		if (c.isPresent()) {
 			return ResponseEntity.ok(c.get());
 		} else {
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User doesn't exists");
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
 		}
 	}
 
@@ -70,7 +70,7 @@ public class UserController {
 			userService.delete(id);
 			return ResponseEntity.ok().body("User deleted");
 		} catch (Exception e) {
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User doesn't exists");
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
 		}
 	}
 
@@ -93,15 +93,14 @@ public class UserController {
 			Customer exists = customerService.getByIvaCode(customer.getIvaCode());
 			if (exists != null) {
 				user.getCustomers().add(exists);
-			}
-			else {
+			} else {
 				user.getCustomers().add(customer);
 				customerService.create(customer);
 			}
 			userService.update(user, user.getId());
 			return ResponseEntity.ok(user);
 		} catch (NoSuchElementException e) {
-			return ResponseEntity.badRequest().body("User Not Found!");
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
 		} catch (Exception e) {
 			return ResponseEntity.badRequest().body("Customer Not Added!");
 		}
@@ -117,9 +116,19 @@ public class UserController {
 			userService.create(user);
 			return ResponseEntity.ok(user);
 		} catch (NoSuchElementException e) {
-			return ResponseEntity.badRequest().body("User Not Found!");
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
 		} catch (Exception e) {
 			return ResponseEntity.badRequest().body("Customers Not Added!");
+		}
+	}
+
+	@GetMapping(path = "/{id}/invoices")
+	public ResponseEntity<?> getInvoices(@PathVariable Long id) throws Exception {
+		try {
+			User user = userService.get(id).get();
+			return ResponseEntity.ok(user.getInvoices());
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
 		}
 	}
 
