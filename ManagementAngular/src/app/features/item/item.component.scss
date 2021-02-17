@@ -20,7 +20,7 @@ button:hover i {
 
 .table {
     border-collapse: collapse;
-    width: 100%;
+    width: 90%;
     margin: 0 auto;
     background-color: var(--colorbglight);
     margin-top: 2vh;
@@ -118,6 +118,7 @@ th:last-child {
 }
 
 .title-container h1 {
+    margin-left: 60px;
     display: inline-block;
     font-size: 4rem !important;
     font-weight: bold !important;
