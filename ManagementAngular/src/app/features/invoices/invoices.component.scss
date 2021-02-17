@@ -365,3 +365,11 @@ th:last-child {
 
 
 /*end*/
+
+.outline-none {
+    outline: none;
+}
+
+.outline-none:focus {
+    outline: none;
+}
