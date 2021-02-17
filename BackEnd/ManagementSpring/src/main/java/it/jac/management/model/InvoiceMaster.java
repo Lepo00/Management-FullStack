@@ -30,6 +30,9 @@ public class InvoiceMaster extends AuditModel {
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
 	private Date date;
 
+	@Column(name = "number")
+	private int number;
+	
 	@Column(name = "payment_method")
 	private String paymentMethod;
 
@@ -79,6 +82,21 @@ public class InvoiceMaster extends AuditModel {
 
 	public void setTail(InvoiceTail tail) {
 		this.tail = tail;
+	}
+	public int getNumber() {
+		return number;
+	}
+
+	public void setNumber(int number) {
+		this.number = number;
+	}
+
+	public String getPaymentMethod() {
+		return paymentMethod;
+	}
+
+	public void setPaymentMethod(String paymentMethod) {
+		this.paymentMethod = paymentMethod;
 	}
 
 }
