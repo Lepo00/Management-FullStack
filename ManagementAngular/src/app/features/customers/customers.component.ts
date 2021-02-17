@@ -32,13 +32,17 @@ export class CustomersComponent implements OnInit {
 
   add(){
     let url:string='user/'+this.currentUser.id+'/addCustomer';
-    this.httpService.retrievePostCall<string>(url, this.customerForm.value).subscribe();
+    this.httpService.retrievePostCall<string>(url, this.customerForm.value).subscribe(response=>{
+      this.updateUser();
+      }
+    );
   }
 
   updateUser(){
-    this.httpService.retrieveGetCall<User>(this.currentUser.id+'').subscribe(response=>{
-        this.currentUser=response
+    this.httpService.retrieveGetCall<User>("user/"+this.currentUser.id).subscribe(response=>{
+        this.currentUser=response;
         this.customers=response.customers;
+        sessionStorage.setItem("user",JSON.stringify(response));
     })
   }
 
