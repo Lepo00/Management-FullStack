@@ -121,6 +121,15 @@ public class UserController {
 			return ResponseEntity.badRequest().body("Customers Not Added!");
 		}
 	}
+	@DeleteMapping(path = "/{idUser}/customer/{idCustomer}")
+	public ResponseEntity<User> deleteCustomer(@PathVariable Long idUser, @PathVariable Long idCustomer) throws Exception {
+			User user = userService.get(idUser).get();
+			Customer customer= customerService.get(idCustomer).get();
+			user.getCustomers().remove(customer);
+			customerService.delete(idCustomer);
+			userService.update(user, user.getId());
+			return ResponseEntity.ok(user);
+	}
 
 	@GetMapping(path = "/{id}/invoices")
 	public ResponseEntity<?> getInvoices(@PathVariable Long id) throws Exception {
@@ -131,5 +140,4 @@ public class UserController {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
 		}
 	}
-
 }

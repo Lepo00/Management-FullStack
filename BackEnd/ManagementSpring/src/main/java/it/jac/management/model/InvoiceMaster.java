@@ -3,6 +3,7 @@ package it.jac.management.model;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
@@ -36,11 +37,11 @@ public class InvoiceMaster extends AuditModel {
 	@Column(name = "payment_method")
 	private String paymentMethod;
 
-	@OneToMany
+	@OneToMany(cascade = CascadeType.ALL)
 	@JoinColumn(name = "invoice_master_id")
 	private List<InvoiceBody> rows;
 
-	@OneToOne
+	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "invoice_tail_id")
 	private InvoiceTail tail;
 
@@ -60,12 +61,20 @@ public class InvoiceMaster extends AuditModel {
 		this.date = date;
 	}
 
-	public String getPaymentCondition() {
+	public int getNumber() {
+		return number;
+	}
+
+	public void setNumber(int number) {
+		this.number = number;
+	}
+
+	public String getPaymentMethod() {
 		return paymentMethod;
 	}
 
-	public void setPaymentCondition(String paymentCondition) {
-		this.paymentMethod = paymentCondition;
+	public void setPaymentMethod(String paymentMethod) {
+		this.paymentMethod = paymentMethod;
 	}
 
 	public List<InvoiceBody> getRows() {
@@ -83,20 +92,4 @@ public class InvoiceMaster extends AuditModel {
 	public void setTail(InvoiceTail tail) {
 		this.tail = tail;
 	}
-	public int getNumber() {
-		return number;
-	}
-
-	public void setNumber(int number) {
-		this.number = number;
-	}
-
-	public String getPaymentMethod() {
-		return paymentMethod;
-	}
-
-	public void setPaymentMethod(String paymentMethod) {
-		this.paymentMethod = paymentMethod;
-	}
-
 }
