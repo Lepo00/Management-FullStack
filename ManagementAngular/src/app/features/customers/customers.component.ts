@@ -16,8 +16,8 @@ export class CustomersComponent implements OnInit, OnDestroy {
   customers:Customer[];
   customer:Customer;
 
-  constructor(private httpService: HttpCommunicationsService, fb: FormBuilder) {
-    this.customerForm = fb.group({
+  constructor(private httpService: HttpCommunicationsService, private fb: FormBuilder) {
+    this.customerForm = this.fb.group({
       name: ['', Validators.required],
       surname: '',
       ivaCode: ['', Validators.required],
@@ -35,8 +35,7 @@ export class CustomersComponent implements OnInit, OnDestroy {
   add(){
     let url:string='user/'+this.currentUser.id+'/addCustomer';
     this.httpService.retrievePostCall<User>(url, this.customerForm.value).subscribe(response=>{
-      sessionStorage.setItem("user",JSON.stringify(response));
-      this.customers=response.customers;
+      this.setSession(response);
       }
     );
   }
@@ -45,16 +44,38 @@ export class CustomersComponent implements OnInit, OnDestroy {
     this.customer=this.customers.find((c) => c.id === id);
   }
 
+  popForm(){
+    this.customerForm = this.fb.group({
+      name: [this.customer.name, Validators.required],
+      surname: this.customer?.surname,
+      ivaCode: [this.customer.ivaCode, Validators.required],
+      phone: [this.customer.phone, Validators.required],
+      email: [this.customer.email, Validators.required],
+      address: [this.customer.address, Validators.required],
+    })
+  }
+
   delete(){
     let url:string="user/"+this.currentUser.id+"/customer/"+this.idDelete;
     this.httpService.retrieveDeleteCall<User>(url).subscribe(response=>{
-      sessionStorage.setItem("user",JSON.stringify(response));
-      this.customers=response.customers;
+      this.setSession(response);
+    });
+  }
+
+  edit(){
+    let url:string="user/"+this.currentUser.id+"/customer/"+this.customer.id;
+    this.httpService.retrievePutCall<User>(url, this.customerForm.value).subscribe(response=>{
+      this.setSession(response);
     });
   }
 
   resetForm(){
     this.customerForm.reset();
+  }
+
+  setSession(response:User){
+    sessionStorage.setItem("user",JSON.stringify(response));
+    this.customers=response.customers;
   }
 
   ngOnDestroy(): void {
