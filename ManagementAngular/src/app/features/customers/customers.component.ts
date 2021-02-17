@@ -13,6 +13,7 @@ export class CustomersComponent implements OnInit, OnDestroy {
   customerForm: FormGroup;
   currentUser:User;
   customers:Customer[];
+  customer:Customer;
 
   constructor(private httpService: HttpCommunicationsService, fb: FormBuilder) {
     this.customerForm = fb.group({
@@ -37,6 +38,20 @@ export class CustomersComponent implements OnInit, OnDestroy {
       this.customers=response.customers;
       }
     );
+  }
+
+  detail(id:Number){
+    console.log('detail: '+id);
+    console.log(this.customers.find((c) => c.id === id));
+    this.customer=this.customers.find((c) => c.id === id);
+  }
+
+  delete(){
+    console.log('delete');
+  }
+
+  resetForm(){
+    this.customerForm.reset();
   }
 
   ngOnDestroy(): void {
