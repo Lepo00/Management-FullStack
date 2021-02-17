@@ -14,7 +14,7 @@
                         <td class="th">Numero</td>
                         <td class="th">Ragione Sociale</td>
                         <td class="th">Data</td>
-                        <td class="th">Pagamento</td>
+                        <td class="th">Metodo di Paagamento</td>
                         <td class="th">Totale</td>
                         <td class="th">Azioni</td>
                     </tr>
@@ -70,7 +70,7 @@
                 </div>
                 <div class="col-8 col-sm-8 col-md-8 col-lg-8">
                     <div class="form-group">
-                        <label for="pagamento">Pagamento</label>
+                        <label for="pagamento">Metodo di Pagamento</label>
                         <input class="form-control" id="pagamento" placeholder="Pagamento" required>
                     </div>
                 </div>
@@ -85,12 +85,7 @@
                         <input type="email" class="form-control" id="totale" placeholder="Totale">
                     </div>
                 </div>
-                <div class="col-6 col-sm-6 col-md-6 col-lg-6">
-                    <div class="form-group">
-                        <label for="valuta">Valuta</label>
-                        <input class="form-control" id="valuta" placeholder="Valuta" required>
-                    </div>
-                </div>
+
 
             </div>
             <div class="form-group">
@@ -133,7 +128,7 @@
                 </div>
                 <div class="col-8 col-sm-8 col-md-8 col-lg-8">
                     <div class="form-group">
-                        <label for="pagamento">Pagamento</label>
+                        <label for="pagamento">Metodo di Pagamento</label>
                         <input class="form-control" id="pagamento" placeholder="Pagamento" required>
                     </div>
                 </div>
@@ -142,17 +137,18 @@
 
 
             <div class="row">
-                <div class="col-6 col-sm-6 col-md-6 col-lg-6 ">
-                    <div class="form-group">
-                        <label for="totale">Totale</label>
-                        <input type="email" class="form-control" id="totale" placeholder="Totale">
-                    </div>
+                <div class="col-6 col-sm-6 col-md-6 col-lg-6 " style="margin-bottom: 10vh; color: black !important; outline: none;">
+
+                    <select class="form-select" aria-label="Default select example">
+                        <option selected>Open this select menu</option>
+                        <option value="1">One</option>
+                        <option value="2">Two</option>
+                        <option value="3">Three</option>
+                      </select>
+
                 </div>
                 <div class="col-6 col-sm-6 col-md-6 col-lg-6">
-                    <div class="form-group">
-                        <label for="valuta">Valuta</label>
-                        <input class="form-control" id="valuta" placeholder="Valuta" required>
-                    </div>
+
                 </div>
 
             </div>
@@ -227,14 +223,18 @@
 
                     <table class="table">
                         <tr class="tr" style="width: 100%;">
-                            <td colspan="5">Riepilogo generale</td>
+                            <td colspan="9">Riepilogo generale</td>
                         </tr>
                         <tr class="tr">
-                            <td class="th">Codice</td>
-                            <td class="th">Descrizione</td>
-                            <td class="th">Unità di misura</td>
-                            <td class="th">Prezzo</td>
-                            <td class="th">IVA</td>
+                            <td class="th">Nome Articolo</td>
+                            <td class="th">Prezzo Unitario</td>
+                            <td class="th">Quantità</td>
+                            <td class="th">Sconto (%)</td>
+                            <td class="th">Totale Sconto</td>
+                            <td class="th">Prezzo scontato Singolo</td>
+                            <td class="th">Imponibile</td>
+                            <td class="th">Tasse</td>
+                            <td class="th">Totale</td>
 
                         </tr>
                         <tr *ngFor="let item of arrayOne(10); let i = index;" class="tr">
@@ -243,6 +243,10 @@
                             <td class="td">PZ</td>
                             <td class="td">20</td>
                             <td class="td">22</td>
+                            <td class="td">{{i+1}}</td>
+                            <td class="td">Penna</td>
+                            <td class="td">PZ</td>
+                            <td class="td">20</td>
                         </tr>
                     </table>
                 </div>
@@ -252,27 +256,34 @@
             </div>
 
             <div class="row">
-                <div class="col-6 col-sm-6 col-md-6 col-lg-6">
-
-
-                </div>
-                <div class="col-6 col-sm-6 col-md-6 col-lg-6 totale">
-
+                <div class="col-12 col-sm-12 col-md-12 col-lg-12">
                     <table class="table">
+
                         <tr class="tr">
-                            <td class="th">Totale Senza IVA</td>
+                            <td class="th">Totale righe</td>
+                            <td class="th">Servizi</td>
+                            <td class="th">Totale Sconto righe</td>
+                            <td class="th">Sconto coda(%)</td>
+                            <td class="th">Valore Sconto Coda</td>
+                            <td class="th">Prezzo scontato Singolo</td>
+                            <td class="th">Totale sconto</td>
+                            <td class="th">Imponibile</td>
+                            <td class="th">Tasse</td>
+                            <td class="th">Totale</td>
+
                         </tr>
-                        <tr class="tr">
-                            <td class="td">1</td>
+                        <tr *ngFor="let item of arrayOne(10); let i = index;" class="tr">
+                            <td class="td">{{i+1}}</td>
+                            <td class="td">Penna</td>
+                            <td class="td">PZ</td>
+                            <td class="td">20</td>
+                            <td class="td">22</td>
+                            <td class="td">{{i+1}}</td>
+                            <td class="td">Penna</td>
+                            <td class="td">PZ</td>
+                            <td class="td">20</td>
+                            <td class="td">20</td>
                         </tr>
-                        <table class="table">
-                            <tr class="tr">
-                                <td class="th">Totale con IVA</td>
-                            </tr>
-                            <tr class="tr">
-                                <td class="td">1</td>
-                            </tr>
-                        </table>
                     </table>
                 </div>
             </div>
