@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Customer } from 'src/app/core/models/customer.interface';
 import { User } from 'src/app/core/models/user';
@@ -9,7 +9,7 @@ import { HttpCommunicationsService } from 'src/app/core/services/http-communicat
   templateUrl: './customers.component.html',
   styleUrls: ['./customers.component.scss']
 })
-export class CustomersComponent implements OnInit {
+export class CustomersComponent implements OnInit, OnDestroy {
   customerForm: FormGroup;
   currentUser:User;
   customers:Customer[];
@@ -26,24 +26,20 @@ export class CustomersComponent implements OnInit {
    }
 
   ngOnInit(): void {
-    this.currentUser= JSON.parse(sessionStorage.getItem("user"));
+    this.currentUser= <User>JSON.parse(sessionStorage.getItem("user"));
     this.customers=this.currentUser.customers;
   }
 
   add(){
     let url:string='user/'+this.currentUser.id+'/addCustomer';
-    this.httpService.retrievePostCall<string>(url, this.customerForm.value).subscribe(response=>{
-      this.updateUser();
+    this.httpService.retrievePostCall<User>(url, this.customerForm.value).subscribe(response=>{
+      sessionStorage.setItem("user",JSON.stringify(response));
+      this.customers=response.customers;
       }
     );
   }
 
-  updateUser(){
-    this.httpService.retrieveGetCall<User>("user/"+this.currentUser.id).subscribe(response=>{
-        this.currentUser=response;
-        this.customers=response.customers;
-        sessionStorage.setItem("user",JSON.stringify(response));
-    })
+  ngOnDestroy(): void {
   }
 
 }
