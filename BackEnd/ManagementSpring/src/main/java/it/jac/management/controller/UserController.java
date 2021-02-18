@@ -121,6 +121,7 @@ public class UserController {
 			return ResponseEntity.badRequest().body("Customers Not Added!");
 		}
 	}
+	
 	@DeleteMapping(path = "/{idUser}/customer/{idCustomer}")
 	public ResponseEntity<User> deleteCustomer(@PathVariable Long idUser, @PathVariable Long idCustomer) throws Exception {
 			User user = userService.get(idUser).get();
@@ -130,7 +131,13 @@ public class UserController {
 			userService.update(user, user.getId());
 			return ResponseEntity.ok(user);
 	}
-
+	
+	@PutMapping(path = "/{idUser}/customer/{idCustomer}")
+	public ResponseEntity<User> updateCustomer(@PathVariable Long idUser, @PathVariable Long idCustomer, @RequestBody Customer update) throws Exception {
+		customerService.update(update, idCustomer);
+		return ResponseEntity.ok(userService.get(idUser).get());
+	}
+	
 	@GetMapping(path = "/{id}/invoices")
 	public ResponseEntity<?> getInvoices(@PathVariable Long id) throws Exception {
 		try {
