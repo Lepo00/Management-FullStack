@@ -1,5 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 import { Customer } from 'src/app/core/models/customer.interface';
 import { User } from 'src/app/core/models/user';
@@ -11,13 +12,15 @@ import { HttpCommunicationsService } from 'src/app/core/services/http-communicat
   styleUrls: ['./customers.component.scss']
 })
 export class CustomersComponent implements OnInit {
+  searchButton:boolean;
   idDelete: number;
   customerForm: FormGroup;
   currentUser:User;
   customers:Customer[];
   customer:Customer;
 
-  constructor(private httpService: HttpCommunicationsService, private fb: FormBuilder) {
+  constructor(private httpService: HttpCommunicationsService, private fb: FormBuilder, private route:ActivatedRoute) {
+    this.searchButton=true;
     this.customerForm = this.fb.group({
       name: ['', Validators.required],
       surname: '',
@@ -31,6 +34,19 @@ export class CustomersComponent implements OnInit {
   ngOnInit(): void {
     this.currentUser= <User>JSON.parse(sessionStorage.getItem("user"));
     this.customers=this.currentUser.customers.sort((a, b) => a.id - b.id);
+    this.route.params.subscribe(params => {
+      let search= params['search'];
+      if(search!=null){
+        this.searchButton=false;
+        this.filterCustomers(search);
+      }
+    });
+  }
+
+  filterCustomers(search: any) {
+    this.customers= this.customers.filter(customer=>
+       customer.email.includes(search) || customer.ivaCode.includes(search) || customer.name.includes(search)
+      )
   }
 
   add(){

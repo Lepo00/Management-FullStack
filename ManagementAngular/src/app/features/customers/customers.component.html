@@ -1,14 +1,15 @@
-<app-menu [search]=true></app-menu>
+<app-menu [search]=searchButton></app-menu>
 <div class="container-page">
     <div class="row container-row ">
         <div class="col-12 col-sm-12 col-md-12 col-lg-12 table-container">
             <div class="container table-responsive py-5 table-container-responsive" *ngIf="customers.length>0; else empty">
                 <div class="title-container">
-                    <h1>Clienti.</h1> <i class="fas fa-users"></i>
-                    <div class="button-container-new">
+                    <h1><span *ngIf="!searchButton">Ricerca </span>Clienti.</h1><i class="fas fa-users"></i>
+                    <div class="button-container-new" *ngIf="searchButton">
                         <button onclick="toggleNewLayer()" (click)="resetForm()"><a>Nuovo Cliente</a></button>
                     </div>
                 </div>
+                <h3 *ngIf="!searchButton" class="results">La tua ricerca ha prodotto: {{customers.length}} risultati</h3>
                 <table class="table">
                     <tr class="tr">
                         <td class="th">Codice</td>
@@ -27,15 +28,15 @@
                         <td class="td">{{item.email}}</td>
                         <td class="td">{{item.address}}</td>
                         <td class="td">
-                            <button onclick="toggleLayer()" (click)="resetForm(); detail(item.id); populateForm()"><i class="fas fa-edit"></i></button>
+                            <button *ngIf="searchButton" onclick="toggleLayer()" (click)="resetForm(); detail(item.id); populateForm()"><i class="fas fa-edit"></i></button>
                             <button onclick="toggleLayerZoom()" (click)="detail(item.id)"><i class="fas fa-search" id="zoom"></i></button>
-                            <button onclick="toggleLayerConfirm()" (click)="detail(item.id)"><i class="fas fa-times"></i></button>
+                            <button *ngIf="searchButton" onclick="toggleLayerConfirm()" (click)="detail(item.id)"><i class="fas fa-times"></i></button>
                         </td>
                     </tr>
                 </table>
             </div>
             <ng-template #empty>
-                <div class="empty">
+                <div class="empty" *ngIf="searchButton">
                     <h2>Non hai nessun cliente.<br>Aggiungine uno ora!</h2>
                     <button onclick="toggleNewLayer()" class="add">Nuovo Cliente</button>
                 </div>
@@ -64,7 +65,7 @@
                 <div class="col-4 col-sm-4 col-md-4 col-lg-4 ">
                     <div class="form-group">
                         <label for="codice">Cognome</label>
-                        <input type="text" class="form-control" placeholder="Cognome" formControlName="surname">
+                        <input class="form-control" placeholder="Cognome" formControlName="surname">
                     </div>
                 </div>
             </div>
@@ -72,7 +73,7 @@
                 <div class="col-6 col-sm-6 col-md-6 col-lg-6 ">
                     <div class="form-group">
                         <label for="partita-iva">Partita IVA*</label>
-                        <input type="email" class="form-control" placeholder="Partita IVA" formControlName="ivaCode">
+                        <input class="form-control" placeholder="Partita IVA" formControlName="ivaCode">
                     </div>
                 </div>
                 <div class="col-6 col-sm-6 col-md-6 col-lg-6">
@@ -98,7 +99,7 @@
             </div>
             <p>* Campi obbligatori</p>
             <div class="form-group">
-                <button type="submit" onclick="toggleLayerX()" [disabled]="customerForm.status === 'INVALID'" [ngClass]="{'disabled': customerForm.status === 'INVALID'}">Crea Cliente</button>
+                <button type="submit" onclick="toggleLayerX()" [disabled]="customerForm.status === 'INVALID'" [ngClass]="{'disabled': customerForm.status === 'INVALID'}">Modifica Cliente</button>
             </div>
         </form>
     </div>
@@ -120,7 +121,7 @@
                 <div class="col-4 col-sm-4 col-md-4 col-lg-4 ">
                     <div class="form-group">
                         <label for="codice">Cognome</label>
-                        <input type="text" class="form-control" placeholder="Cognome" formControlName="surname">
+                        <input class="form-control" placeholder="Cognome" formControlName="surname">
                     </div>
                 </div>
             </div>
@@ -128,7 +129,7 @@
                 <div class="col-6 col-sm-6 col-md-6 col-lg-6 ">
                     <div class="form-group">
                         <label for="partita-iva">Partita IVA*</label>
-                        <input type="email" class="form-control" placeholder="Partita IVA" formControlName="ivaCode">
+                        <input class="form-control" placeholder="Partita IVA" formControlName="ivaCode">
                     </div>
                 </div>
                 <div class="col-6 col-sm-6 col-md-6 col-lg-6">

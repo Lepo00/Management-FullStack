@@ -98,7 +98,7 @@ th:last-child {
 .container-row {
     width: 100%;
     background-color: var(--color2) !important;
-    min-height: 60%;
+    min-height: 100%;
     position: relative;
     background-color: var(--color2);
     padding-top: 9vh;
@@ -109,7 +109,7 @@ th:last-child {
 
 .table-container-responsive {
     background-color: var(--color2) !important;
-    min-height: 51.5vh;
+    min-height: 54.5vh;
     height: auto;
 }
 
@@ -286,3 +286,8 @@ th:last-child {
 
 
 /*end media*/
+
+.results {
+    color: var(--colorbg);
+    text-align: center;
+}

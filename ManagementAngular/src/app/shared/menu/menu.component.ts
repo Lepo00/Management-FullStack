@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { PRIMARY_OUTLET, Router, UrlSegment, UrlSegmentGroup, UrlTree } from '@angular/router';
 
 @Component({
   selector: 'app-menu',
@@ -18,6 +18,14 @@ export class MenuComponent implements OnInit {
   logout(): void{
     sessionStorage.removeItem('user');
     this.router.navigateByUrl('/login');
+  }
+
+  searchButton(txt:string){
+    //const tree: UrlTree = this.router.parseUrl(this.router.url);
+    //const g: UrlSegmentGroup = tree.root.children[PRIMARY_OUTLET];
+    //const s: UrlSegment[] = g.segments;
+    //s[0].path;
+    this.router.navigateByUrl("/"+this.router.url+"/"+txt);
   }
 
 }

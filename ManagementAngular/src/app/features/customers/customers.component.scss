@@ -284,3 +284,8 @@ th:last-child {
 .disabled {
     background-color: grey !important;
 }
+
+.results {
+    color: var(--colorbg);
+    text-align: center;
+}

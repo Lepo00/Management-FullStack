@@ -28,11 +28,13 @@ export class LoginComponent implements OnInit {
     let body = new HttpParams();
     body = body.set('username', this.loginForm.get('username').value);
     body = body.set('password', this.loginForm.get('password').value);
-    this.httpService.retrievePostCall<User>("user/login", body).subscribe(response=>{
+    let observer=this.httpService.retrievePostCall<User>("user/login", body).subscribe(response=>{
       if(response!=null){
         sessionStorage.setItem("user",JSON.stringify(response));
+        observer.unsubscribe();
         this.router.navigateByUrl('home');
       }
+      observer.unsubscribe();
     })
   }
 
