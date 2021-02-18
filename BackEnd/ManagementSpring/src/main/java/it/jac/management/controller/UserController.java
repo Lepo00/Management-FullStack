@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import it.jac.management.model.Customer;
+import it.jac.management.model.ResponseMessage;
 import it.jac.management.model.User;
 import it.jac.management.service.CustomerService;
 import it.jac.management.service.UserService;
@@ -38,7 +39,7 @@ public class UserController {
 		if (c.isPresent()) {
 			return ResponseEntity.ok(c.get());
 		} else {
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ResponseMessage("User not found"));
 		}
 	}
 
@@ -50,7 +51,7 @@ public class UserController {
 				throw new Exception();
 			return ResponseEntity.ok(save);
 		} catch (Exception e) {
-			return ResponseEntity.badRequest().body("User Not Saved!");
+			return ResponseEntity.badRequest().body(new ResponseMessage("User Not Saved!"));
 		}
 	}
 
@@ -60,17 +61,17 @@ public class UserController {
 			User update = userService.update(user, id);
 			return ResponseEntity.ok(update);
 		} catch (Exception e) {
-			return ResponseEntity.badRequest().body("User Not Updated!");
+			return ResponseEntity.badRequest().body(new ResponseMessage("User Not Updated!"));
 		}
 	}
 
 	@DeleteMapping(path = "/delete/{id}")
-	public ResponseEntity<String> deleteUser(@PathVariable Long id) {
+	public ResponseEntity<ResponseMessage> deleteUser(@PathVariable Long id) {
 		try {
 			userService.delete(id);
-			return ResponseEntity.ok().body("User deleted");
+			return ResponseEntity.ok().body(new ResponseMessage("User deleted"));
 		} catch (Exception e) {
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ResponseMessage("User not found"));
 		}
 	}
 
@@ -82,7 +83,7 @@ public class UserController {
 				throw new Exception();
 			return ResponseEntity.ok(login);
 		} catch (Exception e) {
-			return ResponseEntity.badRequest().body("User Not Found!");
+			return ResponseEntity.badRequest().body(new ResponseMessage("User Not Found!"));
 		}
 	}
 
@@ -100,9 +101,9 @@ public class UserController {
 			userService.update(user, user.getId());
 			return ResponseEntity.ok(user);
 		} catch (NoSuchElementException e) {
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ResponseMessage("User not found"));
 		} catch (Exception e) {
-			return ResponseEntity.badRequest().body("Customer Not Added!");
+			return ResponseEntity.badRequest().body(new ResponseMessage("Customer Not Added!"));
 		}
 	}
 
@@ -116,26 +117,10 @@ public class UserController {
 			userService.create(user);
 			return ResponseEntity.ok(user);
 		} catch (NoSuchElementException e) {
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ResponseMessage("User not found"));
 		} catch (Exception e) {
-			return ResponseEntity.badRequest().body("Customers Not Added!");
+			return ResponseEntity.badRequest().body(new ResponseMessage("Customers Not Added!"));
 		}
-	}
-	
-	@DeleteMapping(path = "/{idUser}/customer/{idCustomer}")
-	public ResponseEntity<User> deleteCustomer(@PathVariable Long idUser, @PathVariable Long idCustomer) throws Exception {
-			User user = userService.get(idUser).get();
-			Customer customer= customerService.get(idCustomer).get();
-			user.getCustomers().remove(customer);
-			customerService.delete(idCustomer);
-			userService.update(user, user.getId());
-			return ResponseEntity.ok(user);
-	}
-	
-	@PutMapping(path = "/{idUser}/customer/{idCustomer}")
-	public ResponseEntity<User> updateCustomer(@PathVariable Long idUser, @PathVariable Long idCustomer, @RequestBody Customer update) throws Exception {
-		customerService.update(update, idCustomer);
-		return ResponseEntity.ok(userService.get(idUser).get());
 	}
 	
 	@GetMapping(path = "/{id}/invoices")
@@ -144,7 +129,7 @@ public class UserController {
 			User user = userService.get(id).get();
 			return ResponseEntity.ok(user.getInvoices());
 		} catch (Exception e) {
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ResponseMessage("User not found"));
 		}
 	}
 }

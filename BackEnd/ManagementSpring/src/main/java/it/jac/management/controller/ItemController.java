@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import it.jac.management.model.Item;
+import it.jac.management.model.ResponseMessage;
 import it.jac.management.service.ItemService;
 
 @RestController
@@ -33,7 +34,7 @@ public class ItemController {
 		if (items != null) {
 			return ResponseEntity.ok(items);
 		} else {
-			return ResponseEntity.badRequest().body("No items found!");
+			return ResponseEntity.badRequest().body(new ResponseMessage("No items found!"));
 		}
 	}
 
@@ -43,7 +44,7 @@ public class ItemController {
 		if (i.isPresent()) {
 			return ResponseEntity.ok(i.get());
 		} else {
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Item doesn't exists");
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ResponseMessage("Item doesn't exists"));
 		}
 	}
 
@@ -55,7 +56,7 @@ public class ItemController {
 				throw new Exception();
 			return ResponseEntity.ok(save);
 		} catch (Exception e) {
-			return ResponseEntity.badRequest().body("Item Not Saved!");
+			return ResponseEntity.badRequest().body(new ResponseMessage("Item Not Saved!"));
 		}
 	}
 
@@ -65,17 +66,17 @@ public class ItemController {
 			Item update = itemService.update(item, id);
 			return ResponseEntity.ok(update);
 		} catch (Exception e) {
-			return ResponseEntity.badRequest().body("Item Not Updated!");
+			return ResponseEntity.badRequest().body(new ResponseMessage("Item Not Updated!"));
 		}
 	}
 
 	@DeleteMapping(path = "delete/{id}")
-	public ResponseEntity<String> deleteItem(@PathVariable Long id) {
+	public ResponseEntity<ResponseMessage> deleteItem(@PathVariable Long id) {
 		try {
 			itemService.delete(id);
-			return ResponseEntity.ok().body("Item deleted");
+			return ResponseEntity.ok().body(new ResponseMessage("Item deleted"));
 		} catch (Exception e) {
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Item doesn't exists");
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ResponseMessage("Item doesn't exists"));
 		}
 	}
 

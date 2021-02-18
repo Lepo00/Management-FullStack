@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import it.jac.management.model.Customer;
+import it.jac.management.model.ResponseMessage;
 import it.jac.management.service.CustomerService;
 
 @RestController
@@ -31,7 +32,7 @@ public class CustomerController {
 		if (c.isPresent()) {
 			return ResponseEntity.ok(c.get());
 		} else {
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Customer doesn't exists");
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ResponseMessage("Customer doesn't exists"));
 		}
 	}
 
@@ -43,7 +44,7 @@ public class CustomerController {
 				throw new Exception();
 			return ResponseEntity.ok(save);
 		} catch (Exception e) {
-			return ResponseEntity.badRequest().body("Customer Not Saved!");
+			return ResponseEntity.badRequest().body(new ResponseMessage("Customer Not Saved!"));
 		}
 	}
 
@@ -53,17 +54,17 @@ public class CustomerController {
 			Customer update = customerService.update(customer, id);
 			return ResponseEntity.ok(update);
 		} catch (Exception e) {
-			return ResponseEntity.badRequest().body("Customer Not Updated!");
+			return ResponseEntity.badRequest().body(new ResponseMessage("Customer Not Updated!"));
 		}
 	}
 
 	@DeleteMapping(path = "/delete/{id}")
-	public ResponseEntity<String> deleteCustomer(@PathVariable Long id) {
+	public ResponseEntity<ResponseMessage> deleteCustomer(@PathVariable Long id) {
 		try {
 			customerService.delete(id);
-			return ResponseEntity.ok().body("Customer deleted");
+			return ResponseEntity.ok().body(new ResponseMessage("Customer deleted"));
 		} catch (Exception e) {
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Customer doesn't exists");
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ResponseMessage("Customer doesn't exists"));
 		}
 	}
 }

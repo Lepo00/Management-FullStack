@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import it.jac.management.model.InvoiceMaster;
+import it.jac.management.model.ResponseMessage;
 import it.jac.management.service.InvoiceMasterService;
 
 @RestController
@@ -32,7 +33,7 @@ public class InvoiceController {
 		if (i.isPresent()) {
 			return ResponseEntity.ok(i.get());
 		} else {
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Invoice doesn't exists");
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ResponseMessage("Invoice doesn't exists"));
 		}
 	}
 
@@ -43,9 +44,9 @@ public class InvoiceController {
 			InvoiceMaster save = invoiceService.create(invoice);
 			if (save == null)
 				throw new Exception();
-			return ResponseEntity.ok("Invoice saved with id:" + invoice.getId());
+			return ResponseEntity.ok(save);
 		} catch (Exception e) {
-			return ResponseEntity.badRequest().body("Invoice Not Saved!");
+			return ResponseEntity.badRequest().body(new ResponseMessage("Invoice Not Saved!"));
 		}
 	}
 
@@ -53,10 +54,10 @@ public class InvoiceController {
 	public ResponseEntity<?> newInvoice(@PathVariable Long idCustomer, @RequestBody InvoiceMaster invoice)
 			throws Exception {
 		try {
-			invoiceService.createWithCustomer(idCustomer, invoice);
-			return ResponseEntity.ok("Invoice saved with id:" + invoice.getId());
+			InvoiceMaster save=invoiceService.createWithCustomer(idCustomer, invoice);
+			return ResponseEntity.ok(save);
 		} catch (Exception e) {
-			return ResponseEntity.badRequest().body("Invoice Not Saved!");
+			return ResponseEntity.badRequest().body(new ResponseMessage("Invoice Not Saved!"));
 		}
 	}
 
@@ -66,17 +67,17 @@ public class InvoiceController {
 			InvoiceMaster update = invoiceService.update(invoice, id);
 			return ResponseEntity.ok(update);
 		} catch (Exception e) {
-			return ResponseEntity.badRequest().body("Invoice Not Updated!");
+			return ResponseEntity.badRequest().body(new ResponseMessage("Invoice Not Updated!"));
 		}
 	}
 
 	@DeleteMapping(path = "/delete/{id}")
-	public ResponseEntity<String> deleteInvoice(@PathVariable Long id) {
+	public ResponseEntity<ResponseMessage> deleteInvoice(@PathVariable Long id) {
 		try {
 			invoiceService.delete(id);
-			return ResponseEntity.ok().body("Invoice deleted");
+			return ResponseEntity.ok().body(new ResponseMessage("Invoice deleted"));
 		} catch (Exception e) {
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Invoice doesn't exists");
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ResponseMessage("Invoice doesn't exists"));
 		}
 	}
 	
