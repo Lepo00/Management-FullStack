@@ -27,9 +27,9 @@
                         <td class="td">{{item.email}}</td>
                         <td class="td">{{item.address}}</td>
                         <td class="td">
-                            <button onclick="toggleLayer()" (click)="resetForm(); detail(item.id); popForm()"><i class="fas fa-edit"></i></button>
+                            <button onclick="toggleLayer()" (click)="resetForm(); detail(item.id); populateForm()"><i class="fas fa-edit"></i></button>
                             <button onclick="toggleLayerZoom()" (click)="detail(item.id)"><i class="fas fa-search" id="zoom"></i></button>
-                            <button onclick="toggleLayerConfirm()" (click)="idDelete=item.id"><i class="fas fa-times"></i></button>
+                            <button onclick="toggleLayerConfirm()" (click)="detail(item.id)"><i class="fas fa-times"></i></button>
                         </td>
                     </tr>
                 </table>
@@ -98,7 +98,7 @@
             </div>
             <p>* Campi obbligatori</p>
             <div class="form-group">
-                <button type="submit" onclick="toggleLayerX()">Crea Cliente</button>
+                <button type="submit" onclick="toggleLayerX()" [disabled]="customerForm.status === 'INVALID'" [ngClass]="{'disabled': customerForm.status === 'INVALID'}">Crea Cliente</button>
             </div>
         </form>
     </div>
@@ -154,7 +154,7 @@
             </div>
             <p>* Campi obbligatori</p>
             <div class="form-group">
-                <button type="submit" onclick="toggleLayerX()">Crea Cliente</button>
+                <button type="submit" onclick="toggleLayerX()" [disabled]="customerForm.status === 'INVALID'" [ngClass]="{'disabled': customerForm.status === 'INVALID'}">Crea Cliente</button>
             </div>
         </form>
     </div>
