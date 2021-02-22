@@ -14,7 +14,7 @@
                         <td class="th">Numero</td>
                         <td class="th">Ragione Sociale</td>
                         <td class="th">Data</td>
-                        <td class="th">Pagamento</td>
+                        <td class="th">Metodo di Paagamento</td>
                         <td class="th">Totale</td>
                         <td class="th">Azioni</td>
                     </tr>
@@ -85,12 +85,6 @@
                         <input type="email" class="form-control" placeholder="Totale">
                     </div>
                 </div>
-                <div class="col-6 col-sm-6 col-md-6 col-lg-6">
-                    <div class="form-group">
-                        <label for="valuta">Valuta</label>
-                        <input class="form-control" placeholder="Valuta" required>
-                    </div>
-                </div>
 
             </div>
             <div class="form-group">
@@ -139,22 +133,38 @@
                 </div>
 
             </div>
-
-
             <div class="row">
-                <div class="col-6 col-sm-6 col-md-6 col-lg-6 ">
-                    <div class="form-group">
-                        <label for="totale">Totale</label>
-                        <input type="email" class="form-control" placeholder="Totale">
-                    </div>
+
+                <div class="col-6 col-sm-6 col-md-6 col-lg-6">
+
+
                 </div>
                 <div class="col-6 col-sm-6 col-md-6 col-lg-6">
+
                     <div class="form-group">
-                        <label for="valuta">Valuta</label>
-                        <input class="form-control" placeholder="Valuta" required>
+                        <button type="submit" style="width: 100%; font-size: 1.5rem;" onclick="addItem()">Aggiungi Elemento</button>
                     </div>
                 </div>
+            </div>
 
+            <div class="row">
+                <div class="col-6 col-sm-6 col-md-6 col-lg-6 addItem" style="margin-bottom: 10vh; color: black !important; outline: none;">
+
+
+
+                    <select class="form-select outline-none" aria-label="Default select example" onchange="addItem()">
+                        <option selected>Seleziona articolo</option>
+                        <option value="1">One</option>
+                        <option value="2">Two</option>
+                        <option value="3">Three</option>
+                      </select>
+                    <button id='x-icon-delete'><i class='fas fa-times'  ></i></button>
+
+
+                </div>
+                <div class="col-6 col-sm-6 col-md-6 col-lg-6">
+
+                </div>
             </div>
             <div class="form-group">
                 <button type="submit">Crea Fattura</button>
@@ -165,7 +175,6 @@
 <!--END DIV CREA FATTURA-->
 
 <!--DIV SEI SICURO DI VOLER ELIMINARE FATTURA?-->
-
 <div id="div-delete" style="display: none; ">
     <div class="form-container">
         <button id="x-icon" onclick="toggleLayerX()"><i class="fas fa-times" ></i></button>
@@ -174,11 +183,10 @@
         <button class="confirm-button" style="margin-right: 20px;" type="submit">Si</button>
         <button onclick="cancelConfirmLayer()" class="confirm-button" id="annulla" type="submit">No</button>
         <br><br><br>
-
     </div>
 </div>
-<!--DIV DETTAGLIO FATTURA-->
 
+<!--DIV DETTAGLIO FATTURA-->
 <div id="div-detail" style="display: none; ">
     <div class="form-container">
         <div class="action">
@@ -186,28 +194,17 @@
             <button id="x-icon" onclick="toggleLayerX()"><i class="fas fa-times" ></i></button>
             <button onclick="window.printDiv('div-detail')" class="print"><i class="fas fa-print"></i></button>
         </div>
-
         <div class="fattura">
             <div class="row testa">
-
                 <div class="col-6 col-sm-6 col-md-6 col-lg-6 logo">
-
                     <img src="../../../assets/logo-fatture.png" alt="">
-
                 </div>
-
                 <div class="col-6 col-sm-6 col-md-6 col-lg-6 info">
-
                     Ragione Sociale: F.lli De Vignani <br><br> Partita IVA: 7593057385937483<br><br> Sede Spedizione: Via G.Rossi, 22<br><br> Villongo (BG), 24060
-
-
-
                 </div>
             </div>
-
             <div class="row">
                 <div class="col-6 col-sm-6 col-md-6 col-lg-6 rif">
-
                     <table class="table" style="width: 76%;">
                         <tr class="tr">
                             <td class="th">Numero</td>
@@ -217,25 +214,25 @@
                             <td class="td">1</td>
                             <td class="td">24/02/2020</td>
                         </tr>
-
                     </table>
                 </div>
             </div>
-
             <div class="row">
                 <div class="col-12 col-sm-12 col-md-12 col-lg-12">
-
                     <table class="table">
                         <tr class="tr" style="width: 100%;">
-                            <td colspan="5">Riepilogo generale</td>
+                            <td colspan="9">Riepilogo generale</td>
                         </tr>
                         <tr class="tr">
-                            <td class="th">Codice</td>
-                            <td class="th">Descrizione</td>
-                            <td class="th">Unità di misura</td>
-                            <td class="th">Prezzo</td>
-                            <td class="th">IVA</td>
-
+                            <td class="th">Nome Articolo</td>
+                            <td class="th">Prezzo Unitario</td>
+                            <td class="th">Quantità</td>
+                            <td class="th">Sconto (%)</td>
+                            <td class="th">Totale Sconto</td>
+                            <td class="th">Prezzo scontato Singolo</td>
+                            <td class="th">Imponibile</td>
+                            <td class="th">Tasse</td>
+                            <td class="th">Totale</td>
                         </tr>
                         <tr *ngFor="let item of arrayOne(10); let i = index;" class="tr">
                             <td class="td">{{i+1}}</td>
@@ -243,40 +240,43 @@
                             <td class="td">PZ</td>
                             <td class="td">20</td>
                             <td class="td">22</td>
+                            <td class="td">{{i+1}}</td>
+                            <td class="td">Penna</td>
+                            <td class="td">PZ</td>
+                            <td class="td">20</td>
                         </tr>
                     </table>
                 </div>
-
-
-
             </div>
-
             <div class="row">
-                <div class="col-6 col-sm-6 col-md-6 col-lg-6">
-
-
-                </div>
-                <div class="col-6 col-sm-6 col-md-6 col-lg-6 totale">
-
+                <div class="col-12 col-sm-12 col-md-12 col-lg-12">
                     <table class="table">
                         <tr class="tr">
-                            <td class="th">Totale Senza IVA</td>
+                            <td class="th">Totale righe</td>
+                            <td class="th">Servizi</td>
+                            <td class="th">Totale Sconto righe</td>
+                            <td class="th">Sconto coda(%)</td>
+                            <td class="th">Valore Sconto Coda</td>
+                            <td class="th">Prezzo scontato Singolo</td>
+                            <td class="th">Totale sconto</td>
+                            <td class="th">Imponibile</td>
+                            <td class="th">Tasse</td>
+                            <td class="th">Totale</td>
                         </tr>
-                        <tr class="tr">
-                            <td class="td">1</td>
+                        <tr *ngFor="let item of arrayOne(10); let i = index;" class="tr">
+                            <td class="td">{{i+1}}</td>
+                            <td class="td">Penna</td>
+                            <td class="td">PZ</td>
+                            <td class="td">20</td>
+                            <td class="td">22</td>
+                            <td class="td">{{i+1}}</td>
+                            <td class="td">Penna</td>
+                            <td class="td">PZ</td>
+                            <td class="td">20</td>
+                            <td class="td">20</td>
                         </tr>
-                        <table class="table">
-                            <tr class="tr">
-                                <td class="th">Totale con IVA</td>
-                            </tr>
-                            <tr class="tr">
-                                <td class="td">1</td>
-                            </tr>
-                        </table>
                     </table>
                 </div>
             </div>
         </div>
-
-
     </div>
