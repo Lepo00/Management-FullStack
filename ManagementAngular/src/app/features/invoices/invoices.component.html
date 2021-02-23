@@ -101,18 +101,18 @@
     <div class="form-container">
         <button id="x-icon" onclick="toggleLayerX()"><i class="fas fa-times" ></i></button>
         <h1>Crea Nuova Fattura</h1>
-        <form>
+        <form [formGroup]="invoiceForm" (ngSubmit)="save()">
             <div class="row">
                 <div class="col-4 col-sm-4 col-md-4 col-lg-4 ">
                     <div class="form-group">
-                        <label for="codice">Codice</label>
-                        <input type="email" class="form-control" placeholder="Codice" required>
+                        <label for="tail">Sconto Coda</label>
+                        <input type="email" class="form-control" placeholder="tail" formControlName="tail">
                     </div>
                 </div>
                 <div class="col-8 col-sm-8 col-md-8 col-lg-8">
                     <div class="form-group">
-                        <label for="ragione-sociale">Ragione Sociale</label>
-                        <input class="form-control" placeholder="Ragione Sociale" required>
+                        <label for="Intestatario">Intestatario</label>
+                        <input class="form-control" placeholder="Intestatario" formControlName="accountholder">
                     </div>
                 </div>
 
@@ -142,7 +142,8 @@
                 <div class="col-6 col-sm-6 col-md-6 col-lg-6">
 
                     <div class="form-group">
-                        <button type="submit" style="width: 100%; font-size: 1.5rem;" onclick="addItem()">Aggiungi Elemento</button>
+                        <button id="x-icon" type="button"><i class="fas fa-times" ></i></button>
+                        <h1>Aggiungi Articoli</h1>
                     </div>
                 </div>
             </div>
@@ -173,7 +174,6 @@
     </div>
 </div>
 <!--END DIV CREA FATTURA-->
-
 <!--DIV SEI SICURO DI VOLER ELIMINARE FATTURA?-->
 <div id="div-delete" style="display: none; ">
     <div class="form-container">
