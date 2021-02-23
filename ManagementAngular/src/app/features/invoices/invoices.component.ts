@@ -21,6 +21,7 @@ export class InvoicesComponent implements OnInit {
   invoiceToSave:InvoiceMaster;
   validatingForm: FormGroup;
   items: Item[];
+  rowsTemp:InvoiceBody[]=[];
   constructor(private httpService: HttpCommunicationsService,private fb: FormBuilder) { 
   this.invoiceForm = this.fb.group({
     accountholder: ['', Validators.required],
@@ -54,12 +55,15 @@ export class InvoicesComponent implements OnInit {
     this.invoiceToSave.tail.discountPerc = this.invoiceForm.value.tail;
     this.httpService.retrievePostCall<InvoiceMaster>("invoice/save",this.invoiceToSave)
 }
- add(){
-  /*let newitem = this.items.find(it => it.id == 
-  let body:InvoiceBody = {finalAmount: 0,item:newitem,netPrice:0,percDiscount:this.itemForm.value.percDiscount,quantity:this.itemForm.value.quantity,taxable:0,taxed:0,totDiscount:0};
-  this.rows.push(body)*/
+ /*add(){
+  this.rows = this.rowsTemp;
   console.log(this.rows)
+}*/
+addTemp(id:number){
+  let newitem = this.items.find(it => it.id == id)
+  let body:InvoiceBody = {finalAmount: 0,item:newitem,netPrice:0,percDiscount:this.itemForm.value.percDiscount,quantity:this.itemForm.value.quantity,taxable:0,taxed:0,totDiscount:0};
+  this.rowsTemp.push(body)
+  console.log(this.rowsTemp)
 }
-
 }
 
