@@ -14,7 +14,7 @@
                         <td class="th">Numero</td>
                         <td class="th">Ragione Sociale</td>
                         <td class="th">Data</td>
-                        <td class="th">Metodo di Paagamento</td>
+                        <td class="th">Metodo di Pagamento</td>
                         <td class="th">Totale</td>
                         <td class="th">Azioni</td>
                     </tr>
@@ -135,35 +135,11 @@
             </div>
             <div class="row">
 
-                <div class="col-6 col-sm-6 col-md-6 col-lg-6">
-
-
-                </div>
-                <div class="col-6 col-sm-6 col-md-6 col-lg-6">
+                <div class="col-12 col-sm-12 col-md-12 col-lg-12">
 
                     <div class="form-group">
-                        <button type="submit" style="width: 100%; font-size: 1.5rem;" onclick="addItem()">Aggiungi Elemento</button>
+                        <button type="submit" style="width: 100%; font-size: 1.5rem;" onclick="addItemDiv()">Seleziona prodotti</button>
                     </div>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-6 col-sm-6 col-md-6 col-lg-6 addItem" style="margin-bottom: 10vh; color: black !important; outline: none;">
-
-
-
-                    <select class="form-select outline-none" aria-label="Default select example" onchange="addItem()">
-                        <option selected>Seleziona articolo</option>
-                        <option value="1">One</option>
-                        <option value="2">Two</option>
-                        <option value="3">Three</option>
-                      </select>
-                    <button id='x-icon-delete'><i class='fas fa-times'  ></i></button>
-
-
-                </div>
-                <div class="col-6 col-sm-6 col-md-6 col-lg-6">
-
                 </div>
             </div>
             <div class="form-group">
@@ -173,6 +149,16 @@
     </div>
 </div>
 <!--END DIV CREA FATTURA-->
+
+<!--DIV SEELZIOAN PRODOTTI-->
+<div id="div-select" style="display: none;">
+    <div class="form-container">
+        <button id="x-icon" onclick="toggleLayerXSelect()"><i class="fas fa-times"></i></button>
+        <h1>Seleziona Prodotti</h1>
+
+    </div>
+</div>
+<!--END DIV SEELZIONA PRODOTTI-->
 
 <!--DIV SEI SICURO DI VOLER ELIMINARE FATTURA?-->
 <div id="div-delete" style="display: none; ">
