@@ -101,12 +101,12 @@
     <div class="form-container">
         <button id="x-icon" onclick="toggleLayerX()"><i class="fas fa-times" ></i></button>
         <h1>Crea Nuova Fattura</h1>
-        <form>
+        <form [formGroup]="invoiceForm" (ngSubmit)="save()">
             <div class="row">
                 <div class="col-4 col-sm-4 col-md-4 col-lg-4 ">
                     <div class="form-group">
-                        <label for="codice">Codice</label>
-                        <input type="email" class="form-control" placeholder="Codice" required>
+                        <label for="Intestatario">Intestatario</label>
+                        <input class="form-control" placeholder="Intestatario" formControlName="accountholder">
                     </div>
                 </div>
                 <div class="col-8 col-sm-8 col-md-8 col-lg-8">
@@ -138,9 +138,12 @@
                 <div class="col-12 col-sm-12 col-md-12 col-lg-12">
 
                     <div class="form-group">
-                        <button type="submit" style="width: 100%; font-size: 1.5rem;" onclick="addItemDiv()">Seleziona articoli</button>
+                        <button type="button" style="width: 100%; font-size: 1.5rem;" onclick="addItemDiv()">Seleziona articoli</button>
                     </div>
                 </div>
+            </div>
+            <div *ngFor="let item of rows" class="row">
+                <p>{{item.quantity}}</p>
             </div>
             <div class="form-group">
                 <button type="submit">Crea Fattura</button>
@@ -155,7 +158,31 @@
     <div class="form-container">
         <button id="x-icon" onclick="toggleLayerXSelect()"><i class="fas fa-times"></i></button>
         <h1>Seleziona Articoli</h1>
-
+        <form [formGroup]="itemForm" *ngFor="let i of items" (ngSubmit)="add()">
+            <div class="row">
+                <div class="col-4 col-sm-4 col-md-4 col-lg-4 ">
+                    <div class="form-group">
+                        <label for="id">id</label>
+                        <input class="form-control" formControlName="id" disabled>
+                    </div>
+                </div>
+                <div class="col-8 col-sm-8 col-md-8 col-lg-8">
+                    <div class="form-group">
+                        <label for="quantity">quantity</label>
+                        <input class="form-control" placeholder="Quantità" formControlName="quantity">
+                    </div>
+                </div>
+                <div class="col-8 col-sm-8 col-md-8 col-lg-8">
+                    <div class="form-group">
+                        <label for="Sconto">Sconto</label>
+                        <input class="form-control" placeholder="Sconto" formControlName="percDiscount">
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <button type="submit">Aggiungi articoli</button>
+            </div>
+        </form>
     </div>
 </div>
 <!--END DIV SEELZIONA ARTICOLI-->
