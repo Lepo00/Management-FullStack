@@ -2,6 +2,7 @@ package it.jac.management.model;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
@@ -31,7 +32,7 @@ public class User extends AuditModel {
 	@Column(name = "password")
 	private String password;
 
-	@OneToMany
+	@OneToMany(cascade = CascadeType.ALL)
 	@JoinColumn(name = "user_id")
 	private List<InvoiceMaster> invoices;
 

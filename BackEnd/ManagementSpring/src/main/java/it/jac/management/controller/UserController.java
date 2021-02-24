@@ -115,19 +115,17 @@ public class UserController {
 	public ResponseEntity<?> addInvoice(@PathVariable Long id, @RequestBody InvoiceMaster invoice) throws Exception {
 		try {
 			User user = userService.get(id).get();
-			InvoiceMaster exists = invoiceService.get(id).get();
-			if (exists != null) {
-				user.getInvoices().add(exists);
-			} else {
-				user.getInvoices().add(invoice);
-				invoiceService.create(invoice);
-			}
+			if(invoice.getId()!=null && invoiceService.get(invoice.getId()).isPresent())
+				return ResponseEntity.badRequest().body("Invoice already exists");
+				
+			user.getInvoices().add(invoice);
+			invoiceService.create(invoice);
 			userService.update(user, user.getId());
 			return ResponseEntity.ok(user);
 		} catch (NoSuchElementException e) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ResponseMessage("User not found"));
 		} catch (Exception e) {
-			return ResponseEntity.badRequest().body(new ResponseMessage("Customer Not Added!"));
+			return ResponseEntity.badRequest().body(new ResponseMessage(e.toString()));
 		}
 	}
 

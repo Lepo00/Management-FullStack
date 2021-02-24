@@ -12,7 +12,6 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
@@ -22,11 +21,9 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 @Table(name = "invoice_master")
 public class InvoiceMaster extends AuditModel {
 	@Column(name = "accountholder")
-	@NotNull
 	private String accountholder;
 
 	@Column(name = "date")
-	@NotNull
 	@Temporal(TemporalType.DATE)
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
 	private Date date;
