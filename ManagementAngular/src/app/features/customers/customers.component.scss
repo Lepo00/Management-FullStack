@@ -139,7 +139,6 @@ th:last-child {
     padding-right: 20px;
     padding-top: 10px;
     padding-bottom: 10px;
-    transform: skewX(-10deg);
     text-transform: uppercase;
 }
 
@@ -169,7 +168,6 @@ th:last-child {
     top: 20vh;
     left: 25%;
     z-index: 9999999999999999;
-    transform: skewX(-10deg);
 }
 
 #x-icon {
@@ -200,13 +198,10 @@ th:last-child {
     margin-right: auto;
 }
 
-.form-container input {
-    transform: skewX(-10deg);
-}
+.form-container input {}
 
 .form-group button {
     width: 100%;
-    transform: skewX(-10deg);
     margin-left: auto;
     padding-top: 15px;
     padding-bottom: 15px;
@@ -252,7 +247,6 @@ th:last-child {
 
 #div-delete .confirm-button {
     width: 20%;
-    transform: skewX(-10deg);
     margin-left: auto;
     padding-top: 15px;
     padding-bottom: 15px;
