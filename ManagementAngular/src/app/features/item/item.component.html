@@ -1,8 +1,8 @@
 <!-- corpo  base-->
-<app-menu [search]=searchButton></app-menu>
+<app-menu [search]=true></app-menu>
 <div class="container-page">
     <div class="row container-row ">
-        <div class="col-12 col-sm-12 col-md-12 col-lg-12 table-container ">
+        <div class="col-12 col-sm-12 col-md-12 col-lg-12 table-container">
             <div class="container table-responsive py-5 table-container-responsive">
                 <div class="title-container">
                     <h1>
@@ -11,7 +11,7 @@
                     <i class="fas fa-box-open"></i>
                 </div>
                 <h3 *ngIf="!searchButton" class="results">La tua ricerca ha prodotto: {{items.length}} risultati</h3>
-                <table class="table" *ngIf="items.length>0">
+                <table class="table" *ngIf="items.length>0;">
                     <tr class="tr">
                         <td class="th">Codice</td>
                         <td class="th">Descrizione</td>

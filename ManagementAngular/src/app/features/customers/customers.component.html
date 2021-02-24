@@ -1,4 +1,4 @@
-<app-menu [search]=searchButton></app-menu>
+<app-menu [search]=true></app-menu>
 <div class="container-page">
     <div class="row container-row ">
         <div class="col-12 col-sm-12 col-md-12 col-lg-12 table-container">
@@ -39,6 +39,9 @@
                 <div class="empty" *ngIf="searchButton">
                     <h2>Non hai nessun cliente.<br>Aggiungine uno ora!</h2>
                     <button onclick="toggleNewLayer()" class="add">Nuovo Cliente</button>
+                </div>
+                <div class="empty" *ngIf="!searchButton">
+                    <h2>La tua ricerca non ha prodotto risultati.</h2>
                 </div>
             </ng-template>
         </div>

@@ -23,7 +23,6 @@ export class ItemComponent implements OnInit {
       this.route.params.subscribe(params => {
         let search= params['search'];
         if(search!=null){
-          this.searchButton=false;
           this.filterItems(search);
         }
       });
@@ -32,6 +31,7 @@ export class ItemComponent implements OnInit {
   }
   
   filterItems(search:string) {
+    this.searchButton=false;
     this.items=this.items.filter(item => item.description.includes(search) || item.code.includes(search));
   }
 

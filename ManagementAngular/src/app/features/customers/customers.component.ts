@@ -28,22 +28,23 @@ export class CustomersComponent implements OnInit {
       phone: ['', Validators.required],
       email: ['', Validators.required],
       address: ['', Validators.required],
-    })
+    });
+    this.currentUser= <User>JSON.parse(sessionStorage.getItem("user"));
+    this.customers=this.currentUser.customers.sort((a, b) => a.id - b.id);
    }
 
   ngOnInit(): void {
-    this.currentUser= <User>JSON.parse(sessionStorage.getItem("user"));
-    this.customers=this.currentUser.customers.sort((a, b) => a.id - b.id);
     this.route.params.subscribe(params => {
       let search= params['search'];
       if(search!=null){
-        this.searchButton=false;
         this.filterCustomers(search);
       }
     });
   }
 
   filterCustomers(search: any) {
+    this.customers=this.currentUser.customers.sort((a, b) => a.id - b.id);
+    this.searchButton=false;
     this.customers= this.customers.filter(customer=>
        customer.email.includes(search) || customer.ivaCode.includes(search) || customer.name.includes(search)
       )

@@ -25,8 +25,8 @@
                         <td class="td">{{item.date}}</td>
                         <td class="td">{{item.paymentMethod}}</td>
                         <td class="td">
-                            <button onclick="toggleLayer()"><i class="fas fa-edit" id="edit"></i></button>
-                            <button onclick="toggleLayerZoom()"><i class="fas fa-search" id="zoom"></i></button>
+                            <button onclick="toggleLayer()"><i class="fas fa-edit"></i></button>
+                            <button onclick="toggleLayerZoom()"><i class="fas fa-search" (click)="detail()"></i></button>
                             <button onclick="toggleLayerConfirm()"><i class="fas fa-times"></i></button>
                         </td>
                     </tr>

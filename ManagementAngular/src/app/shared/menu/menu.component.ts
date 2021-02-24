@@ -21,11 +21,10 @@ export class MenuComponent implements OnInit {
   }
 
   searchButton(txt:string){
-    //const tree: UrlTree = this.router.parseUrl(this.router.url);
-    //const g: UrlSegmentGroup = tree.root.children[PRIMARY_OUTLET];
-    //const s: UrlSegment[] = g.segments;
-    //s[0].path;
-    this.router.navigateByUrl("/"+this.router.url+"/"+txt);
+    const tree: UrlTree = this.router.parseUrl(this.router.url);
+    const g: UrlSegmentGroup = tree.root.children[PRIMARY_OUTLET];
+    const s: UrlSegment[] = g.segments;
+    this.router.navigateByUrl(s[0].path+"/"+txt);
   }
 
 }
