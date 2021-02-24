@@ -19,9 +19,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import it.jac.management.model.Customer;
+import it.jac.management.model.InvoiceMaster;
 import it.jac.management.model.ResponseMessage;
 import it.jac.management.model.User;
 import it.jac.management.service.CustomerService;
+import it.jac.management.service.InvoiceMasterService;
 import it.jac.management.service.UserService;
 
 @RestController
@@ -32,6 +34,8 @@ public class UserController {
 	UserService userService;
 	@Autowired
 	CustomerService customerService;
+	@Autowired
+	InvoiceMasterService invoiceService;
 
 	@GetMapping("/{id}")
 	public ResponseEntity<?> get(@PathVariable Long id) {
@@ -97,6 +101,26 @@ public class UserController {
 			} else {
 				user.getCustomers().add(customer);
 				customerService.create(customer);
+			}
+			userService.update(user, user.getId());
+			return ResponseEntity.ok(user);
+		} catch (NoSuchElementException e) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ResponseMessage("User not found"));
+		} catch (Exception e) {
+			return ResponseEntity.badRequest().body(new ResponseMessage("Customer Not Added!"));
+		}
+	}
+	
+	@PostMapping(path = "/{id}/addInvoice")
+	public ResponseEntity<?> addInvoice(@PathVariable Long id, @RequestBody InvoiceMaster invoice) throws Exception {
+		try {
+			User user = userService.get(id).get();
+			InvoiceMaster exists = invoiceService.get(id).get();
+			if (exists != null) {
+				user.getInvoices().add(exists);
+			} else {
+				user.getInvoices().add(invoice);
+				invoiceService.create(invoice);
 			}
 			userService.update(user, user.getId());
 			return ResponseEntity.ok(user);
