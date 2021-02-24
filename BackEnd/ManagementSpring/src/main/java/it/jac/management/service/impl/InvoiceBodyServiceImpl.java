@@ -55,7 +55,7 @@ public class InvoiceBodyServiceImpl implements InvoiceBodyService {
 	public List<InvoiceBody> calc(List<InvoiceBody> rows) {
 		Item item;
 		for (InvoiceBody row : rows) {
-			item = itemService.getOne(row.getItem().getId());
+			item = itemService.get(row.getItem().getId()).get();
 			double discount = (item.getPrice() * row.getPercDiscount() / 100);
 
 			row.setTotDiscount(item.getPrice() * row.getQuantity() * row.getPercDiscount() / 100);
