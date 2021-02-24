@@ -26,7 +26,8 @@
                         <td class="td">{{invoice.tail.finalAmount}}</td>
                         <td class="td">
                             <button onclick="toggleLayer()"><i class="fas fa-edit"></i></button>
-                            <button onclick="toggleLayerZoom()"><i class="fas fa-search" (click)="detail(invoice.id)"></i></button>
+                            <button onclick="toggleLayerZoom()"><i class="fas fa-search"
+                                    (click)="detail(invoice.id)"></i></button>
                             <button onclick="toggleLayerConfirm()"><i class="fas fa-times"></i></button>
                         </td>
                     </tr>
@@ -92,10 +93,12 @@
 <!--DIV CREA FATTURA-->
 <div id="div-new" style="display: none;">
     <div class="form-container">
-        <button id="x-icon" onclick="toggleLayerX()"><i class="fas fa-times" ></i></button>
+        <button id="x-icon" onclick="toggleLayerX()"><i class="fas fa-times"></i></button>
         <button id="x-icon" onclick="toggleLayerX()"> <i class="far fa-save"></i></button>
         <h1>Crea Nuova Fattura</h1>
         <form [formGroup]="invoiceForm" (ngSubmit)="save()">
+            <button style="position: absolute; top: 0%; right: 6%;" type="submit" id="x-icon"> <i
+                    class="far fa-save"></i></button>
             <div class="row">
                 <div class="col-4 col-sm-4 col-md-4 col-lg-4 ">
                     <div class="form-group">
@@ -149,7 +152,8 @@
             <div class="row">
                 <div class="col-12 col-sm-12 col-md-12 col-lg-12">
                     <div class="form-group">
-                        <button type="button" style="width: 100%; font-size: 1.5rem;" onclick="addItemDiv()">Seleziona articoli</button>
+                        <button type="button" style="width: 100%; font-size: 1.5rem;" onclick="addItemDiv()">Seleziona
+                            articoli</button>
                     </div>
                 </div>
             </div>
@@ -165,6 +169,7 @@
 <div id="div-select" style="display: none;">
     <div class="form-container">
         <button id="x-icon" onclick="toggleLayerXSelect()"><i class="fas fa-times"></i></button>
+        <button id="x-icon" onclick="toggleLayerX()"> <i class="far fa-save"></i></button>
         <h1 class="m-0 select-article">Seleziona Articoli</h1>
         <form [formGroup]="itemForm">
             <table class="table" style="width: 76%;">
@@ -176,18 +181,15 @@
                 </tr>
                 <tr *ngFor="let item of items" class="tr">
                     <td class="td">{{item.description}}</td>
-                    <td class="td"><input class=" unset" type="number" placeholder="Quantità"></td>
-                    <td class="td"><input class=" unset" type="number" placeholder="Sconto %"></td>
+                    <td class="td"><input class=" unset" formControlName="quantity" type="number" placeholder="Quantità"></td>
+                    <td class="td"><input class=" unset" formControlName="percDiscount" type="number" placeholder="Sconto %"></td>
                     <td>
                         <div class="form-group">
-                            <button type="submit" class="addItem">Aggiungi</button>
+                            <button type="button" (click)="addTemp(item.id)" class="addItem">Aggiungi</button>
                         </div>
                     </td>
                 </tr>
             </table>
-            <div class="form-group">
-                <button type="submit" class="save-new-invoice">Salva</button>
-            </div>
         </form>
     </div>
 </div>
@@ -195,7 +197,7 @@
 <!--DIV SEI SICURO DI VOLER ELIMINARE FATTURA?-->
 <div id="div-delete" style="display: none; ">
     <div class="form-container">
-        <button id="x-icon" onclick="toggleLayerX()"><i class="fas fa-times" ></i></button>
+        <button id="x-icon" onclick="toggleLayerX()"><i class="fas fa-times"></i></button>
         <h1>Sei sicuro di voler eliminare la fattura?</h1>
         <br> <br>
         <button class="confirm-button" style="margin-right: 20px;" type="submit">Si</button>
@@ -209,7 +211,7 @@
     <div class="form-container">
         <div class="action">
             <span class="title">Dettaglio Fattura</span>
-            <button id="x-icon" onclick="toggleLayerX()"><i class="fas fa-times" ></i></button>
+            <button id="x-icon" onclick="toggleLayerX()"><i class="fas fa-times"></i></button>
             <button onclick="window.printDiv('div-detail')" class="print"><i class="fas fa-print"></i></button>
         </div>
         <div class="fattura">
@@ -218,7 +220,8 @@
                     <img src="../../../assets/logo-fatture.png" alt="">
                 </div>
                 <div class="col-6 col-sm-6 col-md-6 col-lg-6 info">
-                    Ragione Sociale:<br> <b>{{invoiceDetail?.accountholder}}</b> <br> Partita IVA:<br> <b>{{currentUser?.ivaCode}}</b><br> Sede Spedizione:<br> <b>{{currentUser?.address}}</b>
+                    Ragione Sociale:<br> <b>{{invoiceDetail?.accountholder}}</b> <br> Partita IVA:<br>
+                    <b>{{currentUser?.ivaCode}}</b><br> Sede Spedizione:<br> <b>{{currentUser?.address}}</b>
                 </div>
             </div>
             <div class="row">
