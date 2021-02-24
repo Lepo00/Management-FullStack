@@ -15,6 +15,7 @@ import { HttpCommunicationsService } from 'src/app/core/services/http-communicat
   providers: [DatePipe]
 })
 export class InvoicesComponent implements OnInit {
+  invoiceDetail: InvoiceMaster;
   currentUser: User;
   invoices: InvoiceMaster[];
   invoiceForm: FormGroup;
@@ -84,7 +85,8 @@ export class InvoicesComponent implements OnInit {
     console.log(this.rowsTemp)
   }
 
-  detail(){
-    
+  detail(id:number){
+    this.invoiceDetail=this.invoices[id-1];
+    console.log(this.invoiceDetail);
   }
 }

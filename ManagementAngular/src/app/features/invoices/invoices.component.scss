@@ -423,3 +423,11 @@ th:last-child {
     outline: none;
     border: none;
 }
+
+.info {
+    position: absolute;
+    top: 27%;
+    right: 0;
+    font-size: 15px;
+    text-transform: capitalize;
+}
