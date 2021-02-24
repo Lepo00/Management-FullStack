@@ -421,6 +421,14 @@
         z.style.display = "none";
     }
 
+    /* gestione layer edit on click sulla X del seleziona elementi fattura*/
+    function toggleLayerXSelect() {
+
+        var t = document.getElementById("div-select");
+        t.style.display = "none";
+
+    }
+
     /* gestione layer edit on click sull'overlay*/
     function toggleLayerOverlay() {
         var v = document.getElementById("div-detail");
@@ -520,7 +528,15 @@
 
 <!-- Select DropDown-->
 <script>
-    function addItem() {
-        jQuery(".addItem").append("<select class='form-select outline-none' aria-label='Default select example' onchange='addItem()' style='margin-top:2vh;' onchange='addAnotherSelect()'><option selected>Seleziona articolo</option><option value='1'>One</option><option value='2'>Two</option><option value='3'>Three</option></select><button id='x-icon-delete' style='background-color: transparent; border: none; outline:none; outline: none; color:white; font-size:1.6rem;'><i class='fas fa-times'></i></button>");
+    function addItemDiv() {
+        var a = document.getElementById("div-select");
+        var b = document.getElementById("overlay");
+        if (a.style.display === "none") {
+            a.style.display = "block";
+            b.style.display = "block";
+        } else {
+            a.style.display = "none";
+
+        }
     }
 </script>
