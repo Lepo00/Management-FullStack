@@ -8,8 +8,6 @@ import it.jac.management.model.Customer;
 public interface CustomerService {
 	public Optional<Customer> get(Long id);
 
-	public Customer getOne(Long id);
-
 	public Customer getByIvaCode(String ivaCode);
 
 	public Customer create(Customer c);

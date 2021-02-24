@@ -49,7 +49,7 @@ public class InvoiceMasterServiceImpl implements InvoiceMasterService {
 
 	@Override
 	public InvoiceMaster createWithCustomer(Long idCustomer, InvoiceMaster invoice) {
-		Customer customer = customerService.getOne(idCustomer);
+		Customer customer = customerService.get(idCustomer).get();
 		invoice.setAccountholder(customer.getName() + " " + customer.getSurname());
 		return create(invoice);
 	}

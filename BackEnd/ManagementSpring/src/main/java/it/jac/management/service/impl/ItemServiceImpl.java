@@ -22,11 +22,6 @@ public class ItemServiceImpl implements ItemService {
 	}
 
 	@Override
-	public Item getOne(Long id) {
-		return itemRepository.getOne(id);
-	}
-
-	@Override
 	public List<Item> getAll() {
 		return itemRepository.findAll();
 	}
