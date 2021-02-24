@@ -218,9 +218,9 @@
                 </tr>
                 <tr *ngFor="let item of items" class="tr">
                     <td class="td">{{item.description}}</td>
-                    <td class="td"><input type="number" placeholder="quantità"></td>
-                    <td class="td"><input type="number" placeholder="Sconto %"></td>
-                    <td> <button class="addItem">Aggiungi</button></td>
+                    <td class="td"><input formControlName="quantity" type="number" placeholder="quantità"></td>
+                    <td class="td"><input formControlName="percDiscount" type="number" placeholder="Sconto %"></td>
+                    <td> <button type="button" (click)="addTemp(item.id)" class="addItem">Aggiungi</button></td>
                 </tr>
             </table-->
         </form>
