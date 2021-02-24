@@ -431,11 +431,13 @@
 
     /* gestione layer edit on click sull'overlay*/
     function toggleLayerOverlay() {
+        var s = document.getElementById("div-select");
         var v = document.getElementById("div-detail");
         var w = document.getElementById("div-delete");
         var x = document.getElementById("div-edit");
         var y = document.getElementById("overlay");
         var z = document.getElementById("div-new");
+        s.style.display = "none";
         v.style.display = "none";
         w.style.display = "none";
         x.style.display = "none";

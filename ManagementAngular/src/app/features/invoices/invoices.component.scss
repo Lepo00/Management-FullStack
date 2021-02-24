@@ -238,13 +238,44 @@ th:last-child {
 
 #div-select .form-container {
     width: 80% !important;
-    margin-left: -15% !important;
+    margin-left: -13% !important;
+    transform: unset !important;
     position: absolute;
     background-color: var(--colorbg);
 }
 
 .addItem {
-    background-color: white;
+    font-size: 1rem;
+    transform: unset !important;
+    margin-top: 16px;
+}
+
+.addItem:hover {
+    color: var(--color1);
+}
+
+.save-new-invoice {
+    width: 76% !important;
+    margin-left: 12% !important;
+    margin-top: 5vh;
+    background-color: var(--color1) !important;
+    color: var(--colorbglight) !important;
+    transform: unset !important;
+}
+
+.save-new-invoice:hover {
+    color: var(--color1) !important;
+    background-color: var(--colorbglight) !important;
+}
+
+.unset {
+    transform: unset !important;
+}
+
+.select-article {
+    color: white;
+    width: 76% !important;
+    margin-left: 20% !important;
 }
 
 
