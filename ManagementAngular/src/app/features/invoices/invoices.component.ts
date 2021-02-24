@@ -1,3 +1,4 @@
+import { DatePipe, formatDate } from '@angular/common';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { InvoiceBody } from 'src/app/core/models/invoice-body.interface';
@@ -10,7 +11,8 @@ import { HttpCommunicationsService } from 'src/app/core/services/http-communicat
 @Component({
   selector: 'app-invoices',
   templateUrl: './invoices.component.html',
-  styleUrls: ['./invoices.component.scss']
+  styleUrls: ['./invoices.component.scss'],
+  providers: [DatePipe]
 })
 export class InvoicesComponent implements OnInit {
   currentUser:User;
@@ -22,7 +24,9 @@ export class InvoicesComponent implements OnInit {
   validatingForm: FormGroup;
   items: Item[];
   rowsTemp:InvoiceBody[]=[];
-  constructor(private httpService: HttpCommunicationsService,private fb: FormBuilder) { 
+  myDate = new Date();
+
+  constructor(private httpService: HttpCommunicationsService,private fb: FormBuilder,private datePipe: DatePipe) { 
   this.invoiceForm = this.fb.group({
     accountholder: ['', Validators.required],
     date: ['', Validators.required],
@@ -52,9 +56,19 @@ export class InvoicesComponent implements OnInit {
   }
 
   save(){
-    this.invoiceToSave.tail.discountPerc = this.invoiceForm.value.tail;
-    this.httpService.retrievePostCall<InvoiceMaster>("invoice/save",this.invoiceToSave)
-}
+    this.invoiceToSave = {accountholder:this.currentUser.username,number:1,date:"12/12/12",paymentMethod:"bonifico",rows:this.rowsTemp,tail:{discountPerc:this.invoiceForm.value.tail,discountValue:0,finalAmount:0,itemsValue:0,rowsDiscount:0,taxable:0,taxed:0,totDiscount:0}}
+    let observer = this.httpService.retrievePostCall<InvoiceMaster>("invoice/save",this.invoiceToSave).subscribe(response=>{
+      this.updateInvoice();
+      observer.unsubscribe();
+    });
+  }
+  updateInvoice(){
+    let observer=this.httpService.retrieveGetCall<User>("user/"+this.currentUser.id).subscribe(response=>{
+      sessionStorage.setItem("user",JSON.stringify(response));
+      this.invoices=response.invoices.sort((a, b) => a.id - b.id);
+      observer.unsubscribe();
+    })
+  }
  /*add(){
   this.rows = this.rowsTemp;
   console.log(this.rows)
@@ -65,5 +79,6 @@ addTemp(id:number){
   this.rowsTemp.push(body)
   console.log(this.rowsTemp)
 }
+
 }
 

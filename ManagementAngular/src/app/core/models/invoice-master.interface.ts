@@ -5,7 +5,7 @@ export interface InvoiceMaster{
     id?: number;
     number:number;
     accountholder: string;
-    date: Date;
+    date: string;
     paymentMethod: string;
     rows: InvoiceBody[];
     tail: InvoiceTail;
