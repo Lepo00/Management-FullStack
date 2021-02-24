@@ -19,6 +19,7 @@ export class InvoicesComponent implements OnInit {
   invoices:InvoiceMaster[];
   invoiceForm:FormGroup;
   itemForm:FormGroup;
+  rows:InvoiceBody[]=[];
   invoiceToSave:InvoiceMaster;
   validatingForm: FormGroup;
   items: Item[];
@@ -30,6 +31,8 @@ export class InvoicesComponent implements OnInit {
     accountholder: ['', Validators.required],
     date: ['', Validators.required],
     paymentMethod: ['', Validators.required],
+    rows: ['', Validators.required],
+    tail: ['', Validators.required],
   })
   this.itemForm = this.fb.group({
     number:[],
@@ -55,9 +58,16 @@ export class InvoicesComponent implements OnInit {
   save(){
     this.invoiceToSave = {accountholder:this.currentUser.username,number:1,date:"12/12/12",paymentMethod:"bonifico",rows:this.rowsTemp,tail:{discountPerc:this.invoiceForm.value.tail,discountValue:0,finalAmount:0,itemsValue:0,rowsDiscount:0,taxable:0,taxed:0,totDiscount:0}}
     let observer = this.httpService.retrievePostCall<InvoiceMaster>("invoice/save",this.invoiceToSave).subscribe(response=>{
-      this.updateInvoice();
+      this.assignInvoice();
       observer.unsubscribe();
     });
+  }
+  assignInvoice() {
+    let observer = this.httpService.retrievePostCall<User>("user/"+this.currentUser.id+"/addInvoice",this.invoiceToSave).subscribe(response=>{
+      this.currentUser = response;
+      this.updateInvoice();
+      observer.unsubscribe();
+    })
   }
   updateInvoice(){
     let observer=this.httpService.retrieveGetCall<User>("user/"+this.currentUser.id).subscribe(response=>{
