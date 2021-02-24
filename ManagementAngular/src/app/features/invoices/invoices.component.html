@@ -166,9 +166,37 @@
 <div id="div-select" style="display: none;">
     <div class="form-container">
         <button id="x-icon" onclick="toggleLayerXSelect()"><i class="fas fa-times"></i></button>
-        <h1 class="m-0">Seleziona Articoli</h1>
+        <h1 class="m-0 select-article">Seleziona Articoli</h1>
         <form [formGroup]="itemForm">
-            <table class="items">
+
+
+            <table class="table" style="width: 76%;">
+                <tr class="tr">
+                    <td class="th">Articolo</td>
+                    <td class="th">Quantità</td>
+                    <td class="th">Sconto %</td>
+                    <td class="th"></td>
+                </tr>
+                <tr *ngFor="let item of items" class="tr">
+                    <td class="td">{{item.description}}</td>
+                    <td class="td"><input class=" unset" type="number" placeholder="Quantità"></td>
+                    <td class="td"><input class=" unset" type="number" placeholder="Sconto %"></td>
+                    <td>
+                        <div class="form-group">
+                            <button type="submit" class="addItem">Aggiungi</button>
+                        </div>
+                    </td>
+
+
+                </tr>
+            </table>
+
+            <div class="form-group">
+                <button type="submit" class="save-new-invoice">Salva</button>
+            </div>
+
+
+            <!--table class="items">
                 <tr class="tr">
                     <td class="th">Articolo</td>
                     <td class="th">Quantità</td>
@@ -180,7 +208,7 @@
                     <td class="td"><input type="number" placeholder="Sconto %"></td>
                     <td> <button class="addItem">Aggiungi</button></td>
                 </tr>
-            </table>
+            </table-->
         </form>
     </div>
 </div>
