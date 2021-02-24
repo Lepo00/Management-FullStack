@@ -26,8 +26,7 @@
                         <td class="td">{{invoice.tail.finalAmount}}</td>
                         <td class="td">
                             <button onclick="toggleLayer()"><i class="fas fa-edit"></i></button>
-                            <button onclick="toggleLayerZoom()"><i class="fas fa-search"
-                                    (click)="detail(invoice.id)"></i></button>
+                            <button onclick="toggleLayerZoom()"><i class="fas fa-search" (click)="detail(invoice.id)"></i></button>
                             <button onclick="toggleLayerConfirm()"><i class="fas fa-times"></i></button>
                         </td>
                     </tr>
@@ -92,24 +91,23 @@
 
 <!--DIV CREA FATTURA-->
 <div id="div-new" style="display: none;">
-    <div class="form-container">
+    <div class="create-invoice">
         <button id="x-icon" onclick="toggleLayerX()"><i class="fas fa-times"></i></button>
-        <button id="x-icon" onclick="toggleLayerX()"> <i class="far fa-save"></i></button>
         <h1>Crea Nuova Fattura</h1>
         <form [formGroup]="invoiceForm" (ngSubmit)="save()">
-            <button style="position: absolute; top: 0%; right: 6%;" type="submit" id="x-icon"> <i
+            <button class="saveButton" type="submit" id="x-icon"> <i
                     class="far fa-save"></i></button>
             <div class="row">
-                <div class="col-4 col-sm-4 col-md-4 col-lg-4 ">
-                    <div class="form-group">
-                        <label for="tail">Sconto Coda</label>
-                        <input type="email" class="form-control" placeholder="tail" formControlName="tail">
-                    </div>
-                </div>
                 <div class="col-8 col-sm-8 col-md-8 col-lg-8">
                     <div class="form-group">
                         <label for="Intestatario">Intestatario</label>
                         <input class="form-control" placeholder="Intestatario" formControlName="accountholder">
+                    </div>
+                </div>
+                <div class="col-4 col-sm-4 col-md-4 col-lg-4 ">
+                    <div class="form-group">
+                        <label for="tail">Sconto Coda</label>
+                        <input type="email" class="form-control" placeholder="tail" formControlName="tail">
                     </div>
                 </div>
             </div>
@@ -217,7 +215,7 @@
         <div class="fattura">
             <div class="row testa">
                 <div class="col-6 col-sm-6 col-md-6 col-lg-6 logo">
-                    <img src="../../../assets/logo-fatture.png" alt="">
+                    <img src="../../../assets/logo-fatture.png" alt="" class="imgDetail">
                 </div>
                 <div class="col-6 col-sm-6 col-md-6 col-lg-6 info">
                     Ragione Sociale:<br> <b>{{invoiceDetail?.accountholder}}</b> <br> Partita IVA:<br>
@@ -241,30 +239,32 @@
             <div class="row">
                 <div class="col-12 col-sm-12 col-md-12 col-lg-12">
                     <table class="table">
-                        <tr class="tr" style="width: 100%;">
-                            <td colspan="9">Riepilogo generale</td>
+                        <tr class="tr">
+                            <td colspan="9">
+                                <h4 class="titletable">Riepilogo Righe</h4>
+                            </td>
                         </tr>
                         <tr class="tr">
                             <td class="th">Nome Articolo</td>
-                            <td class="th">Prezzo Unitario</td>
+                            <td class="th">Prezzo<br>Unitario</td>
                             <td class="th">Quantità</td>
                             <td class="th">Sconto (%)</td>
                             <td class="th">Totale Sconto</td>
-                            <td class="th">Prezzo scontato Singolo</td>
+                            <td class="th">Prezzo scontato<br>Singolo</td>
                             <td class="th">Imponibile</td>
                             <td class="th">Tasse</td>
                             <td class="th">Totale</td>
                         </tr>
                         <tr *ngFor="let row of invoiceDetail?.rows" class="tr">
                             <td class="td">{{row.item.description}}</td>
-                            <td class="td">{{row.item.price}}</td>
+                            <td class="td">{{row.item.price}} €</td>
                             <td class="td">{{row.quantity}}</td>
-                            <td class="td">{{row.percDiscount}}</td>
-                            <td class="td">{{row.netPrice}}</td>
-                            <td class="td">{{row.item.id}}</td>
-                            <td class="td">{{row.taxable}}</td>
-                            <td class="td">{{row.taxed}}</td>
-                            <td class="td">{{row.finalAmount}}</td>
+                            <td class="td">{{row.percDiscount}} %</td>
+                            <td class="td">{{row.totDiscount}} €</td>
+                            <td class="td">{{row.netPrice}} €</td>
+                            <td class="td">{{row.taxable}} €</td>
+                            <td class="td">{{row.taxed}} €</td>
+                            <td class="td">{{row.finalAmount}} €</td>
                         </tr>
                     </table>
                 </div>
@@ -273,26 +273,31 @@
                 <div class="col-12 col-sm-12 col-md-12 col-lg-12">
                     <table class="table">
                         <tr class="tr">
-                            <td class="th">Totale righe</td>
+                            <td colspan="9">
+                                <h4 class="titletable">Coda fattura</h4>
+                            </td>
+                        </tr>
+                        <tr class="tr">
+                            <td class="th">Totale Righe</td>
                             <td class="th">Servizi</td>
-                            <td class="th">Totale Sconto righe</td>
-                            <td class="th">Sconto coda(%)</td>
-                            <td class="th">Valore Sconto Coda</td>
-                            <td class="th">Totale sconto</td>
+                            <td class="th">Tot. Sconto<br>Righe</td>
+                            <td class="th">Sconto<br>coda(%)</td>
+                            <td class="th">Valore<br>Sconto</td>
+                            <td class="th">Totale<br>sconto</td>
                             <td class="th">Imponibile</td>
                             <td class="th">Tasse</td>
                             <td class="th">Totale</td>
                         </tr>
                         <tr>
-                            <td class="td">{{invoiceDetail?.tail.itemsValue}}</td>
-                            <td class="td">{{invoiceDetail?.tail.serviceValue}}</td>
-                            <td class="td">{{invoiceDetail?.tail.rowsDiscount}}</td>
-                            <td class="td">{{invoiceDetail?.tail.discountPerc}}</td>
-                            <td class="td">{{invoiceDetail?.tail.discountValue}}</td>
-                            <td class="td">{{invoiceDetail?.tail.totDiscount}}</td>
-                            <td class="td">{{invoiceDetail?.tail.taxable}}</td>
-                            <td class="td">{{invoiceDetail?.tail.taxed}}</td>
-                            <td class="td">{{invoiceDetail?.tail.finalAmount}}</td>
+                            <td class="td">{{invoiceDetail?.tail.itemsValue}} €</td>
+                            <td class="td">{{invoiceDetail?.tail.serviceValue}} €</td>
+                            <td class="td">{{invoiceDetail?.tail.rowsDiscount}} €</td>
+                            <td class="td">{{invoiceDetail?.tail.discountPerc}} %</td>
+                            <td class="td">{{invoiceDetail?.tail.discountValue}} €</td>
+                            <td class="td">{{invoiceDetail?.tail.totDiscount}} €</td>
+                            <td class="td">{{invoiceDetail?.tail.taxable}} €</td>
+                            <td class="td">{{invoiceDetail?.tail.taxed}} €</td>
+                            <td class="td">{{invoiceDetail?.tail.finalAmount}} €</td>
                         </tr>
                     </table>
                 </div>

@@ -341,7 +341,7 @@ th:last-child {
 }
 
 #div-detail .fattura {
-    padding-top: 4%;
+    padding-top: 3%;
     padding-bottom: 3%;
 }
 
@@ -417,8 +417,52 @@ th:last-child {
 
 .info {
     position: absolute;
-    top: 27%;
+    top: 22%;
     right: 0;
     font-size: 15px;
     text-transform: capitalize;
+}
+
+.saveButton {
+    position: absolute;
+    top: 0%;
+    right: 6%;
+}
+
+.create-invoice {
+    background-color: var(--bgcolorlayer);
+    height: auto;
+    width: 70%;
+    position: fixed;
+    top: 8%;
+    bottom: 8%;
+    left: 15%;
+    right: 15%;
+    z-index: 9999999999999999;
+}
+
+.create-invoice h1 {
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: 2rem;
+}
+
+.create-invoice form {
+    margin-top: 5vh;
+    margin-bottom: 10vh;
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.imgDetail {
+    margin-left: 20%;
+}
+
+.titletable {
+    text-align: center;
+    margin: 5px;
 }
