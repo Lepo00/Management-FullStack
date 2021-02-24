@@ -17,7 +17,6 @@ export class InvoicesComponent implements OnInit {
   invoices:InvoiceMaster[];
   invoiceForm:FormGroup;
   itemForm:FormGroup;
-  rows:InvoiceBody[]=[];
   invoiceToSave:InvoiceMaster;
   validatingForm: FormGroup;
   items: Item[];
@@ -27,8 +26,6 @@ export class InvoicesComponent implements OnInit {
     accountholder: ['', Validators.required],
     date: ['', Validators.required],
     paymentMethod: ['', Validators.required],
-    rows: ['', Validators.required],
-    tail: ['', Validators.required],
   })
   this.itemForm = this.fb.group({
     number:[],
@@ -55,10 +52,7 @@ export class InvoicesComponent implements OnInit {
     this.invoiceToSave.tail.discountPerc = this.invoiceForm.value.tail;
     this.httpService.retrievePostCall<InvoiceMaster>("invoice/save",this.invoiceToSave)
 }
- /*add(){
-  this.rows = this.rowsTemp;
-  console.log(this.rows)
-}*/
+
 addTemp(id:number){
   let newitem = this.items.find(it => it.id == id)
   let body:InvoiceBody = {finalAmount: 0,item:newitem,netPrice:0,percDiscount:this.itemForm.value.percDiscount,quantity:this.itemForm.value.quantity,taxable:0,taxed:0,totDiscount:0};
