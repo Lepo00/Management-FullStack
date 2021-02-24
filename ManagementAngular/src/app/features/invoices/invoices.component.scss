@@ -240,7 +240,11 @@ th:last-child {
     width: 80% !important;
     margin-left: -15% !important;
     position: absolute;
-    background-color: white !important;
+    background-color: var(--colorbg);
+}
+
+.addItem {
+    background-color: white;
 }
 
 

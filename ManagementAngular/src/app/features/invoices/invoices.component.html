@@ -160,34 +160,25 @@
 <!--END DIV CREA FATTURA-->
 
 <!--DIV SEELZIOAN ARTICOLI-->
+<!--DIV SELEZIONA ARTICOLI-->
 <div id="div-select" style="display: none;">
     <div class="form-container">
         <button id="x-icon" onclick="toggleLayerXSelect()"><i class="fas fa-times"></i></button>
-        <h1>Seleziona Articoli</h1>
-        <form [formGroup]="itemForm" *ngFor="let i of items" (ngSubmit)="addTemp(i.id)">
-            <div class="row">
-                <div class="col-4 col-sm-4 col-md-4 col-lg-4 ">
-                    <div class="form-group">
-                        <label for="id">id</label>
-                        <p class="form-control">{{i.description}}</p>
-                    </div>
-                </div>
-                <div class="col-8 col-sm-8 col-md-8 col-lg-8">
-                    <div class="form-group">
-                        <label for="quantity">quantity</label>
-                        <input class="form-control" placeholder="Quantità" formControlName="quantity">
-                    </div>
-                </div>
-                <div class="col-8 col-sm-8 col-md-8 col-lg-8">
-                    <div class="form-group">
-                        <label for="Sconto">Sconto</label>
-                        <input class="form-control" placeholder="Sconto" formControlName="percDiscount">
-                    </div>
-                </div>
-            </div>
-            <div class="form-group">
-                <button type="submit">Aggiungi articoli</button>
-            </div>
+        <h1 class="m-0">Seleziona Articoli</h1>
+        <form [formGroup]="itemForm">
+            <table class="items">
+                <tr class="tr">
+                    <td class="th">Articolo</td>
+                    <td class="th">Quantità</td>
+                    <td class="th">Sconto %</td>
+                </tr>
+                <tr *ngFor="let item of items" class="tr">
+                    <td class="td">{{item.description}}</td>
+                    <td class="td"><input type="number" placeholder="quantità"></td>
+                    <td class="td"><input type="number" placeholder="Sconto %"></td>
+                </tr>
+            </table>
+            <button class="addItem">Aggiungi</button>
         </form>
     </div>
 </div>
