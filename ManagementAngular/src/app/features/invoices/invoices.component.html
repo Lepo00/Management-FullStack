@@ -180,6 +180,7 @@
 <div id="div-select" style="display: none;">
     <div class="form-container">
         <button id="x-icon" onclick="toggleLayerXSelect()"><i class="fas fa-times"></i></button>
+        <button id="x-icon" onclick="toggleLayerX()"> <i class="far fa-save"></i></button>
         <h1 class="m-0 select-article">Seleziona Articoli</h1>
         <form [formGroup]="itemForm">
 
@@ -204,11 +205,6 @@
 
                 </tr>
             </table>
-
-            <div class="form-group">
-                <button type="submit" class="save-new-invoice">Salva</button>
-            </div>
-
 
             <!--table class="items">
                 <tr class="tr">
