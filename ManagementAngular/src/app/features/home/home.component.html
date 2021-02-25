@@ -2,25 +2,56 @@
 
 <div class="home-container">
     <div class="row row-setting">
-        <div class="col-12 col-sm-12 col-md-12 col-lg-12 cont-page block">
-            <div class="col-12 col-sm-12 col-md-12 col-lg-4 voice-cont ">
-                <a routerLink="/items">
-                    <div class="block-function">
-                        <i class="fas fa-box-open "></i> <br> <br> <span class="block-descrition">Articoli</span>
+        <div class="col-12 col-sm-12 col-md-12 col-lg-12 cont-page block ">
+            <div class="col-12 col-sm-12 col-md-12 col-lg-4 voice-cont">
+                <a routerLink="/items ">
+                    <div class="card ">
+                        <div class="card__container ">
+                            <div class="card__front ">
+                                <i class="fas fa-box-open "></i> <br> <span class="block-descrition ">Articoli</span>
+                            </div>
+                            <div class="card__back ">
+
+                                <i class="fas fa-box-open " style="font-size: 5rem; display: block !important; "></i><br>
+                                <span class="block-descrition ">Totale Articoli: {{nItems}}</span>
+                            </div>
+                        </div>
                     </div>
                 </a>
             </div>
             <div class="col-12 col-sm-12 col-md-12 col-lg-4 voice-cont ">
-                <a routerLink="/customers">
-                    <div class="block-function ">
-                        <i class="fas fa-users"></i> <br> <br> <span class="block-descrition">Clienti</span>
+                <a routerLink="/customers ">
+                    <div class="card ">
+                        <div class="card__container ">
+                            <div class="card__front ">
+                                <i class="fas fa-users "></i> <br> <span class="block-descrition ">Clienti</span>
+                            </div>
+                            <div class="card__back ">
+
+
+                                <i class="fas fa-users " style="font-size: 5rem; display: block !important; "></i> <br> <span class="block-descrition ">Totle Clienti: {{nCustomers}}</span>
+                            </div>
+                        </div>
                     </div>
                 </a>
             </div>
             <div class="col-12 col-sm-12 col-md-12 col-lg-4 voice-cont ">
-                <a routerLink="/invoices">
-                    <div class="block-function " style="width: 86%; ">
-                        <i class="fas fa-cash-register"></i> <br> <br> <span class="block-descrition">Fatture</span>
+                <a routerLink="/invoices ">
+                    <!--div class="block-function " style="width: 86%; ">
+                        <i class="fas fa-cash-register "></i> <br> <br> <span class="block-descrition ">Fatture</span>
+                    </div-->
+
+                    <div class="card ">
+                        <div class="card__container ">
+                            <div class="card__front ">
+                                <i class="fas fa-cash-register "></i> <br> <br> <span class="block-descrition ">Fatture</span>
+                            </div>
+                            <div class="card__back ">
+
+
+                                <i class="fas fa-cash-register " style="font-size: 5rem; display: block !important; "></i> <br> <br> <span class="block-descrition ">Totale Fatturato: {{totInvoices}}</span>
+                            </div>
+                        </div>
                     </div>
                 </a>
             </div>

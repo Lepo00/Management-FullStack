@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { InvoiceMaster } from 'src/app/core/models/invoice-master.interface';
+import { Item } from 'src/app/core/models/item.interface';
+import { User } from 'src/app/core/models/user';
+import { HttpCommunicationsService } from 'src/app/core/services/http-communications.service';
 
 @Component({
   selector: 'app-home',
@@ -6,10 +10,25 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
+  nCustomers:number;
+  nItems:number;
+  totInvoices:number;
 
-  constructor() { }
+  constructor(private httpService: HttpCommunicationsService) {
+    this.totInvoices=0;
+    let currentUser = <User>JSON.parse(sessionStorage.getItem("user"));
+    this.httpService.retrieveGetCall<InvoiceMaster[]>("user/" + currentUser.id + "/invoices").subscribe(response => {
+      response.map(invoice=>{
+        this.totInvoices+=invoice.tail.finalAmount;
+      })
+    });
+    this.httpService.retrieveGetCall<Item[]>("item").subscribe(response => {
+      this.nItems=response.length;
+    });
+    this.nCustomers=currentUser.customers.length;
+  }
 
   ngOnInit(): void {
   }
-
+  
 }
