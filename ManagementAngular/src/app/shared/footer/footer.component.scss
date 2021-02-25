@@ -65,7 +65,7 @@ $social-button-transition-time: 0.3s;
     }
 }
 
-$social-button-colors: ( "mail": #0072c6, "facebook": #3b5999, "linkedin": #0077b5, "github": #6e5494, "codepen": #1ab927, "steam": #7da10e, "snapchat":#eec900, "twitter": #55acee, "instagram": #e4405f, "npmjs": #c12127);
+$social-button-colors: ( "facebook": #3b5999, "linkedin": #0077b5, "github": #6e5494, "codepen": #1ab927, "snapchat":#eec900);
 .social-button {
     position: relative;
     display: flex;
@@ -86,18 +86,11 @@ $social-button-colors: ( "mail": #0072c6, "facebook": #3b5999, "linkedin": #0077
         background: $social-button-background;
         text-align: center;
     }
-    i,
-    svg {
+    i {
         position: relative;
         z-index: 1;
         transition: $social-button-transition-time;
-    }
-    i {
         font-size: $social-button-radius * $social-button-icon-size;
-    }
-    svg {
-        height: percentage($social-button-icon-size);
-        width: percentage($social-button-icon-size);
     }
     &::after {
         content: "";
