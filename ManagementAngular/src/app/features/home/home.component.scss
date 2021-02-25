@@ -1,16 +1,15 @@
-.home-container {
-    background-color: var(--color2) !important;
-}
-
-.row-setting {
-    background-color: var(--color2) !important;
+.all {
     margin: 0;
+    position: relative;
+    z-index: 9999999;
 }
 
 .block {
     background-color: var(--color2);
-    padding-top: 17vh;
+    padding-top: 15.5vh;
     min-height: 69.8vh;
+    display: flex;
+    flex-direction: row;
 }
 
 .block-descrition {
@@ -23,9 +22,10 @@
 /*flip card*/
 
 .card {
+    margin: 0 5%;
     position: relative;
-    width: 300px;
-    height: 300px;
+    width: 30%;
+    height: 280px;
     perspective: 500px;
     cursor: pointer;
     &__container {
@@ -67,7 +67,7 @@
     &:hover &__container,
     &:focus &__container {
         transform: rotateY(180deg);
-        transition-duration: .5s;
+        transition-duration: .7s;
     }
 }
 
