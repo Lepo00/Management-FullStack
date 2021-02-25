@@ -165,7 +165,7 @@ th:last-child {
     height: auto;
     width: 50%;
     position: fixed;
-    top: 20vh;
+    top: 14%;
     left: 25%;
     z-index: 9999999999999999;
 }
@@ -191,8 +191,7 @@ th:last-child {
 }
 
 .form-container form {
-    margin-top: 5vh;
-    margin-bottom: 10vh;
+    margin: 5vh auto;
     width: 80%;
     margin-left: auto;
     margin-right: auto;
@@ -240,7 +239,7 @@ th:last-child {
 }
 
 #div-delete .form-container {
-    top: 35vh;
+    top: 28%;
 }
 
 #div-delete .confirm-button {

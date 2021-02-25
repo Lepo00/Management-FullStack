@@ -28,7 +28,7 @@
                         <td class="td">
                             <button onclick="toggleLayer()"><i class="fas fa-edit"></i></button>
                             <button onclick="toggleLayerZoom()"><i class="fas fa-search" (click)="detail(invoice.id)"></i></button>
-                            <button onclick="toggleLayerConfirm()"><i class="fas fa-times"></i></button>
+                            <button onclick="toggleLayerConfirm()"><i class="fas fa-times" (click)="detail(invoice.id)"></i></button>
                         </td>
                     </tr>
                 </table>
@@ -96,7 +96,7 @@
         <button id="x-icon" onclick="toggleLayerX()"><i class="fas fa-times"></i></button>
         <h1>Crea Nuova Fattura</h1>
         <form [formGroup]="invoiceForm" (ngSubmit)="save()">
-            <button class="saveButton" type="submit" id="x-icon"> <i class="far fa-save"></i></button>
+            <button class="saveButton" type="submit" id="x-icon" [disabled]="invoiceForm.status === 'INVALID'" [ngClass]="{'disabled': invoiceForm.status === 'INVALID'}"> <i class="far fa-save"></i></button>
             <div class="row">
                 <div class="col-8 col-sm-8 col-md-8 col-lg-8">
                     <div class="form-group">
@@ -190,7 +190,7 @@
         <button id="x-icon" onclick="toggleLayerX()"><i class="fas fa-times"></i></button>
         <h1>Sei sicuro di voler eliminare la fattura?</h1>
         <br> <br>
-        <button class="confirm-button" style="margin-right: 20px;" type="submit">Si</button>
+        <button onclick="cancelConfirmLayer()" class="confirm-button" style="margin-right: 20px;" type="submit" (click)="delete()">Si</button>
         <button onclick="cancelConfirmLayer()" class="confirm-button" id="annulla" type="submit">No</button>
         <br><br><br>
     </div>

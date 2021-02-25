@@ -20,17 +20,17 @@
                         <td class="th">Indirizzo</td>
                         <td class="th">Azioni</td>
                     </tr>
-                    <tr *ngFor="let item of customers; let i = index;" class="tr">
+                    <tr *ngFor="let customer of customers; let i = index;" class="tr">
                         <td class="td">{{i+1}}</td>
-                        <td class="td">{{item.name}} {{item?.surname}}</td>
-                        <td class="td">{{item.ivaCode}}</td>
-                        <td class="td">{{item.phone}}</td>
-                        <td class="td">{{item.email}}</td>
-                        <td class="td">{{item.address}}</td>
+                        <td class="td">{{customer.name}} {{customer?.surname}}</td>
+                        <td class="td">{{customer.ivaCode}}</td>
+                        <td class="td">{{customer.phone}}</td>
+                        <td class="td">{{customer.email}}</td>
+                        <td class="td">{{customer.address}}</td>
                         <td class="td">
-                            <button *ngIf="searchButton" onclick="toggleLayer()" (click)="resetForm(); detail(item.id); populateForm()"><i class="fas fa-edit"></i></button>
-                            <button onclick="toggleLayerZoom()" (click)="detail(item.id)"><i class="fas fa-search" id="zoom"></i></button>
-                            <button *ngIf="searchButton" onclick="toggleLayerConfirm()" (click)="detail(item.id)"><i class="fas fa-times"></i></button>
+                            <button *ngIf="searchButton" onclick="toggleLayer()" (click)="resetForm(); detail(customer.id); populateForm()"><i class="fas fa-edit"></i></button>
+                            <button onclick="toggleLayerZoom()" (click)="detail(customer.id)"><i class="fas fa-search" id="zoom"></i></button>
+                            <button *ngIf="searchButton" onclick="toggleLayerConfirm()" (click)="detail(customer.id)"><i class="fas fa-times"></i></button>
                         </td>
                     </tr>
                 </table>
@@ -158,7 +158,7 @@
             </div>
             <p>* Campi obbligatori</p>
             <div class="form-group">
-                <button type="submit" onclick="toggleLayerX()" [disabled]="customerForm.status === 'INVALID'" [ngClass]="{'disabled': customerForm.status === 'INVALID'}">Crea Cliente</button>
+                <button type="submit" class="new" onclick="toggleLayerX()" [disabled]="customerForm.status === 'INVALID'" [ngClass]="{'disabled': customerForm.status === 'INVALID'}">Crea Cliente</button>
             </div>
         </form>
     </div>
@@ -167,7 +167,7 @@
 <!--DIV SEI SICURO DI VOLER ELIMINARE IL CLIENTE?-->
 <div id="div-delete" style="display: none; ">
     <div class="form-container">
-        <button id="x-icon"><i class="fas fa-times" ></i></button>
+        <button id="x-icon"><i class="fas fa-times" onclick="cancelConfirmLayer()"></i></button>
         <h1>Sei sicuro di voler eliminare il Cliente?</h1>
         <br> <br>
         <button class="confirm-button" style="margin-right: 20px;" type="submit" (click)="delete();" onclick="toggleLayerX()">Si</button>
@@ -186,7 +186,7 @@
                 <div class="col-4 col-sm-4 col-md-4 col-lg-4 ">
                     <div class="form-group">
                         <label for="codice">Codice</label>
-                        <input type="email" class="form-control" placeholder="Codice" readonly disabled value={{customer?.id}}>
+                        <input type="email" class="form-control new" placeholder="Codice" readonly disabled value={{customer?.id}}>
                     </div>
                 </div>
                 <div class="col-8 col-sm-8 col-md-8 col-lg-8">

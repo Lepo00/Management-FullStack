@@ -15,15 +15,11 @@ import { HttpCommunicationsService } from 'src/app/core/services/http-communicat
   providers: [DatePipe]
 })
 export class InvoicesComponent implements OnInit {
-  invoiceDetail: InvoiceMaster;
   currentUser: User;
+  items: Item[];
+  invoiceDetail: InvoiceMaster;
   invoices: InvoiceMaster[];
   invoiceForm: FormGroup;
-  rows: InvoiceBody[] = [];
-  invoiceToSave: InvoiceMaster;
-  validatingForm: FormGroup;
-  items: Item[];
-  rowsTemp: InvoiceBody[] = [];
   itemsArr: FormArray;
 
   constructor(private httpService: HttpCommunicationsService, private fb: FormBuilder, private datePipe: DatePipe) {
@@ -33,7 +29,7 @@ export class InvoicesComponent implements OnInit {
       paymentMethod: ['paypal', Validators.required],
       rows: this.fb.array([this.createItem()]),
       tail: ['12', Validators.required]
-    })
+    });
   }
 
   createItem(): FormGroup {
@@ -74,14 +70,26 @@ export class InvoicesComponent implements OnInit {
       invoice.rows[index].percDiscount=row.percDiscount;
     })
     let observer = this.httpService.retrievePostCall<User>("user/"+this.currentUser.id+"/addInvoice", invoice).subscribe(response => {
-      this.updateUser(response);
+      sessionStorage.setItem("user",JSON.stringify(response));
+      this.invoices=response.invoices.sort((a, b) => a.id - b.id);
+      observer.unsubscribe();
+    })
+  }
+  
+  updateUser(){
+    let observer=this.httpService.retrieveGetCall<User>("user/"+this.currentUser.id).subscribe(response=>{
+      sessionStorage.setItem("user",JSON.stringify(response));
+      this.invoices=response.invoices.sort((a, b) => a.id - b.id);
       observer.unsubscribe();
     })
   }
 
-  updateUser(response: User){
-      sessionStorage.setItem("user",JSON.stringify(response));
-      this.invoices=response.invoices.sort((a, b) => a.id - b.id);
+  delete(){
+    let url:string="invoice/delete/"+this.invoiceDetail.id;
+    let observer=this.httpService.retrieveDeleteCall<string>(url).subscribe(response=>{
+      this.updateUser();
+      observer.unsubscribe();
+    });
   }
 
   detail(id: number) {

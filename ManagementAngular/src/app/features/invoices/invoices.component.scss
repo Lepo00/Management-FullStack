@@ -67,7 +67,7 @@ tr:focus {
 }
 
 #x-icon:hover i {
-    color: var(--colorbglight) !important;
+    color: var(--colorbglight);
 }
 
 input:focus {
@@ -168,9 +168,14 @@ th:last-child {
     height: auto;
     width: 50%;
     position: fixed;
-    top: 20vh;
+    top: 25%;
     left: 25%;
     z-index: 9999999999999999;
+}
+
+.disabled,
+.disabled:hover i {
+    color: rgb(59, 59, 59) !important;
 }
 
 #x-icon {
@@ -243,10 +248,6 @@ th:last-child {
     display: none;
     color: var(--color4);
     text-align: center;
-}
-
-#div-delete .form-container {
-    top: 35vh;
 }
 
 #div-delete .confirm-button {
