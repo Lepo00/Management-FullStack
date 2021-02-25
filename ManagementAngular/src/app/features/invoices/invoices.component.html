@@ -6,7 +6,8 @@
                 <div class="title-container">
                     <h1>Fatture.</h1> <i class="fas fa-file-invoice"></i>
                     <div class="button-container-new" style="display: inline-block;">
-                        <button onclick="toggleNewLayer()"><a>Nuova Fattura</a></button>
+                        <button onclick="toggleNewLayer()" (click)="invoiceForm.reset();itemsArr?.clear();this.itemsArr?.push(this.createItem())"><a>Nuova
+                                Fattura</a></button>
                     </div>
                 </div>
                 <table class="table">
@@ -95,8 +96,7 @@
         <button id="x-icon" onclick="toggleLayerX()"><i class="fas fa-times"></i></button>
         <h1>Crea Nuova Fattura</h1>
         <form [formGroup]="invoiceForm" (ngSubmit)="save()">
-            <button class="saveButton" type="submit" id="x-icon"> <i
-                    class="far fa-save"></i></button>
+            <button class="saveButton" type="submit" id="x-icon"> <i class="far fa-save"></i></button>
             <div class="row">
                 <div class="col-8 col-sm-8 col-md-8 col-lg-8">
                     <div class="form-group">
@@ -115,17 +115,46 @@
                 <div class="col-4 col-sm-4 col-md-4 col-lg-4 ">
                     <div class="form-group">
                         <label for="data">Data</label>
-                        <input type="email" class="form-control" placeholder="Data" required>
+                        <input type="email" class="form-control" placeholder="Data" formControlName="date">
                     </div>
                 </div>
                 <div class="col-8 col-sm-8 col-md-8 col-lg-8">
                     <div class="form-group">
                         <label for="pagamento">Pagamento</label>
-                        <input class="form-control" placeholder="Pagamento" required>
+                        <input class="form-control" placeholder="Pagamento" formControlName="paymentMethod">
                     </div>
                 </div>
             </div>
-            <div class="col-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom: 5vh;">
+            <div class="itemsArr">
+                <div formArrayName="itemsArr" *ngFor="let item of invoiceForm.get('itemsArr')['controls']; let i = index;" class="row">
+                    <div [formGroupName]="i">
+                        <div class="col-4 col-sm-4 col-md-4 col-lg-4">
+                            <div class="form-group">
+                                <label>Oggetto</label>
+                                <select data-menu formControlName="name" placeholder="Item name" class="form-control">
+                                    <option *ngFor="let item of items" value="{{item.id}}">{{item.description}}</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-3 col-sm-3 col-md-3 col-lg-3">
+                            <div class="form-group">
+                                <label>Quantità</label>
+                                <input formControlName="quantity" placeholder="Quantità" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-3 col-sm-3 col-md-3 col-lg-3">
+                            <div class="form-group">
+                                <label>Sconto %</label>
+                                <input formControlName="discountPerc" placeholder="Sconto Percentuale" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-2 col-sm-2 col-md-2 col-lg-2">
+                        <button type="button" (click)="addItem()" class="addItem">Aggiungi</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom: 2vh;">
                 <table class="table">
                     <tr class="tr">
                         <td class="th">Items Value</td>
@@ -138,12 +167,16 @@
                         <td class="th"> Taxed</td>
                         <td class="th">Totale Finale</td>
                     </tr>
-                    <tr *ngFor="let item of invoices; let i = index;" class="tr">
-                        <td class="td">{{i+1}}</td>
-                        <td class="td">{{item.number}}</td>
-                        <td class="td">{{item.accountholder}}</td>
-                        <td class="td">{{item.date}}</td>
-                        <td class="td">{{item.paymentMethod}}</td>
+                    <tr class="tr">
+                        <td class="td">12</td>
+                        <td class="td">15</td>
+                        <td class="td">18</td>
+                        <td class="td">21</td>
+                        <td class="td">prova</td>
+                        <td class="th">Sconto Totale</td>
+                        <td class="th">Imponibile</td>
+                        <td class="th"> Taxed</td>
+                        <td class="th">Totale Finale</td>
                     </tr>
                 </table>
             </div>
@@ -155,39 +188,18 @@
                     </div>
                 </div>
             </div>
-            <div *ngFor="let item of rowsTemp" class="row">
-                <p>{{item.quantity}}</p>
-            </div>
-
         </form>
     </div>
 </div>
 
 <!--DIV SELEZIONA ARTICOLI-->
 <div id="div-select" style="display: none;">
-    <div class="form-container">
+    <div class="form-select">
         <button id="x-icon" onclick="toggleLayerXSelect()"><i class="fas fa-times"></i></button>
         <button id="x-icon" onclick="toggleLayerX()"> <i class="far fa-save"></i></button>
-        <h1 class="m-0 select-article">Seleziona Articoli</h1>
-        <form [formGroup]="itemForm">
-            <table class="table" style="width: 76%;">
-                <tr class="tr">
-                    <td class="th">Articolo</td>
-                    <td class="th">Quantità</td>
-                    <td class="th">Sconto %</td>
-                    <td class="th"></td>
-                </tr>
-                <tr *ngFor="let item of items" class="tr">
-                    <td class="td">{{item.description}}</td>
-                    <td class="td"><input class=" unset" formControlName="quantity" type="number" placeholder="Quantità"></td>
-                    <td class="td"><input class=" unset" formControlName="percDiscount" type="number" placeholder="Sconto %"></td>
-                    <td>
-                        <div class="form-group">
-                            <button type="button" (click)="addTemp(item.id)" class="addItem">Aggiungi</button>
-                        </div>
-                    </td>
-                </tr>
-            </table>
+        <h1 class="select-article">Seleziona Articoli</h1>
+        <form>
+
         </form>
     </div>
 </div>
@@ -304,3 +316,4 @@
             </div>
         </div>
     </div>
+</div>

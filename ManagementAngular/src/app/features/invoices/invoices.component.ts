@@ -1,6 +1,6 @@
 import { DatePipe, formatDate } from '@angular/common';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { InvoiceBody } from 'src/app/core/models/invoice-body.interface';
 import { InvoiceMaster } from 'src/app/core/models/invoice-master.interface';
 import { InvoiceTail } from 'src/app/core/models/invoice-tail.interface';
@@ -19,31 +19,34 @@ export class InvoicesComponent implements OnInit {
   currentUser: User;
   invoices: InvoiceMaster[];
   invoiceForm: FormGroup;
-  itemForm: FormGroup;
   rows: InvoiceBody[] = [];
   invoiceToSave: InvoiceMaster;
   validatingForm: FormGroup;
   items: Item[];
   rowsTemp: InvoiceBody[] = [];
-  myDate = new Date();
+  itemsArr: FormArray;
 
   constructor(private httpService: HttpCommunicationsService, private fb: FormBuilder, private datePipe: DatePipe) {
     this.invoiceForm = this.fb.group({
       accountholder: ['', Validators.required],
       date: ['', Validators.required],
       paymentMethod: ['', Validators.required],
-      rows: ['', Validators.required],
+      itemsArr: this.fb.array([this.createItem()]),
       tail: ['', Validators.required],
-    })
-    this.itemForm = this.fb.group({
-      number: [],
-      quantity: [""],
-      percDiscount: [0],
     })
   }
 
-  arrayOne(n: number): any[] {
-    return Array(n);
+  createItem(): FormGroup {
+    return this.fb.group({
+      name: '',
+      quantity: '',
+      discountPerc: ''
+    });
+  }
+
+  addItem(): void {
+    this.itemsArr = this.invoiceForm.get('itemsArr') as FormArray;
+    this.itemsArr.push(this.createItem());
   }
 
   ngOnInit(): void {
@@ -57,12 +60,14 @@ export class InvoicesComponent implements OnInit {
   }
 
   save() {
-    this.invoiceToSave = { accountholder: this.currentUser.username, number: 1, date: "12/12/12", paymentMethod: "bonifico", rows: this.rowsTemp, tail: { discountPerc: this.invoiceForm.value.tail, discountValue: 0, finalAmount: 0, itemsValue: 0, rowsDiscount: 0, taxable: 0, taxed: 0, totDiscount: 0 } }
+    console.log(this.invoiceForm.value);
+    /*this.invoiceToSave = { accountholder: this.currentUser.username, number: 1, date: "12/12/12", paymentMethod: "bonifico", rows: this.rowsTemp, tail: { discountPerc: this.invoiceForm.value.tail, discountValue: 0, finalAmount: 0, itemsValue: 0, rowsDiscount: 0, taxable: 0, taxed: 0, totDiscount: 0 } }
     let observer = this.httpService.retrievePostCall<InvoiceMaster>("invoice/save", this.invoiceToSave).subscribe(response => {
       this.assignInvoice();
       observer.unsubscribe();
-    });
+    });*/
   }
+
   assignInvoice() {
     let observer = this.httpService.retrievePostCall<User>("user/" + this.currentUser.id + "/addInvoice", this.invoiceToSave).subscribe(response => {
       this.currentUser = response;
@@ -70,6 +75,7 @@ export class InvoicesComponent implements OnInit {
       observer.unsubscribe();
     })
   }
+
   updateInvoice() {
     let observer = this.httpService.retrieveGetCall<User>("user/" + this.currentUser.id).subscribe(response => {
       sessionStorage.setItem("user", JSON.stringify(response));
@@ -78,15 +84,8 @@ export class InvoicesComponent implements OnInit {
     })
   }
 
-  addTemp(id: number) {
-    let newitem = this.items.find(it => it.id == id)
-    let body: InvoiceBody = { finalAmount: 0, item: newitem, netPrice: 0, percDiscount: this.itemForm.value.percDiscount, quantity: this.itemForm.value.quantity, taxable: 0, taxed: 0, totDiscount: 0 };
-    this.rowsTemp.push(body)
-    console.log(this.rowsTemp)
-  }
-
-  detail(id:number){
-    this.invoiceDetail=this.invoices[id-1];
+  detail(id: number) {
+    this.invoiceDetail = this.invoices[id - 1];
     console.log(this.invoiceDetail);
   }
 }
