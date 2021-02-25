@@ -28,64 +28,64 @@ export class InvoicesComponent implements OnInit {
 
   constructor(private httpService: HttpCommunicationsService, private fb: FormBuilder, private datePipe: DatePipe) {
     this.invoiceForm = this.fb.group({
-      accountholder: ['', Validators.required],
-      date: ['', Validators.required],
-      paymentMethod: ['', Validators.required],
-      itemsArr: this.fb.array([this.createItem()]),
-      tail: ['', Validators.required],
+      accountholder: ['ciao', Validators.required],
+      date: ['14/08/2000', Validators.required],
+      paymentMethod: ['paypal', Validators.required],
+      rows: this.fb.array([this.createItem()]),
+      tail: ['12', Validators.required]
     })
   }
 
   createItem(): FormGroup {
     return this.fb.group({
-      name: '',
-      quantity: '',
-      discountPerc: ''
+      item: ['', Validators.required],
+      quantity: ['12', Validators.required],
+      percDiscount: ['12', Validators.required]
     });
   }
 
   addItem(): void {
-    this.itemsArr = this.invoiceForm.get('itemsArr') as FormArray;
+    this.itemsArr = this.invoiceForm.get('rows') as FormArray;
     this.itemsArr.push(this.createItem());
   }
 
   ngOnInit(): void {
     this.currentUser = <User>JSON.parse(sessionStorage.getItem("user"));
-    this.httpService.retrieveGetCall<InvoiceMaster[]>("user/" + this.currentUser.id + "/invoices").subscribe(response => {
-      this.invoices = response;
-    });
-    this.httpService.retrieveGetCall<Item[]>("item").subscribe(response => {
+    this.invoices = this.currentUser.invoices;
+    let observer=this.httpService.retrieveGetCall<Item[]>("item").subscribe(response => {
       this.items = response;
+      observer.unsubscribe();
     })
   }
 
   save() {
-    console.log(this.invoiceForm.value);
-    /*this.invoiceToSave = { accountholder: this.currentUser.username, number: 1, date: "12/12/12", paymentMethod: "bonifico", rows: this.rowsTemp, tail: { discountPerc: this.invoiceForm.value.tail, discountValue: 0, finalAmount: 0, itemsValue: 0, rowsDiscount: 0, taxable: 0, taxed: 0, totDiscount: 0 } }
-    let observer = this.httpService.retrievePostCall<InvoiceMaster>("invoice/save", this.invoiceToSave).subscribe(response => {
-      this.assignInvoice();
-      observer.unsubscribe();
-    });*/
-  }
-
-  assignInvoice() {
-    let observer = this.httpService.retrievePostCall<User>("user/" + this.currentUser.id + "/addInvoice", this.invoiceToSave).subscribe(response => {
-      this.currentUser = response;
-      this.updateInvoice();
+    const invoice = {} as InvoiceMaster;
+    invoice.tail={} as InvoiceTail;
+    invoice.rows=[] as InvoiceBody[];
+    invoice.accountholder=this.invoiceForm.get('accountholder').value;
+    invoice.date=this.invoiceForm.get('date').value;
+    invoice.paymentMethod=this.invoiceForm.get('paymentMethod').value;
+    invoice.tail.discountPerc=this.invoiceForm.get('tail').value;
+    this.invoiceForm.get('rows').value.map((row,index)=>{
+      invoice.rows[index]={} as InvoiceBody;
+      invoice.rows[index].item={} as Item;
+      invoice.rows[index].item.id=row.item;
+      invoice.rows[index].quantity=row.quantity;
+      invoice.rows[index].percDiscount=row.percDiscount;
+    })
+    let observer = this.httpService.retrievePostCall<User>("user/"+this.currentUser.id+"/addInvoice", invoice).subscribe(response => {
+      this.updateUser(response);
       observer.unsubscribe();
     })
   }
 
-  updateInvoice() {
-    let observer = this.httpService.retrieveGetCall<User>("user/" + this.currentUser.id).subscribe(response => {
-      sessionStorage.setItem("user", JSON.stringify(response));
-      this.invoices = response.invoices.sort((a, b) => a.id - b.id);
-      observer.unsubscribe();
-    })
+  updateUser(response: User){
+      sessionStorage.setItem("user",JSON.stringify(response));
+      this.invoices=response.invoices.sort((a, b) => a.id - b.id);
   }
 
   detail(id: number) {
-    this.invoiceDetail = this.invoices[id - 1];
-    console.log(this.invoiceDetail);
+    console.log("id: "+id);
+    this.invoiceDetail = this.invoices.find((i)=> i.id === id )
   }
 }

@@ -6,7 +6,7 @@
                 <div class="title-container">
                     <h1>Fatture.</h1> <i class="fas fa-file-invoice"></i>
                     <div class="button-container-new" style="display: inline-block;">
-                        <button onclick="toggleNewLayer()" (click)="invoiceForm.reset();itemsArr?.clear();this.itemsArr?.push(this.createItem())"><a>Nuova
+                        <button onclick="toggleNewLayer()" (click)="itemsArr?.clear();this.itemsArr?.push(this.createItem())"><a>Nuova
                                 Fattura</a></button>
                     </div>
                 </div>
@@ -126,12 +126,12 @@
                 </div>
             </div>
             <div class="itemsArr">
-                <div formArrayName="itemsArr" *ngFor="let item of invoiceForm.get('itemsArr')['controls']; let i = index;" class="row">
+                <div formArrayName="rows" *ngFor="let item of invoiceForm.get('rows')['controls']; let i = index;" class="row">
                     <div [formGroupName]="i">
                         <div class="col-4 col-sm-4 col-md-4 col-lg-4">
                             <div class="form-group">
                                 <label>Oggetto</label>
-                                <select data-menu formControlName="name" placeholder="Item name" class="form-control">
+                                <select data-menu formControlName="item" class="form-control">
                                     <option *ngFor="let item of items" value="{{item.id}}">{{item.description}}</option>
                                 </select>
                             </div>
@@ -145,7 +145,7 @@
                         <div class="col-3 col-sm-3 col-md-3 col-lg-3">
                             <div class="form-group">
                                 <label>Sconto %</label>
-                                <input formControlName="discountPerc" placeholder="Sconto Percentuale" class="form-control">
+                                <input formControlName="percDiscount" placeholder="Sconto Percentuale" class="form-control">
                             </div>
                         </div>
                     </div>
