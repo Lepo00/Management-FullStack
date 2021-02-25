@@ -228,14 +228,6 @@ th:last-child {
     color: var(--color4);
 }
 
-#div-select .form-container {
-    width: 80% !important;
-    margin-left: -13% !important;
-    transform: unset !important;
-    position: absolute;
-    background-color: var(--colorbg);
-}
-
 .addItem {
     background-color: var(--colorbg);
     margin-top: 25px;
@@ -245,36 +237,6 @@ th:last-child {
 .addItem:hover {
     color: var(--color1);
 }
-
-.save-new-invoice {
-    width: 76% !important;
-    margin-left: 12% !important;
-    margin-top: 5vh;
-    background-color: var(--color1) !important;
-    color: var(--colorbglight) !important;
-    transform: unset !important;
-}
-
-.save-new-invoice:hover {
-    color: var(--color1) !important;
-    background-color: var(--colorbglight) !important;
-}
-
-.unset {
-    transform: unset !important;
-}
-
-.select-article {
-    color: white;
-    width: 76% !important;
-    margin-left: 20% !important;
-}
-
-
-/*end*/
-
-
-/*delete layer*/
 
 #div-delete {
     width: 100%;
@@ -310,9 +272,6 @@ th:last-child {
 /*media*/
 
 @media screen and (max-width: 800px) {
-    .cont-page {
-        height: 140vh !important;
-    }
     .row {
         width: 102.6% !important;
     }
@@ -396,25 +355,6 @@ th:last-child {
     width: 45%;
 }
 
-
-/*end*/
-
-.outline-none {
-    outline: none;
-}
-
-.outline-none:focus {
-    outline: none;
-}
-
-#x-icon-delete {
-    color: white;
-    font-size: 1.6rem;
-    background-color: transparent;
-    outline: none;
-    border: none;
-}
-
 .info {
     position: absolute;
     top: 22%;
@@ -466,34 +406,6 @@ th:last-child {
 .titletable {
     text-align: center;
     margin: 5px;
-}
-
-.form-select {
-    background-color: var(--bgcolorlayer);
-    width: 70%;
-    position: absolute;
-    top: 0;
-    left: 15%;
-    right: 15%;
-    z-index: 9999999999999999;
-    border: 1px solid white;
-}
-
-.form-select h1 {
-    width: 80%;
-    margin-left: auto;
-    margin-right: auto;
-    text-transform: uppercase;
-    font-weight: bold;
-    font-size: 2rem;
-}
-
-.form-select form {
-    margin-top: 5vh;
-    margin-bottom: 10vh;
-    width: 80%;
-    margin-left: auto;
-    margin-right: auto;
 }
 
 .itemsArr {
