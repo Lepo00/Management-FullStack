@@ -13,59 +13,11 @@
     min-height: 69.8vh;
 }
 
-.block-function {
-    display: inline-block;
-    background-color: var(--color1);
-    text-align: center;
-    vertical-align: middle;
-    padding: 8vh 0vh 8vh 0vh;
-    width: 90%;
-    transform: skewX(-10deg);
-    margin: 10%;
-}
-
-.block-function i {
-    font-size: 5rem;
-    color: var(--color2);
-}
-
-.block-function:hover i {
-    color: var(--color3) !important;
-}
-
-.block-function:hover {
-    transform: skewX(-10deg);
-    box-shadow: 0px 8px 10px var(--color3);
-    color: var(--color3);
-}
-
 .block-descrition {
     font-size: 2rem;
     color: var(--color2);
     font-weight: bold;
 }
-
-.block-function:hover .block-descrition {
-    color: var(--color3) !important;
-}
-
-
-/*media*/
-
-@media screen and (max-width: 1200px) {
-    .cont-page {
-        height: 140vh !important;
-    }
-    .row {
-        width: 100% !important;
-    }
-    .block-function {
-        margin: 30px;
-    }
-}
-
-
-/*end media*/
 
 
 /*flip card*/
