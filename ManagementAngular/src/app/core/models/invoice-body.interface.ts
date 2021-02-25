@@ -5,9 +5,9 @@ export interface InvoiceBody{
     item: Item;
     quantity: number;
     percDiscount : number;
-    totDiscount : number;
-    netPrice:number;
-    taxable:number;
-    taxed:number;
-    finalAmount:number;
+    totDiscount? : number;
+    netPrice?:number;
+    taxable?:number;
+    taxed?:number;
+    finalAmount?:number;
 }
