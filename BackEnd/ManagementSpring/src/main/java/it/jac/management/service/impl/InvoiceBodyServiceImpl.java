@@ -63,8 +63,17 @@ public class InvoiceBodyServiceImpl implements InvoiceBodyService {
 			row.setTaxable(row.getNetPrice() * row.getQuantity());
 			row.setTaxed(row.getTaxable() * 22 / 100);
 			row.setFinalAmount(row.getTaxable() + row.getTaxed());
+			roundUp(row);
 		}
 		return rows;
+	}
+	
+	public void roundUp(InvoiceBody row) {
+		row.setTotDiscount(Math.round(row.getTotDiscount() * 100.0) / 100.0);
+		row.setNetPrice(Math.round(row.getNetPrice() * 100.0) / 100.0);
+		row.setTaxable(Math.round(row.getTaxable() * 100.0) / 100.0);
+		row.setTaxed(Math.round(row.getTaxed() * 100.0) / 100.0);
+		row.setFinalAmount(Math.round(row.getFinalAmount() * 100.0) / 100.0);
 	}
 
 }
