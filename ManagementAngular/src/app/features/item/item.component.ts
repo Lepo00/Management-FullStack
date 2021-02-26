@@ -13,6 +13,7 @@ export class ItemComponent implements OnInit {
   //search:string;
   searchButton:boolean;
   items: Item[];
+  itemsTot: Item[];
   constructor(private httpService: HttpCommunicationsService, private route: ActivatedRoute) { 
     this.searchButton=true;
   }
@@ -20,10 +21,10 @@ export class ItemComponent implements OnInit {
   ngOnInit(): void {
     let observer=this.httpService.retrieveGetCall<Item[]>("item").subscribe(response => {
       this.items = response;
+      this.itemsTot = response;
       this.route.params.subscribe(params => {
-        let search= params['search'];
-        if(search!=null){
-          this.filterItems(search);
+        if(params['search']!=null){
+          this.filterItems(params['search']);
         }
       });
       observer.unsubscribe();
@@ -31,12 +32,9 @@ export class ItemComponent implements OnInit {
   }
   
   filterItems(search:string) {
+    this.items=this.itemsTot;
     this.searchButton=false;
     this.items=this.items.filter(item => item.description.includes(search) || item.code.includes(search));
   }
-
-  /*get items(): Observable<Item[]>{
-    return this.httpService.retrieveGetCall<Item[]>("item");
-  }*/
 
 }
