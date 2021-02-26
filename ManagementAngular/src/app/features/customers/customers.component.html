@@ -28,9 +28,9 @@
                         <td class="td">{{customer.email}}</td>
                         <td class="td">{{customer.address}}</td>
                         <td class="td">
-                            <button *ngIf="searchButton" onclick="toggleLayer()" (click)="resetForm(); detail(customer.id); populateForm()"><i class="fas fa-edit"></i></button>
+                            <button onclick="toggleLayer()" (click)="resetForm(); detail(customer.id); populateForm()"><i class="fas fa-edit"></i></button>
                             <button onclick="toggleLayerZoom()" (click)="detail(customer.id)"><i class="fas fa-search" id="zoom"></i></button>
-                            <button *ngIf="searchButton" onclick="toggleLayerConfirm()" (click)="detail(customer.id)"><i class="fas fa-times"></i></button>
+                            <button onclick="toggleLayerConfirm()" (click)="detail(customer.id)"><i class="fas fa-times"></i></button>
                         </td>
                     </tr>
                 </table>
