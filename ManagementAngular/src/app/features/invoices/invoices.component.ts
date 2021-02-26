@@ -1,5 +1,5 @@
 import { DatePipe, formatDate } from '@angular/common';
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, Inject, LOCALE_ID, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { InvoiceBody } from 'src/app/core/models/invoice-body.interface';
 import { InvoiceMaster } from 'src/app/core/models/invoice-master.interface';
@@ -22,7 +22,7 @@ export class InvoicesComponent implements OnInit {
   invoiceForm: FormGroup;
   itemsArr: FormArray;
 
-  constructor(private httpService: HttpCommunicationsService, private fb: FormBuilder, private datePipe: DatePipe) {
+  constructor(private httpService: HttpCommunicationsService, private fb: FormBuilder, @Inject(LOCALE_ID) private locale: string) {
     this.invoiceForm = this.fb.group({
       accountholder: ['', Validators.required],
       date: ['', Validators.required],
@@ -64,7 +64,8 @@ export class InvoicesComponent implements OnInit {
     invoice.tail={} as InvoiceTail;
     invoice.rows=[] as InvoiceBody[];
     invoice.accountholder=this.invoiceForm.get('accountholder').value;
-    invoice.date=this.invoiceForm.get('date').value;
+    //invoice.date=(this.invoiceForm.get('date').value).toLocaleDateString();
+    invoice.date=formatDate(this.invoiceForm.get('date').value,'dd/MM/yyyy',this.locale);
     invoice.paymentMethod=this.invoiceForm.get('paymentMethod').value;
     invoice.tail.discountPerc=this.invoiceForm.get('tail').value;
     this.invoiceForm.get('rows').value.map((row,index)=>{
