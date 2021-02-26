@@ -24,25 +24,30 @@ export class InvoicesComponent implements OnInit {
 
   constructor(private httpService: HttpCommunicationsService, private fb: FormBuilder, private datePipe: DatePipe) {
     this.invoiceForm = this.fb.group({
-      accountholder: ['ciao', Validators.required],
-      date: ['14/08/2000', Validators.required],
-      paymentMethod: ['paypal', Validators.required],
+      accountholder: ['', Validators.required],
+      date: ['', Validators.required],
+      paymentMethod: ['', Validators.required],
       rows: this.fb.array([this.createItem()]),
-      tail: ['12', Validators.required]
+      tail: ['0', [Validators.required, Validators.min(0), Validators.max(100)]]
     });
   }
 
   createItem(): FormGroup {
     return this.fb.group({
       item: ['', Validators.required],
-      quantity: ['12', Validators.required],
-      percDiscount: ['12', Validators.required]
+      quantity: ['', [Validators.required, Validators.min(0)]],
+      percDiscount: ['0', [Validators.required, Validators.min(0), Validators.max(100)]]
     });
   }
 
   addItem(): void {
     this.itemsArr = this.invoiceForm.get('rows') as FormArray;
     this.itemsArr.push(this.createItem());
+  }
+
+  deleteItem(id:number): void{
+    this.itemsArr = this.invoiceForm.get('rows') as FormArray;
+    this.itemsArr.removeAt(id);
   }
 
   ngOnInit(): void {
@@ -70,8 +75,7 @@ export class InvoicesComponent implements OnInit {
       invoice.rows[index].percDiscount=row.percDiscount;
     })
     let observer = this.httpService.retrievePostCall<User>("user/"+this.currentUser.id+"/addInvoice", invoice).subscribe(response => {
-      sessionStorage.setItem("user",JSON.stringify(response));
-      this.invoices=response.invoices.sort((a, b) => a.id - b.id);
+      this.updateUser();
       observer.unsubscribe();
     })
   }
@@ -93,7 +97,7 @@ export class InvoicesComponent implements OnInit {
   }
 
   detail(id: number) {
-    console.log("id: "+id);
     this.invoiceDetail = this.invoices.find((i)=> i.id === id )
+    console.log(this.invoiceDetail);
   }
 }
