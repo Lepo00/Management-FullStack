@@ -52,7 +52,7 @@ export class InvoicesComponent implements OnInit {
 
   ngOnInit(): void {
     this.currentUser = <User>JSON.parse(sessionStorage.getItem("user"));
-    this.invoices = this.currentUser.invoices;
+    this.invoices=this.currentUser.invoices.sort((a, b) => a.id - b.id);
     let observer=this.httpService.retrieveGetCall<Item[]>("item").subscribe(response => {
       this.items = response;
       observer.unsubscribe();
