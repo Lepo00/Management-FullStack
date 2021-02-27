@@ -7,11 +7,12 @@ import {ReactiveFormsModule} from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { EurPipe } from './pipes/eur.pipe';
 import { PercPipe } from './pipes/perc.pipe';
+import { DateCustomPipe } from './pipes/date-custom.pipe';
 
 
 
 @NgModule({
-  declarations: [MenuComponent, FooterComponent, EurPipe, PercPipe],
+  declarations: [MenuComponent, FooterComponent, EurPipe, PercPipe, DateCustomPipe],
   imports: [
     CommonModule,
     FormsModule,
@@ -26,7 +27,8 @@ import { PercPipe } from './pipes/perc.pipe';
     MenuComponent,
     FooterComponent,
     EurPipe,
-    PercPipe
+    PercPipe,
+    DateCustomPipe
   ]
 })
 export class SharedModule { }
