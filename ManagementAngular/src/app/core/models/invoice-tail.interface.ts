@@ -5,7 +5,7 @@ export interface InvoiceTail{
     itemsValue? : number;
     serviceValue? : number;
     rowsDiscount?: number;
-    discountPerc : number;
+    percDiscount: number;
     discountValue : number;
     totDiscount? : number;
     taxable? : number;
