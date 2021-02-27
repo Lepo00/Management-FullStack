@@ -2,14 +2,15 @@
 <div class="container-page">
     <div class="row container-row ">
         <div class="col-12 col-sm-12 col-md-12 col-lg-12 table-container ">
-            <div class="container table-responsive py-5 table-container-responsive">
+            <div class="container table-responsive py-5 table-container-responsive" *ngIf="invoices.length>0; else empty">
                 <div class="title-container">
-                    <h1>Fatture.</h1> <i class="fas fa-file-invoice"></i>
+                    <h1><span *ngIf="!searchButton">Ricerca </span>Fatture.</h1> <i class="fas fa-file-invoice"></i>
                     <div class="button-container-new" style="display: inline-block;">
                         <button onclick="toggleNewLayer()" (click)="invoiceForm.reset();itemsArr?.clear();this.itemsArr?.push(this.createItem())"><a>Nuova
                                 Fattura</a></button>
                     </div>
                 </div>
+                <h3 *ngIf="!searchButton" class="results">La tua ricerca ha prodotto: {{invoices.length}} risultati</h3>
                 <table class="table">
                     <tr class="tr">
                         <td class="th">Numero</td>
@@ -24,7 +25,7 @@
                         <td class="td">{{invoice.accountholder}}</td>
                         <td class="td">{{invoice.date}}</td>
                         <td class="td">{{invoice.paymentMethod}}</td>
-                        <td class="td">{{invoice.tail.finalAmount}} €</td>
+                        <td class="td">{{invoice.tail.finalAmount| number:'1.2-2'|eur}}</td>
                         <td class="td">
                             <button onclick="toggleLayer()"><i class="fas fa-edit"></i></button>
                             <button onclick="toggleLayerZoom()"><i class="fas fa-search" (click)="detail(invoice.id)"></i></button>
@@ -33,6 +34,15 @@
                     </tr>
                 </table>
             </div>
+            <ng-template #empty>
+                <div class="empty" *ngIf="searchButton">
+                    <h2>Non hai nessuna fattura.<br>Aggiungine una ora!</h2>
+                    <button onclick="toggleNewLayer()" class="add">Nuova Fattura</button>
+                </div>
+                <div class="empty" *ngIf="!searchButton">
+                    <h2>La tua ricerca non ha prodotto risultati.</h2>
+                </div>
+            </ng-template>
         </div>
         <button onclick="toggleLayerOverlay()">
             <div id="overlay"></div>
@@ -159,48 +169,50 @@
             </div>
             <div class="summary">
                 <h1>Riepilogo</h1>
+                <label class="lab">Righe</label>
                 <div class="flex-row">
                     <div class="one">
                         <label>Sconto %</label>
-                        <input class="form-control" disabled>
+                        <input type="text" class="form-control" disabled [value]="calcs()[0].percDiscount | number:'1.1-2'|perc">
                     </div>
                     <div class="one">
-                        <label>Valore righe</label>
-                        <input class="form-control" disabled>
+                        <label>Valore sconto</label>
+                        <input class="form-control" disabled [value]="calcs()[0].discountValue| number:'1.2-2'|eur">
                     </div>
                     <div class="one">
-                        <label>Servizi</label>
-                        <input class="form-control" disabled>
+                        <label>Imponibile</label>
+                        <input class="form-control" disabled [value]="calcs()[0].taxable| number:'1.2-2'|eur">
                     </div>
                     <div class="one">
-                        <label>Val. sconto riga</label>
-                        <input class="form-control" disabled>
+                        <label>Tasse</label>
+                        <input class="form-control" disabled [value]="calcs()[0].taxed| number:'1.2-2'|eur">
                     </div>
                     <div class="one">
-                        <label>Sc. riga %</label>
-                        <input class="form-control" disabled>
+                        <label>Totale</label>
+                        <input class="form-control" disabled [value]="calcs()[0].finalAmount| number:'1.2-2'|eur">
                     </div>
                 </div>
+                <label class="lab">Coda</label>
                 <div class="flex-row">
                     <div class="one">
                         <label>Sconto %</label>
-                        <input class="form-control" disabled>
+                        <input class="form-control" disabled [value]="calcs()[1].percDiscount | number:'1.1-2'|perc">
                     </div>
                     <div class="one">
-                        <label>Valore righe</label>
-                        <input class="form-control" disabled>
+                        <label>Valore sconto</label>
+                        <input class="form-control" disabled [value]="calcs()[1].discountValue| number:'1.2-2'|eur">
                     </div>
                     <div class="one">
-                        <label>Servizi</label>
-                        <input class="form-control" disabled>
+                        <label>Imponibile</label>
+                        <input class="form-control" disabled [value]="calcs()[1].taxable| number:'1.2-2'|eur">
                     </div>
                     <div class="one">
-                        <label>Val. sconto riga</label>
-                        <input class="form-control" disabled>
+                        <label>Tasse</label>
+                        <input class="form-control" disabled [value]="calcs()[1].taxed| number:'1.2-2'|eur">
                     </div>
                     <div class="one">
-                        <label>Sc. riga %</label>
-                        <input class="form-control" disabled>
+                        <label>Totale</label>
+                        <input class="form-control" disabled [value]="calcs()[1].finalAmount| number:'1.2-2'|eur">
                     </div>
                 </div>
             </div>
@@ -273,14 +285,14 @@
                         </tr>
                         <tr *ngFor="let row of invoiceDetail?.rows" class="tr">
                             <td class="td">{{row.item.description}}</td>
-                            <td class="td">{{row.item.price}} €</td>
+                            <td class="td">{{row.item.price|eur}}</td>
                             <td class="td">{{row.quantity}}</td>
-                            <td class="td">{{row.percDiscount}} %</td>
-                            <td class="td">{{row.totDiscount}} €</td>
-                            <td class="td">{{row.netPrice}} €</td>
-                            <td class="td">{{row.taxable}} €</td>
-                            <td class="td">{{row.taxed}} €</td>
-                            <td class="td">{{row.finalAmount}} €</td>
+                            <td class="td">{{row.percDiscount|perc}}</td>
+                            <td class="td">{{row.totDiscount|eur}}</td>
+                            <td class="td">{{row.netPrice|eur}}</td>
+                            <td class="td">{{row.taxable|eur}}</td>
+                            <td class="td">{{row.taxed|eur}}</td>
+                            <td class="td">{{row.finalAmount|eur}}</td>
                         </tr>
                     </table>
                 </div>
@@ -305,15 +317,15 @@
                             <td class="th">Totale</td>
                         </tr>
                         <tr>
-                            <td class="td">{{invoiceDetail?.tail.itemsValue}} €</td>
-                            <td class="td">{{invoiceDetail?.tail.serviceValue}} €</td>
-                            <td class="td">{{invoiceDetail?.tail.rowsDiscount}} €</td>
-                            <td class="td">{{invoiceDetail?.tail.discountPerc}} %</td>
-                            <td class="td">{{invoiceDetail?.tail.discountValue}} €</td>
-                            <td class="td">{{invoiceDetail?.tail.totDiscount}} €</td>
-                            <td class="td">{{invoiceDetail?.tail.taxable}} €</td>
-                            <td class="td">{{invoiceDetail?.tail.taxed}} €</td>
-                            <td class="td">{{invoiceDetail?.tail.finalAmount}} €</td>
+                            <td class="td">{{invoiceDetail?.tail.itemsValue|eur}}</td>
+                            <td class="td">{{invoiceDetail?.tail.serviceValue|eur}}</td>
+                            <td class="td">{{invoiceDetail?.tail.rowsDiscount|eur}}</td>
+                            <td class="td">{{invoiceDetail?.tail.percDiscount|perc}}</td>
+                            <td class="td">{{invoiceDetail?.tail.discountValue|eur}}</td>
+                            <td class="td">{{invoiceDetail?.tail.totDiscount|eur}}</td>
+                            <td class="td">{{invoiceDetail?.tail.taxable|eur}}</td>
+                            <td class="td">{{invoiceDetail?.tail.taxed|eur}}</td>
+                            <td class="td">{{invoiceDetail?.tail.finalAmount|eur}}</td>
                         </tr>
                     </table>
                 </div>

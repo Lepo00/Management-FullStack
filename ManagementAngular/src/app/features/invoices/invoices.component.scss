@@ -130,7 +130,7 @@ th:last-child {
 
 .button-container-new {
     float: right;
-    margin-top: 2.5vh;
+    margin-top: 3vh;
 }
 
 .button-container-new button {
@@ -366,7 +366,7 @@ th:last-child {
 }
 
 #div-detail table {
-    width: 80%;
+    width: 90%;
     background-color: #c0c0c0;
     color: black !important;
 }
@@ -448,13 +448,37 @@ th:last-child {
     margin-top: 5px;
 }
 
+.summary .lab {
+    position: absolute;
+    left: 3%;
+    margin-top: 35px;
+}
+
+.summary input {
+    text-align: center;
+    font-weight: bold;
+    font-size: 25px;
+    color: var(--colorbgdark);
+}
+
 .flex-row {
     display: flex;
     flex-direction: row;
     overflow: hidden;
-    margin: 0 -10px;
+    margin: 15px -10px;
+}
+
+.flex-row:last-child {
+    margin-top: 25px;
 }
 
 .one {
     margin: 0 10px;
+    text-align: center;
+}
+
+.empty {
+    text-align: center;
+    color: white;
+    margin-top: 13%;
 }

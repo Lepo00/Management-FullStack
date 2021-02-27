@@ -1,6 +1,7 @@
 import { DatePipe, formatDate } from '@angular/common';
 import { Component, ElementRef, Inject, LOCALE_ID, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 import { InvoiceBody } from 'src/app/core/models/invoice-body.interface';
 import { InvoiceMaster } from 'src/app/core/models/invoice-master.interface';
 import { InvoiceTail } from 'src/app/core/models/invoice-tail.interface';
@@ -15,6 +16,7 @@ import { HttpCommunicationsService } from 'src/app/core/services/http-communicat
   providers: [DatePipe]
 })
 export class InvoicesComponent implements OnInit {
+  searchButton:boolean;
   currentUser: User;
   items: Item[];
   invoiceDetail: InvoiceMaster;
@@ -22,21 +24,44 @@ export class InvoicesComponent implements OnInit {
   invoiceForm: FormGroup;
   itemsArr: FormArray;
 
-  constructor(private httpService: HttpCommunicationsService, private fb: FormBuilder, @Inject(LOCALE_ID) private locale: string) {
+  constructor(private httpService: HttpCommunicationsService, private fb: FormBuilder, private route:ActivatedRoute, @Inject(LOCALE_ID) private locale: string) {
     this.invoiceForm = this.fb.group({
       accountholder: ['', Validators.required],
       date: ['', Validators.required],
       paymentMethod: ['', Validators.required],
       rows: this.fb.array([this.createItem()]),
-      tail: ['0', [Validators.required, Validators.min(0), Validators.max(100)]]
+      tail: [0, [Validators.required, Validators.min(0), Validators.max(100)]]
     });
+    this.currentUser = <User>JSON.parse(sessionStorage.getItem("user"));
+    this.invoices=this.currentUser.invoices.sort((a, b) => a.id - b.id);
+    let observer=this.httpService.retrieveGetCall<Item[]>("item").subscribe(response => {
+      this.items = response;
+      observer.unsubscribe();
+    });
+    this.searchButton=true;
+  }
+
+  ngOnInit(): void {
+    this.route.params.subscribe(params => {
+      if(params['search']!=null){
+        this.filterCustomers(params['search']);
+      }
+    });
+  }
+
+  filterCustomers(search: any) {
+    this.invoices=this.currentUser.invoices.sort((a, b) => a.id - b.id);
+    this.searchButton=false;
+    this.invoices= this.invoices.filter(invoice=>
+      invoice.accountholder.includes(search) || invoice.date.includes(search) || invoice.paymentMethod.includes(search)
+      )
   }
 
   createItem(): FormGroup {
     return this.fb.group({
       item: ['', Validators.required],
       quantity: ['', [Validators.required, Validators.min(0)]],
-      percDiscount: ['0', [Validators.required, Validators.min(0), Validators.max(100)]]
+      percDiscount: [0, [Validators.required, Validators.min(0), Validators.max(100)]]
     });
   }
 
@@ -50,24 +75,14 @@ export class InvoicesComponent implements OnInit {
     this.itemsArr.removeAt(id);
   }
 
-  ngOnInit(): void {
-    this.currentUser = <User>JSON.parse(sessionStorage.getItem("user"));
-    this.invoices=this.currentUser.invoices.sort((a, b) => a.id - b.id);
-    let observer=this.httpService.retrieveGetCall<Item[]>("item").subscribe(response => {
-      this.items = response;
-      observer.unsubscribe();
-    })
-  }
-
   save() {
     const invoice = {} as InvoiceMaster;
     invoice.tail={} as InvoiceTail;
     invoice.rows=[] as InvoiceBody[];
     invoice.accountholder=this.invoiceForm.get('accountholder').value;
-    //invoice.date=(this.invoiceForm.get('date').value).toLocaleDateString();
     invoice.date=formatDate(this.invoiceForm.get('date').value,'dd/MM/yyyy',this.locale);
     invoice.paymentMethod=this.invoiceForm.get('paymentMethod').value;
-    invoice.tail.discountPerc=this.invoiceForm.get('tail').value;
+    invoice.tail.percDiscount=this.invoiceForm.get('tail').value;
     this.invoiceForm.get('rows').value.map((row,index)=>{
       invoice.rows[index]={} as InvoiceBody;
       invoice.rows[index].item={} as Item;
@@ -99,6 +114,35 @@ export class InvoicesComponent implements OnInit {
 
   detail(id: number) {
     this.invoiceDetail = this.invoices.find((i)=> i.id === id )
-    console.log(this.invoiceDetail);
+  }
+
+  calcs():InvoiceTail[]{
+    const tail:InvoiceTail={percDiscount:0, discountValue:0, taxable:0};
+    const rows:InvoiceTail={percDiscount:0, discountValue:0, taxable:0};
+
+    //rows values
+    if(this.items){
+      this.invoiceForm.get('rows').value.map(row=>{
+        if(row.item){
+          rows.taxable+=this.items[row.item-1].price*row.quantity;
+          rows.discountValue+=this.items[row.item-1].price*row.quantity*(row.percDiscount/100);
+          rows.percDiscount+=row.percDiscount;
+        }
+      })
+      rows.percDiscount/=this.invoiceForm.get('rows').value.length;
+      rows.taxable-=rows.discountValue;
+      rows.taxed=rows.taxable*22/100;
+      rows.finalAmount=rows.taxed+rows.taxable;
+    }
+
+    //tail values
+    if(this.invoiceForm.get('tail').value !=null)
+      tail.percDiscount=this.invoiceForm.get('tail').value as number;
+    tail.discountValue=rows.taxable*tail.percDiscount/100;
+    tail.taxable=rows.taxable-tail.discountValue;
+    tail.taxed=tail.taxable*22/100;
+    tail.finalAmount=tail.taxed+tail.taxable;
+      
+    return [rows,tail];
   }
 }
