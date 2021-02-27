@@ -5,11 +5,13 @@ import { FooterComponent } from './footer/footer.component';
 import {FormsModule} from '@angular/forms';
 import {ReactiveFormsModule} from '@angular/forms';
 import { RouterModule } from '@angular/router';
+import { EurPipe } from './pipes/eur.pipe';
+import { PercPipe } from './pipes/perc.pipe';
 
 
 
 @NgModule({
-  declarations: [MenuComponent, FooterComponent],
+  declarations: [MenuComponent, FooterComponent, EurPipe, PercPipe],
   imports: [
     CommonModule,
     FormsModule,
@@ -22,7 +24,9 @@ import { RouterModule } from '@angular/router';
     ReactiveFormsModule,
     RouterModule,
     MenuComponent,
-    FooterComponent
+    FooterComponent,
+    EurPipe,
+    PercPipe
   ]
 })
 export class SharedModule { }
