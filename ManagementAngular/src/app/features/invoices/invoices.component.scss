@@ -229,6 +229,10 @@ th:last-child {
     width: 100%;
     display: none;
     color: var(--color4);
+    min-height: 42px;
+    display: inline-block;
+    top: 6px;
+    position: inherit;
 }
 
 .addItem {
@@ -403,6 +407,7 @@ th:last-child {
     right: 15%;
     z-index: 9999999999999999;
     border: 1px solid white;
+    margin-bottom: 3%;
 }
 
 .create-invoice h1 {
@@ -470,6 +475,7 @@ th:last-child {
 
 .flex-row:last-child {
     margin-top: 25px;
+    margin-bottom: 0;
 }
 
 .one {

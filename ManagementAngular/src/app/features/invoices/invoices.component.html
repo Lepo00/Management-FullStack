@@ -6,7 +6,7 @@
                 <div class="title-container">
                     <h1><span *ngIf="!searchButton">Ricerca </span>Fatture.</h1> <i class="fas fa-file-invoice"></i>
                     <div class="button-container-new" style="display: inline-block;">
-                        <button onclick="toggleNewLayer()" (click)="invoiceForm.reset();itemsArr?.clear();this.itemsArr?.push(this.createItem())"><a>Nuova
+                        <button onclick="toggleNewLayer()" (click)="addInvoice()"><a>Nuova
                                 Fattura</a></button>
                     </div>
                 </div>
@@ -27,7 +27,7 @@
                         <td class="td">{{invoice.paymentMethod}}</td>
                         <td class="td">{{invoice.tail.finalAmount| number:'1.2-2'|eur}}</td>
                         <td class="td">
-                            <button onclick="toggleLayer()"><i class="fas fa-edit"></i></button>
+                            <button onclick="toggleLayer()"><i class="fas fa-edit" (click)="detail(invoice.id); populateForm()"></i></button>
                             <button onclick="toggleLayerZoom()"><i class="fas fa-search" (click)="detail(invoice.id)"></i></button>
                             <button onclick="toggleLayerConfirm()"><i class="fas fa-times" (click)="detail(invoice.id)"></i></button>
                         </td>
@@ -51,22 +51,24 @@
 </div>
 <app-footer></app-footer>
 
+<!--DIV MODIFICA-->
 <div id="div-edit" style="display: none;">
-    <div class="form-container">
+    <div class="create-invoice">
         <button id="x-icon" onclick="toggleLayerX()"><i class="fas fa-times"></i></button>
         <h1>Modifica Fattura</h1>
-        <form>
+        <form [formGroup]="invoiceForm" (ngSubmit)="save()">
+            <button class="saveButton" type="submit" onclick="toggleLayerX()" id="x-icon" [disabled]="invoiceForm.status === 'INVALID'" [ngClass]="{'disabled': invoiceForm.status === 'INVALID'}"> <i class="far fa-save"></i></button>
             <div class="row">
-                <div class="col-4 col-sm-4 col-md-4 col-lg-4 ">
-                    <div class="form-group">
-                        <label for="codice">Codice</label>
-                        <input type="email" class="form-control" placeholder="Codice" required>
-                    </div>
-                </div>
                 <div class="col-8 col-sm-8 col-md-8 col-lg-8">
                     <div class="form-group">
-                        <label for="ragione-sociale">Ragione Sociale</label>
-                        <input class="form-control" placeholder="Ragione Sociale" required>
+                        <label for="Intestatario">Intestatario</label>
+                        <input class="form-control" placeholder="Intestatario" formControlName="accountholder">
+                    </div>
+                </div>
+                <div class="col-4 col-sm-4 col-md-4 col-lg-4 ">
+                    <div class="form-group">
+                        <label for="tail">Sconto Coda %</label>
+                        <input type="number" class="form-control" placeholder="Sconto coda percentuale" formControlName="tail" min="0" max="100">
                     </div>
                 </div>
             </div>
@@ -74,27 +76,96 @@
                 <div class="col-4 col-sm-4 col-md-4 col-lg-4 ">
                     <div class="form-group">
                         <label for="data">Data</label>
-                        <input type="email" class="form-control" placeholder="Data" required>
+                        <input type="date" class="form-control" placeholder="Data" formControlName="date">
                     </div>
                 </div>
                 <div class="col-8 col-sm-8 col-md-8 col-lg-8">
                     <div class="form-group">
                         <label for="pagamento">Pagamento</label>
-                        <input class="form-control" placeholder="Pagamento" required>
+                        <input class="form-control" placeholder="Pagamento" formControlName="paymentMethod">
                     </div>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-6 col-sm-6 col-md-6 col-lg-6 ">
-                    <div class="form-group">
-                        <label for="totale">Totale</label>
-                        <input type="email" class="form-control" placeholder="Totale">
+            <div class="itemsArr">
+                <div formArrayName="rows" *ngFor="let item of invoiceForm.get('rows')['controls']; let i = index;" class="row">
+                    <div [formGroupName]="i">
+                        <div class="col-4 col-sm-4 col-md-4 col-lg-4">
+                            <div class="form-group">
+                                <label>Oggetto {{i+1}}</label>
+                                <select data-menu formControlName="item" class="form-control">
+                                    <option *ngFor="let item of items" value="{{item.id}}">{{item.description}}</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-3 col-sm-3 col-md-3 col-lg-3">
+                            <div class="form-group">
+                                <label>Quantità</label>
+                                <input type="number" formControlName="quantity" placeholder="Quantità" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-3 col-sm-3 col-md-3 col-lg-3">
+                            <div class="form-group">
+                                <label>Sconto %</label>
+                                <input type="number" formControlName="percDiscount" placeholder="Sconto Percentuale" class="form-control" min="0" max="100">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="addForm">
+                        <button type="button" (click)="addItem()" class="addItem">Aggiungi</button>
+                    </div>
+                    <div class="deleteForm" *ngIf="invoiceForm.get('rows')['controls'].length>1">
+                        <button type="button" (click)="deleteItem(i)" class="deleteItem"><i class="fas fa-times"></i></button>
                     </div>
                 </div>
-
             </div>
-            <div class="form-group">
-                <button type="submit">Modifica Fattura</button>
+            <div class="summary">
+                <h1>Riepilogo</h1>
+                <label class="lab">RIGHE</label>
+                <div class="flex-row">
+                    <div class="one">
+                        <label>Sconto %</label>
+                        <input type="text" class="form-control" disabled [value]="calcs()[0].percDiscount | number:'1.1-2'|perc">
+                    </div>
+                    <div class="one">
+                        <label>Valore sconto</label>
+                        <input class="form-control" disabled [value]="calcs()[0].discountValue| number:'1.2-2'|eur">
+                    </div>
+                    <div class="one">
+                        <label>Imponibile</label>
+                        <input class="form-control" disabled [value]="calcs()[0].taxable| number:'1.2-2'|eur">
+                    </div>
+                    <div class="one">
+                        <label>Tasse</label>
+                        <input class="form-control" disabled [value]="calcs()[0].taxed| number:'1.2-2'|eur">
+                    </div>
+                    <div class="one">
+                        <label>Totale</label>
+                        <input class="form-control" disabled [value]="calcs()[0].finalAmount| number:'1.2-2'|eur">
+                    </div>
+                </div>
+                <label class="lab">CODA</label>
+                <div class="flex-row">
+                    <div class="one">
+                        <label>Sconto %</label>
+                        <input class="form-control" disabled [value]="calcs()[1].percDiscount | number:'1.1-2'|perc">
+                    </div>
+                    <div class="one">
+                        <label>Valore sconto</label>
+                        <input class="form-control" disabled [value]="calcs()[1].discountValue| number:'1.2-2'|eur">
+                    </div>
+                    <div class="one">
+                        <label>Imponibile</label>
+                        <input class="form-control" disabled [value]="calcs()[1].taxable| number:'1.2-2'|eur">
+                    </div>
+                    <div class="one">
+                        <label>Tasse</label>
+                        <input class="form-control" disabled [value]="calcs()[1].taxed| number:'1.2-2'|eur">
+                    </div>
+                    <div class="one">
+                        <label>Totale</label>
+                        <input class="form-control" disabled [value]="calcs()[1].finalAmount| number:'1.2-2'|eur">
+                    </div>
+                </div>
             </div>
         </form>
     </div>
@@ -169,7 +240,7 @@
             </div>
             <div class="summary">
                 <h1>Riepilogo</h1>
-                <label class="lab">Righe</label>
+                <label class="lab">RIGHE</label>
                 <div class="flex-row">
                     <div class="one">
                         <label>Sconto %</label>
@@ -192,7 +263,7 @@
                         <input class="form-control" disabled [value]="calcs()[0].finalAmount| number:'1.2-2'|eur">
                     </div>
                 </div>
-                <label class="lab">Coda</label>
+                <label class="lab">CODA</label>
                 <div class="flex-row">
                     <div class="one">
                         <label>Sconto %</label>

@@ -57,17 +57,36 @@ export class InvoicesComponent implements OnInit {
       )
   }
 
-  createItem(): FormGroup {
+  createItem(item?, quantity?, percDiscount?): FormGroup {
     return this.fb.group({
-      item: ['', Validators.required],
-      quantity: ['', [Validators.required, Validators.min(0)]],
-      percDiscount: [0, [Validators.required, Validators.min(0), Validators.max(100)]]
+      item: [item, Validators.required],
+      quantity: [quantity, [Validators.required, Validators.min(0)]],
+      percDiscount: [percDiscount, [Validators.required, Validators.min(0), Validators.max(100)]]
     });
   }
 
-  addItem(): void {
+  addItem(item?, quantity?, percDiscount?): void {
     this.itemsArr = this.invoiceForm.get('rows') as FormArray;
-    this.itemsArr.push(this.createItem());
+    this.itemsArr.push(this.createItem(item, quantity, percDiscount));
+  }
+
+  addInvoice():void{
+    this.invoiceForm.reset();
+    this.itemsArr?.clear();
+    this.itemsArr?.push(this.createItem())
+  }
+
+  populateForm(){
+    this.invoiceForm = this.fb.group({
+      accountholder: [this.invoiceDetail.accountholder, Validators.required],
+      date: [this.invoiceDetail.date+"", Validators.required],
+      paymentMethod: [this.invoiceDetail.paymentMethod, Validators.required],
+      rows: this.fb.array([]),
+      tail: [this.invoiceDetail.tail.percDiscount, [Validators.required, Validators.min(0), Validators.max(100)]]
+    })
+    this.invoiceDetail.rows.map(row=>{
+      this.addItem(row.item.id, row.quantity, row.percDiscount);
+    })
   }
 
   deleteItem(id:number): void{
@@ -114,6 +133,7 @@ export class InvoicesComponent implements OnInit {
 
   detail(id: number) {
     this.invoiceDetail = this.invoices.find((i)=> i.id === id )
+    console.log(this.invoiceDetail);
   }
 
   calcs():InvoiceTail[]{
