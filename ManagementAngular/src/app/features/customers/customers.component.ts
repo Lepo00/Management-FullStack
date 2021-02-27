@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
@@ -35,9 +35,8 @@ export class CustomersComponent implements OnInit {
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
-      let search= params['search'];
-      if(search!=null){
-        this.filterCustomers(search);
+      if(params['search']!=null){
+        this.filterCustomers(params['search']);
       }
     });
   }
