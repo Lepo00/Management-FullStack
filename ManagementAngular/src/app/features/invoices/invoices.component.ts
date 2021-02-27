@@ -8,12 +8,13 @@ import { InvoiceTail } from 'src/app/core/models/invoice-tail.interface';
 import { Item } from 'src/app/core/models/item.interface';
 import { User } from 'src/app/core/models/user';
 import { HttpCommunicationsService } from 'src/app/core/services/http-communications.service';
+import { DateCustomPipe } from 'src/app/shared/pipes/date-custom.pipe';
 
 @Component({
   selector: 'app-invoices',
   templateUrl: './invoices.component.html',
   styleUrls: ['./invoices.component.scss'],
-  providers: [DatePipe]
+  providers: [DateCustomPipe]
 })
 export class InvoicesComponent implements OnInit {
   searchButton:boolean;
@@ -24,7 +25,7 @@ export class InvoicesComponent implements OnInit {
   invoiceForm: FormGroup;
   itemsArr: FormArray;
 
-  constructor(private httpService: HttpCommunicationsService, private fb: FormBuilder, private route:ActivatedRoute, @Inject(LOCALE_ID) private locale: string) {
+  constructor(private httpService: HttpCommunicationsService, private fb: FormBuilder, private route:ActivatedRoute, @Inject(LOCALE_ID) private locale: string, private datepipe: DateCustomPipe) {
     this.invoiceForm = this.fb.group({
       accountholder: ['', Validators.required],
       date: ['', Validators.required],
@@ -79,7 +80,7 @@ export class InvoicesComponent implements OnInit {
   populateForm(){
     this.invoiceForm = this.fb.group({
       accountholder: [this.invoiceDetail.accountholder, Validators.required],
-      date: [this.invoiceDetail.date+"", Validators.required],
+      date: [this.datepipe.transform(this.invoiceDetail.date), Validators.required],
       paymentMethod: [this.invoiceDetail.paymentMethod, Validators.required],
       rows: this.fb.array([]),
       tail: [this.invoiceDetail.tail.percDiscount, [Validators.required, Validators.min(0), Validators.max(100)]]
@@ -94,7 +95,7 @@ export class InvoicesComponent implements OnInit {
     this.itemsArr.removeAt(id);
   }
 
-  save() {
+  setInvoiceToSave():InvoiceMaster {
     const invoice = {} as InvoiceMaster;
     invoice.tail={} as InvoiceTail;
     invoice.rows=[] as InvoiceBody[];
@@ -109,7 +110,20 @@ export class InvoicesComponent implements OnInit {
       invoice.rows[index].quantity=row.quantity;
       invoice.rows[index].percDiscount=row.percDiscount;
     })
+    return invoice;
+  }
+
+  saveInvoice(){
+    let invoice= this.setInvoiceToSave();
     let observer = this.httpService.retrievePostCall<User>("user/"+this.currentUser.id+"/addInvoice", invoice).subscribe(response => {
+      this.updateUser();
+      observer.unsubscribe();
+    })
+  }
+
+  updateInvoice(){
+    let invoice= this.setInvoiceToSave();
+    let observer = this.httpService.retrievePutCall<User>("invoice/update/"+this.invoiceDetail.id, invoice).subscribe(response => {
       this.updateUser();
       observer.unsubscribe();
     })
@@ -133,7 +147,6 @@ export class InvoicesComponent implements OnInit {
 
   detail(id: number) {
     this.invoiceDetail = this.invoices.find((i)=> i.id === id )
-    console.log(this.invoiceDetail);
   }
 
   calcs():InvoiceTail[]{

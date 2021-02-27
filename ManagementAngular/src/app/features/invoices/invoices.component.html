@@ -54,9 +54,9 @@
 <!--DIV MODIFICA-->
 <div id="div-edit" style="display: none;">
     <div class="create-invoice">
-        <button id="x-icon" onclick="toggleLayerX()"><i class="fas fa-times"></i></button>
+        <button id="x-icon-2" onclick="toggleLayerX()"><i class="fas fa-times"></i></button>
         <h1>Modifica Fattura</h1>
-        <form [formGroup]="invoiceForm" (ngSubmit)="save()">
+        <form [formGroup]="invoiceForm" (ngSubmit)="updateInvoice()">
             <button class="saveButton" type="submit" onclick="toggleLayerX()" id="x-icon" [disabled]="invoiceForm.status === 'INVALID'" [ngClass]="{'disabled': invoiceForm.status === 'INVALID'}"> <i class="far fa-save"></i></button>
             <div class="row">
                 <div class="col-8 col-sm-8 col-md-8 col-lg-8">
@@ -76,7 +76,7 @@
                 <div class="col-4 col-sm-4 col-md-4 col-lg-4 ">
                     <div class="form-group">
                         <label for="data">Data</label>
-                        <input type="date" class="form-control" placeholder="Data" formControlName="date">
+                        <input type="date" class="form-control" formControlName="date">
                     </div>
                 </div>
                 <div class="col-8 col-sm-8 col-md-8 col-lg-8">
@@ -176,7 +176,7 @@
     <div class="create-invoice">
         <button id="x-icon" onclick="toggleLayerX()"><i class="fas fa-times"></i></button>
         <h1>Crea Nuova Fattura</h1>
-        <form [formGroup]="invoiceForm" (ngSubmit)="save()">
+        <form [formGroup]="invoiceForm" (ngSubmit)="saveInvoice()">
             <button class="saveButton" type="submit" onclick="toggleLayerX()" id="x-icon" [disabled]="invoiceForm.status === 'INVALID'" [ngClass]="{'disabled': invoiceForm.status === 'INVALID'}"> <i class="far fa-save"></i></button>
             <div class="row">
                 <div class="col-8 col-sm-8 col-md-8 col-lg-8">
