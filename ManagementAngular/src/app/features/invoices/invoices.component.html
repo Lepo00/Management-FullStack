@@ -206,38 +206,6 @@
                     </div>
                 </div>
             </div>
-            <div class="itemsArr">
-                <div formArrayName="rows" *ngFor="let item of invoiceForm.get('rows')['controls']; let i = index;" class="row">
-                    <div [formGroupName]="i">
-                        <div class="col-4 col-sm-4 col-md-4 col-lg-4">
-                            <div class="form-group">
-                                <label>Oggetto {{i+1}}</label>
-                                <select data-menu formControlName="item" class="form-control">
-                                    <option *ngFor="let item of items" value="{{item.id}}">{{item.description}}</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-3 col-sm-3 col-md-3 col-lg-3">
-                            <div class="form-group">
-                                <label>Quantità</label>
-                                <input type="number" formControlName="quantity" placeholder="Quantità" class="form-control">
-                            </div>
-                        </div>
-                        <div class="col-3 col-sm-3 col-md-3 col-lg-3">
-                            <div class="form-group">
-                                <label>Sconto %</label>
-                                <input type="number" formControlName="percDiscount" placeholder="Sconto Percentuale" class="form-control" min="0" max="100">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="addForm">
-                        <button type="button" (click)="addItem()" class="addItem">Aggiungi</button>
-                    </div>
-                    <div class="deleteForm" *ngIf="invoiceForm.get('rows')['controls'].length>1">
-                        <button type="button" (click)="deleteItem(i)" class="deleteItem"><i class="fas fa-times"></i></button>
-                    </div>
-                </div>
-            </div>
             <div class="summary">
                 <h1>Riepilogo</h1>
                 <label class="lab">RIGHE</label>
@@ -284,6 +252,38 @@
                     <div class="one">
                         <label>Totale</label>
                         <input class="form-control" disabled [value]="calcs()[1].finalAmount| number:'1.2-2'|eur">
+                    </div>
+                </div>
+            </div>
+            <div class="itemsArr">
+                <div formArrayName="rows" *ngFor="let item of invoiceForm.get('rows')['controls']; let i = index;" class="row">
+                    <div [formGroupName]="i">
+                        <div class="col-4 col-sm-4 col-md-4 col-lg-4">
+                            <div class="form-group">
+                                <label>Oggetto {{i+1}}</label>
+                                <select data-menu formControlName="item" class="form-control">
+                                    <option *ngFor="let item of items" value="{{item.id}}">{{item.description}}</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-3 col-sm-3 col-md-3 col-lg-3">
+                            <div class="form-group">
+                                <label>Quantità</label>
+                                <input type="number" formControlName="quantity" placeholder="Quantità" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-3 col-sm-3 col-md-3 col-lg-3">
+                            <div class="form-group">
+                                <label>Sconto %</label>
+                                <input type="number" formControlName="percDiscount" placeholder="Sconto Percentuale" class="form-control" min="0" max="100">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="addForm">
+                        <button type="button" (click)="addItem()" class="addItem">Aggiungi</button>
+                    </div>
+                    <div class="deleteForm" *ngIf="invoiceForm.get('rows')['controls'].length>1">
+                        <button type="button" (click)="deleteItem(i)" class="deleteItem"><i class="fas fa-times"></i></button>
                     </div>
                 </div>
             </div>
