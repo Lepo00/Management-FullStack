@@ -17,13 +17,15 @@ export class HomeComponent implements OnInit {
   constructor(private httpService: HttpCommunicationsService) {
     this.totInvoices=0;
     let currentUser = <User>JSON.parse(sessionStorage.getItem("user"));
-    this.httpService.retrieveGetCall<InvoiceMaster[]>("user/" + currentUser.id + "/invoices").subscribe(response => {
+    let observer=this.httpService.retrieveGetCall<InvoiceMaster[]>("user/" + currentUser.id + "/invoices").subscribe(response => {
       response.map(invoice=>{
         this.totInvoices+=invoice.tail.finalAmount;
       })
+      observer.unsubscribe();
     });
-    this.httpService.retrieveGetCall<Item[]>("item").subscribe(response => {
+    let observer2=this.httpService.retrieveGetCall<Item[]>("item").subscribe(response => {
       this.nItems=response.length;
+      observer2.unsubscribe();
     });
     this.nCustomers=currentUser.customers.length;
   }
