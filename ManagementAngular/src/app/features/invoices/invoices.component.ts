@@ -74,7 +74,7 @@ export class InvoicesComponent implements OnInit {
   addInvoice():void{
     this.invoiceForm.reset();
     this.itemsArr?.clear();
-    this.itemsArr?.push(this.createItem())
+    this.itemsArr?.push(this.createItem());
   }
 
   populateForm(){
@@ -96,19 +96,21 @@ export class InvoicesComponent implements OnInit {
   }
 
   setInvoiceToSave():InvoiceMaster {
-    const invoice = {} as InvoiceMaster;
-    invoice.tail={} as InvoiceTail;
-    invoice.rows=[] as InvoiceBody[];
-    invoice.accountholder=this.invoiceForm.get('accountholder').value;
-    invoice.date=formatDate(this.invoiceForm.get('date').value,'dd/MM/yyyy',this.locale);
-    invoice.paymentMethod=this.invoiceForm.get('paymentMethod').value;
-    invoice.tail.percDiscount=this.invoiceForm.get('tail').value;
+    const invoice:InvoiceMaster = {
+      "accountholder":this.invoiceForm.get('accountholder').value,
+      "date":formatDate(this.invoiceForm.get('date').value,'dd/MM/yyyy',this.locale),
+      "paymentMethod":this.invoiceForm.get('paymentMethod').value,
+      "tail":{
+        "percDiscount":this.invoiceForm.get('tail').value,
+      },
+      "rows":[],
+    };
     this.invoiceForm.get('rows').value.map((row,index)=>{
-      invoice.rows[index]={} as InvoiceBody;
-      invoice.rows[index].item={} as Item;
-      invoice.rows[index].item.id=row.item;
-      invoice.rows[index].quantity=row.quantity;
-      invoice.rows[index].percDiscount=row.percDiscount;
+      invoice.rows[index]={
+        "item":{ "id":row.item },
+        "quantity":row.quantity,
+        "percDiscount":row.percDiscount,
+      }
     })
     return invoice;
   }

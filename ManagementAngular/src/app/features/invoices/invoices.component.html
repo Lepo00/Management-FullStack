@@ -57,7 +57,7 @@
         <button id="x-icon-2" onclick="toggleLayerX()"><i class="fas fa-times"></i></button>
         <h1>Modifica Fattura</h1>
         <form [formGroup]="invoiceForm" (ngSubmit)="updateInvoice()">
-            <button class="saveButton" type="submit" onclick="toggleLayerX()" id="x-icon" [disabled]="invoiceForm.status === 'INVALID'" [ngClass]="{'disabled': invoiceForm.status === 'INVALID'}"> <i class="far fa-save"></i></button>
+            <button class="saveButton" type="submit" onclick="toggleLayerX()" id="x-icon-2" [disabled]="invoiceForm.status === 'INVALID'" [ngClass]="{'disabled': invoiceForm.status === 'INVALID'}"> <i class="far fa-save"></i></button>
             <div class="row">
                 <div class="col-8 col-sm-8 col-md-8 col-lg-8">
                     <div class="form-group">
@@ -263,7 +263,7 @@
                         <div class="col-4 col-sm-4 col-md-4 col-lg-4">
                             <div class="form-group">
                                 <label>Articolo {{i+1}}</label>
-                                <select data-menu formControlName="item" class="form-control">
+                                <select formControlName="item" class="form-control">
                                     <option *ngFor="let item of items" value="{{item.id}}">{{item.description}}</option>
                                 </select>
                             </div>
