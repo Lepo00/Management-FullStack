@@ -264,7 +264,10 @@
                             <div class="form-group">
                                 <label>Articolo {{i+1}}</label>
                                 <select formControlName="item" class="form-control">
-                                    <option *ngFor="let item of items" value="{{item.id}}">{{item.description}}</option>
+                                    <option value="null" disabled hidden>Seleziona Articolo</option>
+                                        <option [ngValue]="item.id" *ngFor="let item of items">
+                                            {{item.description}}
+                                      </option>
                                 </select>
                             </div>
                         </div>
@@ -282,7 +285,7 @@
                         </div>
                     </div>
                     <div class="addForm">
-                        <button type="button" (click)="addItem()" class="addItem">Aggiungi</button>
+                        <button type="button" (click)="addItem();" class="addItem">Aggiungi</button>
                     </div>
                     <div class="deleteForm" *ngIf="invoiceForm.get('rows')['controls'].length>1">
                         <button type="button" (click)="deleteItem(i)" class="deleteItem"><i class="fas fa-times"></i></button>

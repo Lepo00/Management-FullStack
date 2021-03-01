@@ -1,8 +1,7 @@
-import { DatePipe, formatDate } from '@angular/common';
-import { Component, ElementRef, Inject, LOCALE_ID, OnInit, ViewChild } from '@angular/core';
+import { formatDate } from '@angular/common';
+import { Component, Inject, LOCALE_ID, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { InvoiceBody } from 'src/app/core/models/invoice-body.interface';
 import { InvoiceMaster } from 'src/app/core/models/invoice-master.interface';
 import { InvoiceTail } from 'src/app/core/models/invoice-tail.interface';
 import { Item } from 'src/app/core/models/item.interface';
@@ -74,7 +73,7 @@ export class InvoicesComponent implements OnInit {
   addInvoice():void{
     this.invoiceForm.reset();
     this.itemsArr?.clear();
-    this.itemsArr?.push(this.createItem());
+    this.itemsArr?.push(this.createItem())
   }
 
   populateForm(){
@@ -159,8 +158,8 @@ export class InvoicesComponent implements OnInit {
     if(this.items){
       this.invoiceForm.get('rows').value.map(row=>{
         if(row.item){
-          rows.taxable+=this.items[row.item-1].price*row.quantity;
-          rows.discountValue+=this.items[row.item-1].price*row.quantity*(row.percDiscount/100);
+          rows.taxable+=this.items[row.item-1]?.price*row.quantity;
+          rows.discountValue+=this.items[row.item-1]?.price*row.quantity*(row.percDiscount/100);
           rows.percDiscount+=row.percDiscount;
         }
       })
@@ -180,4 +179,5 @@ export class InvoicesComponent implements OnInit {
       
     return [rows,tail];
   }
+
 }
