@@ -410,12 +410,10 @@ th:last-child {
 }
 
 .create-invoice h1 {
-    width: 80%;
-    margin-left: auto;
-    margin-right: auto;
     text-transform: uppercase;
     font-weight: bold;
     font-size: 2rem;
+    text-align: center;
 }
 
 .create-invoice form {
@@ -438,6 +436,7 @@ th:last-child {
 .itemsArr {
     position: relative;
     z-index: 999999999;
+    margin-bottom: -40px;
 }
 
 .summary {
@@ -455,7 +454,11 @@ th:last-child {
 .summary .lab {
     position: absolute;
     left: 3%;
-    margin-top: 35px;
+    margin-top: 36px;
+}
+
+.summary .sec {
+    margin-top: 40px;
 }
 
 .summary input {
