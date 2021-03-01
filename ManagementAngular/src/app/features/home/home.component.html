@@ -8,7 +8,7 @@
                 </div>
                 <div class="card__back ">
                     <i class="fas fa-box-open " style="font-size: 5rem; display: block !important; "></i><br>
-                    <span class="block-descrition ">Totale Articoli: {{nItems}} €</span>
+                    <span class="block-descrition ">Numero Articoli: {{nItems}}</span>
                 </div>
             </div>
         </div>
@@ -29,7 +29,7 @@
                     <i class="fas fa-cash-register "></i> <br> <span class="block-descrition ">Fatture</span>
                 </div>
                 <div class="card__back ">
-                    <i class="fas fa-cash-register " style="font-size: 5rem; display: block !important; "></i> <br> <br> <span class="block-descrition ">Totale Fatturato: {{totInvoices}}</span>
+                    <i class="fas fa-cash-register " style="font-size: 5rem; display: block !important; "></i> <br> <br> <span class="block-descrition ">Totale Fatturato: {{totInvoices.toString()| number:'1.2-2'|eur}}</span>
                 </div>
             </div>
         </div>

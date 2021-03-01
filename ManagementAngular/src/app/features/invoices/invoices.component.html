@@ -22,9 +22,9 @@
                     </tr>
                     <tr *ngFor="let invoice of invoices; let i = index;" class="tr">
                         <td class="td">{{i+1}}</td>
-                        <td class="td">{{invoice.accountholder}}</td>
+                        <td class="td">{{invoice.accountholder|titlecase}}</td>
                         <td class="td">{{invoice.date}}</td>
-                        <td class="td">{{invoice.paymentMethod}}</td>
+                        <td class="td">{{invoice.paymentMethod|titlecase}}</td>
                         <td class="td">{{invoice.tail.finalAmount| number:'1.2-2'|eur}}</td>
                         <td class="td">
                             <button onclick="toggleLayer()"><i class="fas fa-edit" (click)="detail(invoice.id); populateForm()"></i></button>
