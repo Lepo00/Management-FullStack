@@ -18,8 +18,8 @@ public class InvoiceTail extends AuditModel {
 	@Column(name = "rows_discount")
 	private double rowsDiscount;
 
-	@Column(name = "discount_perc")
-	private double discountPerc;
+	@Column(name = "perc_discount")
+	private int percDiscount;
 
 	@Column(name = "discount_value")
 	private double discountValue;
@@ -60,12 +60,12 @@ public class InvoiceTail extends AuditModel {
 		this.rowsDiscount = rowsDiscount;
 	}
 
-	public double getDiscountPerc() {
-		return discountPerc;
+	public int getPercDiscount() {
+		return percDiscount;
 	}
 
-	public void setDiscountPerc(double discountPerc) {
-		this.discountPerc = discountPerc;
+	public void setPercDiscount(int percDiscount) {
+		this.percDiscount = percDiscount;
 	}
 
 	public double getDiscountValue() {

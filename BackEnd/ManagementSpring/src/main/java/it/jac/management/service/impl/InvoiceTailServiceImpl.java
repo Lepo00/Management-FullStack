@@ -56,7 +56,7 @@ public class InvoiceTailServiceImpl implements InvoiceTailService {
 		}
 		tail.setItemsValue(tot);
 		tail.setRowsDiscount(rowdisc);
-		tail.setDiscountValue(tot * tail.getDiscountPerc() / 100);
+		tail.setDiscountValue(tot * tail.getPercDiscount() / 100);
 		tail.setTotDiscount(tail.getDiscountValue() + rowdisc);
 		tail.setTaxable(tot - tail.getDiscountValue());
 		tail.setTaxed(tail.getTaxable() * 22 / 100);
@@ -66,8 +66,8 @@ public class InvoiceTailServiceImpl implements InvoiceTailService {
 	}
 	
 	public void roundUp(InvoiceTail tail) {
-		tail.setItemsValue(Math.round(tail.getItemsValue() * 100.0) / 100.0);
-		tail.setRowsDiscount(Math.round(tail.getRowsDiscount() * 100.0) / 100.0);
+		//tail.setItemsValue(Math.round(tail.getItemsValue() * 100.0) / 100.0);
+		//tail.setRowsDiscount(Math.round(tail.getRowsDiscount() * 100.0) / 100.0);
 		tail.setDiscountValue(Math.round(tail.getDiscountValue() * 100.0) / 100.0);
 		tail.setTotDiscount(Math.round(tail.getTotDiscount() * 100.0) / 100.0);
 		tail.setTaxable(Math.round(tail.getTaxable() * 100.0) / 100.0);
