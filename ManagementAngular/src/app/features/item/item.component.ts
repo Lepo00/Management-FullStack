@@ -22,16 +22,16 @@ export class ItemComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    let observer=this.httpService.retrieveGetCall<Item[]>("item").subscribe(response => {
+    /*let observer=this.httpService.retrieveGetCall<Item[]>("item").subscribe(response => {
       this.items = response;
-      this.itemsTot = response;
+      this.itemsTot = response;*/
       this.route.params.subscribe(params => {
         if(params['search']!=null){
           this.filterItems(params['search']);
         }
       });
-      observer.unsubscribe();
-    });
+      /*observer.unsubscribe();
+    });*/
   }
   
   filterItems(search:string) {
