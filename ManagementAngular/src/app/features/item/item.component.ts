@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Observable } from 'rxjs';
 import { Item } from 'src/app/core/models/item.interface';
-import { HttpCommunicationsService } from 'src/app/core/services/http-communications.service';
 import { ItemService } from 'src/app/core/services/item.service';
 
 @Component({
@@ -11,28 +9,24 @@ import { ItemService } from 'src/app/core/services/item.service';
   styleUrls: ['./item.component.scss']
 })
 export class ItemComponent implements OnInit {
-  //search:string;
   searchButton:boolean;
   items: Item[];
   itemsTot: Item[];
-  constructor(private httpService: HttpCommunicationsService, private route: ActivatedRoute, private itemService:ItemService) { 
+  constructor(private route: ActivatedRoute, private itemService:ItemService) {
     this.searchButton=true;
     itemService.retrieveItems().subscribe(response=>{
-      this.items=this.itemsTot=response;
+      this.items=response;
+      this.itemsTot=response;
     });
   }
 
   ngOnInit(): void {
-    /*let observer=this.httpService.retrieveGetCall<Item[]>("item").subscribe(response => {
-      this.items = response;
-      this.itemsTot = response;*/
-      this.route.params.subscribe(params => {
+      let observer=this.route.params.subscribe(params => {
         if(params['search']!=null){
           this.filterItems(params['search']);
         }
+        observer.unsubscribe();
       });
-      /*observer.unsubscribe();
-    });*/
   }
   
   filterItems(search:string) {

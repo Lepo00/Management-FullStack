@@ -13,4 +13,5 @@ export class ItemService {
   retrieveItems():Observable<Item[]>{
     return this.httpService.retrieveGetCall<Item[]>("item");
   }
+  
 }

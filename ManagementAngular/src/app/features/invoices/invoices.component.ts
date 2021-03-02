@@ -6,7 +6,6 @@ import { InvoiceMaster } from 'src/app/core/models/invoice-master.interface';
 import { InvoiceTail } from 'src/app/core/models/invoice-tail.interface';
 import { Item } from 'src/app/core/models/item.interface';
 import { User } from 'src/app/core/models/user';
-import { HttpCommunicationsService } from 'src/app/core/services/http-communications.service';
 import { InvoiceService } from 'src/app/core/services/invoice.service';
 import { ItemService } from 'src/app/core/services/item.service';
 import { UserService } from 'src/app/core/services/user.service';
@@ -27,7 +26,7 @@ export class InvoicesComponent implements OnInit {
   invoiceForm: FormGroup;
   itemsArr: FormArray;
 
-  constructor(private httpService: HttpCommunicationsService, private fb: FormBuilder, private route:ActivatedRoute, @Inject(LOCALE_ID) private locale: string, private datepipe: DateCustomPipe,
+  constructor(private fb: FormBuilder, private route:ActivatedRoute, @Inject(LOCALE_ID) private locale: string, private datepipe: DateCustomPipe,
    private invoiceService:InvoiceService, private itemService:ItemService, private userService:UserService) {
     this.invoiceForm = this.fb.group({
       accountholder: ['', Validators.required],
