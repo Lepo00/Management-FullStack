@@ -1,5 +1,5 @@
 import { formatDate } from '@angular/common';
-import { Component, Inject, LOCALE_ID, OnInit } from '@angular/core';
+import { Component, Inject, LOCALE_ID, OnDestroy, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
@@ -18,7 +18,7 @@ import { DateCustomPipe } from 'src/app/shared/pipes/date-custom.pipe';
   styleUrls: ['./invoices.component.scss'],
   providers: [DateCustomPipe]
 })
-export class InvoicesComponent implements OnInit {
+export class InvoicesComponent implements OnInit, OnDestroy {
   subs: Subscription[] = [];
   searchButton:boolean;
   currentUser: User;
@@ -39,19 +39,19 @@ export class InvoicesComponent implements OnInit {
     });
     this.currentUser = <User>JSON.parse(sessionStorage.getItem("user"));
     this.invoices=this.currentUser.invoices.sort((a, b) => a.id - b.id);
-    this.itemService.retrieveItems().subscribe(response=>{
+    this.subs.push(this.itemService.retrieveItems().subscribe(response=>{
       this.items=response;
-    }).unsubscribe();
+    }));
     this.searchButton=true;
   }
   
   ngOnInit(): void {
-    this.route.params.subscribe(params => {
+    this.subs.push(this.route.params.subscribe(params => {
       if(params['search']!=null){
         this.invoices=this.invoiceService.filterInvoices(params['search'],this.currentUser.invoices);
         this.searchButton=false;
       }
-    }).unsubscribe();
+    }));
   }
 
   createItem(item?, quantity?, percDiscount?): FormGroup {
@@ -112,9 +112,9 @@ export class InvoicesComponent implements OnInit {
   }
 
   saveInvoice(){
-    this.invoiceService.save(this.currentUser.id, this.setInvoiceToSave()).subscribe(()=>{
+    this.subs.push(this.invoiceService.save(this.currentUser.id, this.setInvoiceToSave()).subscribe(()=>{
       this.updateUser();
-    }).unsubscribe();
+    }));
     /*let invoice= this.setInvoiceToSave();
     let observer = this.httpService.retrievePostCall<User>("user/"+this.currentUser.id+"/addInvoice", invoice).subscribe(response => {
       observer.unsubscribe();
@@ -122,9 +122,9 @@ export class InvoicesComponent implements OnInit {
   }
 
   updateInvoice(){
-    this.invoiceService.update(this.invoiceDetail.id, this.setInvoiceToSave()).subscribe(()=>{
+    this.subs.push(this.invoiceService.update(this.invoiceDetail.id, this.setInvoiceToSave()).subscribe(()=>{
       this.updateUser();
-    }).unsubscribe();
+    }));
     /*let invoice= this.setInvoiceToSave();
     let observer = this.httpService.retrievePutCall<User>("invoice/update/"+this.invoiceDetail.id, invoice).subscribe(response => {
       this.updateUser();
@@ -133,16 +133,16 @@ export class InvoicesComponent implements OnInit {
   }
   
   updateUser(){
-    this.userService.update(this.currentUser.id).subscribe(response=>{
+    this.subs.push(this.userService.update(this.currentUser.id).subscribe(response=>{
       sessionStorage.setItem("user",JSON.stringify(response));
       this.invoices=response.invoices.sort((a, b) => a.id - b.id);
-    }).unsubscribe();
+    }));
   }
 
   delete(){
-    this.invoiceService.delete(this.invoiceDetail.id).subscribe(()=>{
+    this.subs.push(this.invoiceService.delete(this.invoiceDetail.id).subscribe(()=>{
       this.updateUser();
-    }).unsubscribe();
+    }));
     /*let url:string="invoice/delete/"+this.invoiceDetail.id;
     let observer=this.httpService.retrieveDeleteCall<string>(url).subscribe(response=>{
       this.updateUser();
@@ -184,4 +184,7 @@ export class InvoicesComponent implements OnInit {
     return [rows,tail];
   }
 
+  ngOnDestroy(): void {
+    this.subscriptions.forEach((subscription) => subscription.unsubscribe());
+  }
 }
