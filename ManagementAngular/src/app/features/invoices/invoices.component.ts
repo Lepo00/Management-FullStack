@@ -38,11 +38,12 @@ export class InvoicesComponent implements OnInit {
     });
     this.currentUser = <User>JSON.parse(sessionStorage.getItem("user"));
     this.invoices=this.currentUser.invoices.sort((a, b) => a.id - b.id);
-
-    this.items=itemService.retrieveItems();
+    this.itemService.retrieveItems().subscribe(response=>{
+      this.items=response;
+    });
     this.searchButton=true;
   }
-
+  
   ngOnInit(): void {
     this.route.params.subscribe(params => {
       if(params['search']!=null){
@@ -110,8 +111,9 @@ export class InvoicesComponent implements OnInit {
   }
 
   saveInvoice(){
-    this.invoiceService.save(this.currentUser.id, this.setInvoiceToSave());
-    this.updateUser();
+    this.invoiceService.save(this.currentUser.id, this.setInvoiceToSave()).subscribe(()=>{
+      this.updateUser();
+    });
     /*let invoice= this.setInvoiceToSave();
     let observer = this.httpService.retrievePostCall<User>("user/"+this.currentUser.id+"/addInvoice", invoice).subscribe(response => {
       observer.unsubscribe();
@@ -119,8 +121,9 @@ export class InvoicesComponent implements OnInit {
   }
 
   updateInvoice(){
-    this.invoiceService.update(this.invoiceDetail.id, this.setInvoiceToSave());
-    this.updateUser();
+    this.invoiceService.update(this.invoiceDetail.id, this.setInvoiceToSave()).subscribe(()=>{
+      this.updateUser();
+    });
     /*let invoice= this.setInvoiceToSave();
     let observer = this.httpService.retrievePutCall<User>("invoice/update/"+this.invoiceDetail.id, invoice).subscribe(response => {
       this.updateUser();
@@ -129,18 +132,17 @@ export class InvoicesComponent implements OnInit {
   }
   
   updateUser(){
-    this.invoices=this.userService.update(this.currentUser.id).invoices;
-    /*let observer=this.httpService.retrieveGetCall<User>("user/"+this.currentUser.id).subscribe(response=>{
+    let observer=this.userService.update(this.currentUser.id).subscribe(response=>{
       sessionStorage.setItem("user",JSON.stringify(response));
       this.invoices=response.invoices.sort((a, b) => a.id - b.id);
       observer.unsubscribe();
-    })*/
+    });
   }
 
   delete(){
-    this.invoiceService.delete(this.invoiceDetail.id);
-    this.updateUser();
-
+    this.invoiceService.delete(this.invoiceDetail.id).subscribe(()=>{
+      this.updateUser();
+    });
     /*let url:string="invoice/delete/"+this.invoiceDetail.id;
     let observer=this.httpService.retrieveDeleteCall<string>(url).subscribe(response=>{
       this.updateUser();

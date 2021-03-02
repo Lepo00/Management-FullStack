@@ -17,8 +17,9 @@ export class ItemComponent implements OnInit {
   itemsTot: Item[];
   constructor(private httpService: HttpCommunicationsService, private route: ActivatedRoute, private itemService:ItemService) { 
     this.searchButton=true;
-    this.items=itemService.retrieveItems();
-    this.itemsTot=this.items;
+    itemService.retrieveItems().subscribe(response=>{
+      this.items=this.itemsTot=response;
+    });
   }
 
   ngOnInit(): void {

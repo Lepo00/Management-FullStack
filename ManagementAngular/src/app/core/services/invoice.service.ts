@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 import { InvoiceMaster } from '../models/invoice-master.interface';
 import { User } from '../models/user';
 import { HttpCommunicationsService } from './http-communications.service';
@@ -18,23 +19,17 @@ export class InvoiceService {
     return invoices;
   }
 
-  save(id:number, invoice:InvoiceMaster):void{
-    let observer = this.httpService.retrievePostCall<User>("user/"+id+"/addInvoice", invoice).subscribe(() => {
-      observer.unsubscribe();
-    })
+  save(id:number, invoice:InvoiceMaster):Observable<InvoiceMaster>{
+    return this.httpService.retrievePostCall<InvoiceMaster>("user/"+id+"/addInvoice", invoice);
   }
 
-  update(id:number, invoice:InvoiceMaster):void{
-    let observer = this.httpService.retrievePutCall<User>("invoice/update/"+id, invoice).subscribe(response => {
-      observer.unsubscribe();
-    })
+  update(id:number, invoice:InvoiceMaster):Observable<InvoiceMaster>{
+    return this.httpService.retrievePutCall<InvoiceMaster>("invoice/update/"+id, invoice)
   }
 
-  delete(id:number):void{
+  delete(id:number):Observable<string>{
     let url:string="invoice/delete/"+id;
-    let observer=this.httpService.retrieveDeleteCall<string>(url).subscribe(response=>{
-      observer.unsubscribe();
-    });
+    return this.httpService.retrieveDeleteCall<string>(url);
   }
 
 }

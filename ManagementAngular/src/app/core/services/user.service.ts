@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 import { User } from '../models/user';
 import { HttpCommunicationsService } from './http-communications.service';
 
@@ -9,14 +10,7 @@ export class UserService {
 
   constructor(private httpService:HttpCommunicationsService) { }
 
-  update(id:number):User{
-    let user:User;
-    let observer=this.httpService.retrieveGetCall<User>("user/"+id).subscribe(response=>{
-      sessionStorage.setItem("user",JSON.stringify(response));
-      user=response;
-      observer.unsubscribe();
-    })
-    return user;
-
+  update(id:number):Observable<User>{
+    return this.httpService.retrieveGetCall<User>("user/"+id);
   }
 }
