@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 import { Item } from 'src/app/core/models/item.interface';
 import { HttpCommunicationsService } from 'src/app/core/services/http-communications.service';
+import { ItemService } from 'src/app/core/services/item.service';
 
 @Component({
   selector: 'app-item',
@@ -14,8 +15,10 @@ export class ItemComponent implements OnInit {
   searchButton:boolean;
   items: Item[];
   itemsTot: Item[];
-  constructor(private httpService: HttpCommunicationsService, private route: ActivatedRoute) { 
+  constructor(private httpService: HttpCommunicationsService, private route: ActivatedRoute, private itemService:ItemService) { 
     this.searchButton=true;
+    this.items=itemService.retrieveItems();
+    this.itemsTot=this.items;
   }
 
   ngOnInit(): void {

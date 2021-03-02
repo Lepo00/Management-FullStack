@@ -7,6 +7,9 @@ import { InvoiceTail } from 'src/app/core/models/invoice-tail.interface';
 import { Item } from 'src/app/core/models/item.interface';
 import { User } from 'src/app/core/models/user';
 import { HttpCommunicationsService } from 'src/app/core/services/http-communications.service';
+import { InvoiceService } from 'src/app/core/services/invoice.service';
+import { ItemService } from 'src/app/core/services/item.service';
+import { UserService } from 'src/app/core/services/user.service';
 import { DateCustomPipe } from 'src/app/shared/pipes/date-custom.pipe';
 
 @Component({
@@ -24,7 +27,8 @@ export class InvoicesComponent implements OnInit {
   invoiceForm: FormGroup;
   itemsArr: FormArray;
 
-  constructor(private httpService: HttpCommunicationsService, private fb: FormBuilder, private route:ActivatedRoute, @Inject(LOCALE_ID) private locale: string, private datepipe: DateCustomPipe) {
+  constructor(private httpService: HttpCommunicationsService, private fb: FormBuilder, private route:ActivatedRoute, @Inject(LOCALE_ID) private locale: string, private datepipe: DateCustomPipe,
+   private invoiceService:InvoiceService, private itemService:ItemService, private userService:UserService) {
     this.invoiceForm = this.fb.group({
       accountholder: ['', Validators.required],
       date: ['', Validators.required],
@@ -34,27 +38,18 @@ export class InvoicesComponent implements OnInit {
     });
     this.currentUser = <User>JSON.parse(sessionStorage.getItem("user"));
     this.invoices=this.currentUser.invoices.sort((a, b) => a.id - b.id);
-    let observer=this.httpService.retrieveGetCall<Item[]>("item").subscribe(response => {
-      this.items = response;
-      observer.unsubscribe();
-    });
+
+    this.items=itemService.retrieveItems();
     this.searchButton=true;
   }
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
       if(params['search']!=null){
-        this.filterCustomers(params['search']);
+        this.invoices=this.invoiceService.filterInvoices(params['search'],this.currentUser.invoices);
+        this.searchButton=false;
       }
     });
-  }
-
-  filterCustomers(search: any) {
-    this.invoices=this.currentUser.invoices.sort((a, b) => a.id - b.id);
-    this.searchButton=false;
-    this.invoices= this.invoices.filter(invoice=>
-      invoice.accountholder.includes(search) || invoice.date.includes(search) || invoice.paymentMethod.includes(search)
-      )
   }
 
   createItem(item?, quantity?, percDiscount?): FormGroup {
@@ -73,7 +68,7 @@ export class InvoicesComponent implements OnInit {
   addInvoice():void{
     this.invoiceForm.reset();
     this.itemsArr?.clear();
-    this.itemsArr?.push(this.createItem())
+    this.itemsArr?.push(this.createItem());
   }
 
   populateForm(){
@@ -115,35 +110,42 @@ export class InvoicesComponent implements OnInit {
   }
 
   saveInvoice(){
-    let invoice= this.setInvoiceToSave();
+    this.invoiceService.save(this.currentUser.id, this.setInvoiceToSave());
+    this.updateUser();
+    /*let invoice= this.setInvoiceToSave();
     let observer = this.httpService.retrievePostCall<User>("user/"+this.currentUser.id+"/addInvoice", invoice).subscribe(response => {
-      this.updateUser();
       observer.unsubscribe();
-    })
+    })*/
   }
 
   updateInvoice(){
-    let invoice= this.setInvoiceToSave();
+    this.invoiceService.update(this.invoiceDetail.id, this.setInvoiceToSave());
+    this.updateUser();
+    /*let invoice= this.setInvoiceToSave();
     let observer = this.httpService.retrievePutCall<User>("invoice/update/"+this.invoiceDetail.id, invoice).subscribe(response => {
       this.updateUser();
       observer.unsubscribe();
-    })
+    })*/
   }
   
   updateUser(){
-    let observer=this.httpService.retrieveGetCall<User>("user/"+this.currentUser.id).subscribe(response=>{
+    this.invoices=this.userService.update(this.currentUser.id).invoices;
+    /*let observer=this.httpService.retrieveGetCall<User>("user/"+this.currentUser.id).subscribe(response=>{
       sessionStorage.setItem("user",JSON.stringify(response));
       this.invoices=response.invoices.sort((a, b) => a.id - b.id);
       observer.unsubscribe();
-    })
+    })*/
   }
 
   delete(){
-    let url:string="invoice/delete/"+this.invoiceDetail.id;
+    this.invoiceService.delete(this.invoiceDetail.id);
+    this.updateUser();
+
+    /*let url:string="invoice/delete/"+this.invoiceDetail.id;
     let observer=this.httpService.retrieveDeleteCall<string>(url).subscribe(response=>{
       this.updateUser();
       observer.unsubscribe();
-    });
+    });*/
   }
 
   detail(id: number) {
