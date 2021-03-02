@@ -31,7 +31,10 @@ export class InvoiceService {
   }
 
   delete(id:number):void{
-
+    let url:string="invoice/delete/"+id;
+    let observer=this.httpService.retrieveDeleteCall<string>(url).subscribe(response=>{
+      observer.unsubscribe();
+    });
   }
-  
+
 }
