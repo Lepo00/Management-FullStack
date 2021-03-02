@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { Customer } from 'src/app/core/models/customer.interface';
 import { User } from 'src/app/core/models/user';
 import { CustomerService } from 'src/app/core/services/customer.service';
@@ -12,15 +13,15 @@ import { UserService } from 'src/app/core/services/user.service';
   templateUrl: './customers.component.html',
   styleUrls: ['./customers.component.scss']
 })
-export class CustomersComponent implements OnInit {
+export class CustomersComponent implements OnInit, OnDestroy {
+  subs: Subscription[] = [];
   searchButton:boolean;
-  idDelete: number;
   customerForm: FormGroup;
   currentUser:User;
   customers:Customer[];
   customer:Customer;
 
-  constructor(private httpService: HttpCommunicationsService, private fb: FormBuilder, private route:ActivatedRoute,
+  constructor(private fb: FormBuilder, private route:ActivatedRoute,
      private customerService: CustomerService, private userService:UserService) {
     this.searchButton=true;
     this.customerForm = this.fb.group({
@@ -36,11 +37,11 @@ export class CustomersComponent implements OnInit {
    }
 
   ngOnInit(): void {
-    this.route.params.subscribe(params => {
+    this.subs.push(this.route.params.subscribe(params => {
       if(params['search']!=null){
         this.filterCustomers(params['search']);
       }
-    });
+    }));
   }
 
   filterCustomers(search: any) {
@@ -52,9 +53,9 @@ export class CustomersComponent implements OnInit {
   }
 
   add(){
-    this.customerService.save(this.currentUser.id, this.customerForm.value).subscribe(()=>{
+    this.subs.push(this.customerService.save(this.currentUser.id, this.customerForm.value).subscribe(()=>{
       this.updateUser();
-    }).unsubscribe();
+    }));
     /*let url:string='user/'+this.currentUser.id+'/addCustomer';
     let observer=this.httpService.retrievePostCall<User>(url, this.customerForm.value).subscribe(response=>{
       this.updateUser();
@@ -63,9 +64,9 @@ export class CustomersComponent implements OnInit {
   }
 
   delete(){
-    this.userService.update(this.customer.id).subscribe(()=>{
+    this.subs.push(this.userService.update(this.customer.id).subscribe(()=>{
       this.updateUser();
-    }).unsubscribe();
+    }));
     /*let url:string="customer/delete/"+this.customer.id;
     let observer=this.httpService.retrieveDeleteCall<string>(url).subscribe(response=>{
       this.updateUser();
@@ -74,9 +75,9 @@ export class CustomersComponent implements OnInit {
   }
 
   edit(){
-    this.userService.update(this.customer.id).subscribe(()=>{
+    this.subs.push(this.userService.update(this.customer.id).subscribe(()=>{
       this.updateUser();
-    }).unsubscribe();
+    }))
     /*let url:string="customer/update/"+this.customer.id;
     let observer=this.httpService.retrievePutCall<User>(url, this.customerForm.value).subscribe(()=>{
       this.updateUser();
@@ -89,10 +90,10 @@ export class CustomersComponent implements OnInit {
   }
 
   updateUser(){
-    this.userService.update(this.currentUser.id).subscribe(response=>{
+    this.subs.push(this.userService.update(this.currentUser.id).subscribe(response=>{
       sessionStorage.setItem("user",JSON.stringify(response));
       this.customers=response.customers.sort((a, b) => a.id - b.id);
-    }).unsubscribe();
+    }));
   }
 
   populateForm(){
@@ -108,5 +109,9 @@ export class CustomersComponent implements OnInit {
 
   resetForm(){
     this.customerForm.reset();
+  }
+
+  ngOnDestroy(): void {
+    this.subs.forEach((subscription) => subscription.unsubscribe());
   }
 }
