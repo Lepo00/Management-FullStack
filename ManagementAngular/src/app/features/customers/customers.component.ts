@@ -64,7 +64,7 @@ export class CustomersComponent implements OnInit, OnDestroy {
   }
 
   delete(){
-    this.subs.push(this.userService.update(this.customer.id).subscribe(()=>{
+    this.subs.push(this.customerService.delete(this.customer.id).subscribe(()=>{
       this.updateUser();
     }));
     /*let url:string="customer/delete/"+this.customer.id;
@@ -75,7 +75,7 @@ export class CustomersComponent implements OnInit, OnDestroy {
   }
 
   edit(){
-    this.subs.push(this.userService.update(this.customer.id).subscribe(()=>{
+    this.subs.push(this.customerService.update(this.customer.id, this.customerForm.value).subscribe(()=>{
       this.updateUser();
     }))
     /*let url:string="customer/update/"+this.customer.id;
