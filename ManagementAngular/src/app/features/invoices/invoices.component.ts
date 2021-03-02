@@ -185,6 +185,6 @@ export class InvoicesComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.subscriptions.forEach((subscription) => subscription.unsubscribe());
+    this.subs.forEach((subscription) => subscription.unsubscribe());
   }
 }
