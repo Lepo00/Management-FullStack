@@ -103,7 +103,7 @@
                         <input class="form-control" disabled [value]="calcs()[0].taxable| number:'1.2-2'|eur">
                     </div>
                     <div class="one">
-                        <label>Tasse</label>
+                        <label>IVA</label>
                         <input class="form-control" disabled [value]="calcs()[0].taxed| number:'1.2-2'|eur">
                     </div>
                     <div class="one">
@@ -126,7 +126,7 @@
                         <input class="form-control" disabled [value]="calcs()[1].taxable| number:'1.2-2'|eur">
                     </div>
                     <div class="one">
-                        <label>Tasse</label>
+                        <label>IVA</label>
                         <input class="form-control" disabled [value]="calcs()[1].taxed| number:'1.2-2'|eur">
                     </div>
                     <div class="one">
@@ -179,7 +179,7 @@
         <h1>Crea Nuova Fattura</h1>
         <form [formGroup]="invoiceForm" (ngSubmit)="saveInvoice()">
             <button class="saveButton" type="submit" onclick="toggleLayerX()" id="x-icon" [disabled]="invoiceForm.status === 'INVALID'" [ngClass]="{'disabled': invoiceForm.status === 'INVALID'}"> <i class="far fa-save"></i></button>
-            <div class="row">
+            <div class="row" style="margin-left: 10%; margin-right: 10%;">
                 <div class="col-8 col-sm-8 col-md-8 col-lg-8">
                     <div class="form-group">
                         <label for="Intestatario">Intestatario</label>
@@ -193,7 +193,7 @@
                     </div>
                 </div>
             </div>
-            <div class="row">
+            <div class="row" style="margin-left: 10%; margin-right: 10%;">
                 <div class="col-4 col-sm-4 col-md-4 col-lg-4 ">
                     <div class="form-group">
                         <label for="data">Data</label>
@@ -224,7 +224,7 @@
                         <input class="form-control" disabled [value]="calcs()[0].taxable| number:'1.2-2'|eur">
                     </div>
                     <div class="one">
-                        <label>Tasse</label>
+                        <label>IVA</label>
                         <input class="form-control" disabled [value]="calcs()[0].taxed| number:'1.2-2'|eur">
                     </div>
                     <div class="one">
@@ -247,7 +247,7 @@
                         <input class="form-control" disabled [value]="calcs()[1].taxable| number:'1.2-2'|eur">
                     </div>
                     <div class="one">
-                        <label>Tasse</label>
+                        <label>IVA</label>
                         <input class="form-control" disabled [value]="calcs()[1].taxed| number:'1.2-2'|eur">
                     </div>
                     <div class="one">
@@ -260,7 +260,7 @@
                 <h1>Articoli</h1>
                 <div formArrayName="rows" *ngFor="let item of invoiceForm.get('rows')['controls']; let i = index;" class="row">
                     <div [formGroupName]="i">
-                        <div class="col-4 col-sm-4 col-md-4 col-lg-4">
+                        <div class="col-2 col-sm-2 col-md-2 col-lg-2">
                             <div class="form-group">
                                 <label>Articolo {{i+1}}</label>
                                 <select formControlName="item" class="form-control">
@@ -271,19 +271,56 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="col-3 col-sm-3 col-md-3 col-lg-3">
+                        <div class="col-1 col-sm-1 col-md-1 col-lg-1">
                             <div class="form-group">
                                 <label>Quantità</label>
                                 <input type="number" formControlName="quantity" placeholder="Quantità" class="form-control">
                             </div>
                         </div>
-                        <div class="col-3 col-sm-3 col-md-3 col-lg-3">
+                        <div class="col-1 col-sm-1 col-md-1 col-lg-1">
+                            <div class="form-group">
+                                <label>Prezzo Un.</label>
+                                <input type="number" formControlName="price" placeholder="Prezzo Unitario" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-1 col-sm-1 col-md-1 col-lg-1">
                             <div class="form-group">
                                 <label>Sconto %</label>
                                 <input type="number" formControlName="percDiscount" placeholder="Sconto Percentuale" class="form-control" min="0" max="100">
                             </div>
                         </div>
+                        <div class="col-1 col-sm-1 col-md-1 col-lg-1">
+                            <div class="form-group">
+                                <label>Sconto Tot.</label>
+                                <input type="number" formControlName="percDiscount" placeholder="Totale Sconto" class="form-control" min="0" max="100">
+                            </div>
+                        </div>
+                        <div class="col-1 col-sm-1 col-md-1 col-lg-1">
+                            <div class="form-group">
+                                <label>Prz. Scont.</label>
+                                <input type="number" formControlName="percDiscount" placeholder="Prezzo Scontato" class="form-control" min="0" max="100">
+                            </div>
+                        </div>
+                        <div class="col-1 col-sm-1 col-md-1 col-lg-1">
+                            <div class="form-group">
+                                <label>Imponibile</label>
+                                <input type="number" formControlName="percDiscount" placeholder="Imponibile Sconto" class="form-control" min="0" max="100">
+                            </div>
+                        </div>
+                        <div class="col-1 col-sm-1 col-md-1 col-lg-1">
+                            <div class="form-group">
+                                <label>IVA</label>
+                                <input type="number" formControlName="percDiscount" placeholder="IVA Sconto" class="form-control" min="0" max="100">
+                            </div>
+                        </div>
+                        <div class="col-1 col-sm-1 col-md-1 col-lg-1">
+                            <div class="form-group">
+                                <label>Totale</label>
+                                <input type="number" formControlName="percDiscount" placeholder="Totale" class="form-control" min="0" max="100">
+                            </div>
+                        </div>
                     </div>
+
                     <div class="addForm">
                         <button type="button" (click)="addItem();" class="addItem">Aggiungi</button>
                     </div>
@@ -356,7 +393,7 @@
                             <td class="th">Totale Sconto</td>
                             <td class="th">Prezzo scontato<br>Singolo</td>
                             <td class="th">Imponibile</td>
-                            <td class="th">Tasse</td>
+                            <td class="th">IVA</td>
                             <td class="th">Totale</td>
                         </tr>
                         <tr *ngFor="let row of invoiceDetail?.rows" class="tr">
@@ -389,7 +426,7 @@
                             <td class="th">Valore<br>Sconto</td>
                             <td class="th">Totale<br>sconto</td>
                             <td class="th">Imponibile</td>
-                            <td class="th">Tasse</td>
+                            <td class="th">IVA</td>
                             <td class="th">Totale</td>
                         </tr>
                         <tr>
