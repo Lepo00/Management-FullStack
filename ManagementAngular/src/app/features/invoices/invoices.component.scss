@@ -230,6 +230,10 @@ th:last-child {
     position: inherit;
 }
 
+#div-new .form-container {
+    width: 100%;
+}
+
 .addItem {
     background-color: var(--colorbg);
     margin-top: 25px;
@@ -391,11 +395,11 @@ th:last-child {
 .create-invoice {
     background-color: var(--bgcolorlayer);
     height: auto;
-    width: 70%;
+    width: 100%;
     position: absolute;
     top: 3%;
-    left: 15%;
-    right: 15%;
+    left: 0%;
+    right: 0%;
     z-index: 9999999999999999;
     border: 1px solid white;
     margin-bottom: 3%;
@@ -413,9 +417,7 @@ th:last-child {
 .create-invoice form {
     margin-top: 5vh;
     margin-bottom: 10vh;
-    width: 80%;
-    margin-left: auto;
-    margin-right: auto;
+    width: 100%;
 }
 
 .imgDetail {
@@ -429,8 +431,11 @@ th:last-child {
 
 .itemsArr {
     position: relative;
+    padding: 0% !important;
     z-index: 999999999;
     margin-bottom: -40px;
+    margin-left: 10px !important;
+    margin-right: 10px !important;
 }
 
 .itemsArr h1 {
@@ -441,10 +446,17 @@ th:last-child {
 
 .summary {
     margin-bottom: 15px;
+    margin-left: 10%;
+    margin-right: 10%;
     text-align: center;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+}
+
+.invoiceForm {
+    margin-left: 10%;
+    margin-right: 10%;
 }
 
 .summary h1 {
