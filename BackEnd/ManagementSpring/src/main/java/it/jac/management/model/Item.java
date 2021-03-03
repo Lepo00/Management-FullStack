@@ -20,6 +20,9 @@ public class Item extends AuditModel {
 	@Column(name = "price")
 	private double price;
 
+	@Column(name = "service")
+	private boolean service;
+	
 	@ManyToOne
 	private UnitOfMeasure unitOfMeasure;
 
@@ -54,4 +57,14 @@ public class Item extends AuditModel {
 	public void setUnitOfMeasure(UnitOfMeasure unitOfMeasure) {
 		this.unitOfMeasure = unitOfMeasure;
 	}
+
+	public boolean isService() {
+		return service;
+	}
+
+	public void setService(boolean service) {
+		this.service = service;
+	}
+	
+	
 }
