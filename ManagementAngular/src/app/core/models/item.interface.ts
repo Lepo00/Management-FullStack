@@ -6,4 +6,5 @@ export interface Item{
     description?:string;
     price?:number;
     unitOfMeasure?: UnitOfMeasure;
+    service?:boolean;
 }

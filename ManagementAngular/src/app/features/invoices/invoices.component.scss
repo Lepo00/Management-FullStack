@@ -1,5 +1,9 @@
 /* edit layer*/
 
+label {
+    margin-bottom: 1px;
+}
+
 button {
     outline: none;
     background-color: transparent;
@@ -414,6 +418,8 @@ th:last-child {
     font-weight: bold;
     font-size: 2rem;
     text-align: center;
+    margin-top: 15px;
+    margin-bottom: -15px;
 }
 
 .create-invoice form {
@@ -439,6 +445,12 @@ th:last-child {
     margin-bottom: -40px;
 }
 
+.itemsArr h1 {
+    margin-top: 2px;
+    font-size: 15px;
+    margin-bottom: 0;
+}
+
 .summary {
     margin-bottom: 15px;
     text-align: center;
@@ -448,7 +460,9 @@ th:last-child {
 }
 
 .summary h1 {
-    margin-top: 5px;
+    margin-top: 2px;
+    font-size: 15px;
+    margin-bottom: -10px;
 }
 
 .summary .lab {
