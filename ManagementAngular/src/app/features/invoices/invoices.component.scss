@@ -230,6 +230,19 @@ th:last-child {
     position: inherit;
 }
 
+::-webkit-scrollbar {
+    width: 1.2rem;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: red;
+}
+
+::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 5px var(--colorbglight);
+    border-radius: 10px;
+}
+
 #div-new .form-container {
     width: 100%;
 }
@@ -250,7 +263,7 @@ th:last-child {
 .deleteItem {
     position: absolute;
     margin-top: 32px;
-    right: -3%;
+    margin-left: 10px;
 }
 
 .deleteItem:hover i {
@@ -394,7 +407,7 @@ th:last-child {
 
 .create-invoice {
     background-color: var(--bgcolorlayer);
-    height: auto;
+    height: 90vh;
     width: 100%;
     position: absolute;
     top: 3%;
@@ -433,9 +446,10 @@ th:last-child {
     position: relative;
     padding: 0% !important;
     z-index: 999999999;
-    margin-bottom: -40px;
-    margin-left: 10px !important;
-    margin-right: 10px !important;
+    margin-bottom: -45px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    height: 70vh;
 }
 
 .itemsArr h1 {

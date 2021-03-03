@@ -72,6 +72,6 @@ canvas {
 }
 
  ::-webkit-scrollbar-thumb {
-    background: #23b5b5 !important;
+    background: var(--colorbglight) !important;
     border-radius: 0rem;
 }
