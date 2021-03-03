@@ -25,21 +25,24 @@ SELECT * FROM
  SELECT '6' `id`, 'km' `unit`, 'chilometri' `name` ) A
 WHERE NOT EXISTS (SELECT NULL FROM unit_of_measure B WHERE A.id=B.id);
 
-INSERT INTO `item` (`id`, `created_at`, `updated_at`, `code`, `description`, `price`, `unit_of_measure_id`)
+INSERT INTO `item` (`id`, `created_at`, `updated_at`, `code`, `description`, `price`, `unit_of_measure_id`, `service`)
 SELECT * FROM
-(SELECT '1' `id`, CURRENT_TIME() `created_at`, CURRENT_TIME() `updated_at`, 'AAA' `code`, 'legno' `description`, 10 `price`, 2 `unit_of_measure_id` UNION ALL
-SELECT '2' `id`, CURRENT_TIME() `created_at`, CURRENT_TIME() `updated_at`, 'BBB' `code`, 'roccia' `description`, 20 `price`, 2 `unit_of_measure_id` UNION ALL
-SELECT '3' `id`, CURRENT_TIME() `created_at`, CURRENT_TIME() `updated_at`, 'CCC' `code`, 'acqua' `description`, 30 `price`, 4 `unit_of_measure_id` UNION ALL
-SELECT '4' `id`, CURRENT_TIME() `created_at`, CURRENT_TIME() `updated_at`, 'DDD' `code`, 'pietra' `description`, 40 `price`, 2 `unit_of_measure_id` UNION ALL
-SELECT '5' `id`, CURRENT_TIME() `created_at`, CURRENT_TIME() `updated_at`, 'EEE' `code`, 'fango' `description`, 50 `price`, 2 `unit_of_measure_id` UNION ALL
-SELECT '6' `id`, CURRENT_TIME() `created_at`, CURRENT_TIME() `updated_at`, 'FFF' `code`, 'sabbia' `description`, 60 `price`, 2 `unit_of_measure_id` UNION ALL
-SELECT '7' `id`, CURRENT_TIME() `created_at`, CURRENT_TIME() `updated_at`, 'GGG' `code`, 'ghiaia' `description`, 70 `price`, 3 `unit_of_measure_id` UNION ALL
-SELECT '8' `id`, CURRENT_TIME() `created_at`, CURRENT_TIME() `updated_at`, 'HHH' `code`, 'rete' `description`, 80 `price`, 5 `unit_of_measure_id` UNION ALL
-SELECT '9' `id`, CURRENT_TIME() `created_at`, CURRENT_TIME() `updated_at`, 'III' `code`, 'bronzo' `description`, 90 `price`, 1 `unit_of_measure_id` UNION ALL
-SELECT '10' `id`, CURRENT_TIME() `created_at`, CURRENT_TIME() `updated_at`, 'JJJ' `code`, 'oro' `description`, 100 `price`, 1 `unit_of_measure_id` UNION ALL
-SELECT '11' `id`, CURRENT_TIME() `created_at`, CURRENT_TIME() `updated_at`, 'KKK' `code`, 'spago' `description`, 110 `price`, 5 `unit_of_measure_id` UNION ALL
-SELECT '12' `id`, CURRENT_TIME() `created_at`, CURRENT_TIME() `updated_at`, 'LLL' `code`, 'argento' `description`, 120 `price`, 6 `unit_of_measure_id` UNION ALL
-SELECT '13' `id`, CURRENT_TIME() `created_at`, CURRENT_TIME() `updated_at`, 'MMM' `code`, 'granito' `description`, 130 `price`, 5 `unit_of_measure_id` UNION ALL
-SELECT '14' `id`, CURRENT_TIME() `created_at`, CURRENT_TIME() `updated_at`, 'NNN' `code`, 'marmo' `description`, 140 `price`, 1 `unit_of_measure_id` UNION ALL
-SELECT '15' `id`, CURRENT_TIME() `created_at`, CURRENT_TIME() `updated_at`, 'OOO' `code`, 'sciroppo' `description`, 150 `price`, 4 `unit_of_measure_id`) A
+(SELECT '1' `id`, CURRENT_TIME() `created_at`, CURRENT_TIME() `updated_at`, 'AAA' `code`, 'legno' `description`, 10 `price`, 2 `unit_of_measure_id`, false `service` UNION ALL
+SELECT '2' `id`, CURRENT_TIME() `created_at`, CURRENT_TIME() `updated_at`, 'BBB' `code`, 'roccia' `description`, 20 `price`, 2 `unit_of_measure_id`, false `service` UNION ALL
+SELECT '3' `id`, CURRENT_TIME() `created_at`, CURRENT_TIME() `updated_at`, 'CCC' `code`, 'acqua' `description`, 30 `price`, 4 `unit_of_measure_id`, false `service` UNION ALL
+SELECT '4' `id`, CURRENT_TIME() `created_at`, CURRENT_TIME() `updated_at`, 'DDD' `code`, 'pietra' `description`, 40 `price`, 2 `unit_of_measure_id`, false `service` UNION ALL
+SELECT '5' `id`, CURRENT_TIME() `created_at`, CURRENT_TIME() `updated_at`, 'EEE' `code`, 'fango' `description`, 50 `price`, 2 `unit_of_measure_id`, false `service` UNION ALL
+SELECT '6' `id`, CURRENT_TIME() `created_at`, CURRENT_TIME() `updated_at`, 'FFF' `code`, 'sabbia' `description`, 60 `price`, 2 `unit_of_measure_id`, false `service` UNION ALL
+SELECT '7' `id`, CURRENT_TIME() `created_at`, CURRENT_TIME() `updated_at`, 'GGG' `code`, 'ghiaia' `description`, 70 `price`, 3 `unit_of_measure_id`, false `service` UNION ALL
+SELECT '8' `id`, CURRENT_TIME() `created_at`, CURRENT_TIME() `updated_at`, 'HHH' `code`, 'rete' `description`, 80 `price`, 5 `unit_of_measure_id`, false `service` UNION ALL
+SELECT '9' `id`, CURRENT_TIME() `created_at`, CURRENT_TIME() `updated_at`, 'III' `code`, 'bronzo' `description`, 90 `price`, 1 `unit_of_measure_id`, false `service` UNION ALL
+SELECT '10' `id`, CURRENT_TIME() `created_at`, CURRENT_TIME() `updated_at`, 'JJJ' `code`, 'oro' `description`, 100 `price`, 1 `unit_of_measure_id`, false `service` UNION ALL
+SELECT '11' `id`, CURRENT_TIME() `created_at`, CURRENT_TIME() `updated_at`, 'KKK' `code`, 'spago' `description`, 110 `price`, 5 `unit_of_measure_id`, false `service` UNION ALL
+SELECT '12' `id`, CURRENT_TIME() `created_at`, CURRENT_TIME() `updated_at`, 'LLL' `code`, 'argento' `description`, 120 `price`, 6 `unit_of_measure_id`, false `service` UNION ALL
+SELECT '13' `id`, CURRENT_TIME() `created_at`, CURRENT_TIME() `updated_at`, 'MMM' `code`, 'granito' `description`, 130 `price`, 5 `unit_of_measure_id`, false `service` UNION ALL
+SELECT '14' `id`, CURRENT_TIME() `created_at`, CURRENT_TIME() `updated_at`, 'NNN' `code`, 'marmo' `description`, 140 `price`, 1 `unit_of_measure_id`, false `service` UNION ALL
+SELECT '15' `id`, CURRENT_TIME() `created_at`, CURRENT_TIME() `updated_at`, 'OOO' `code`, 'sciroppo' `description`, 150 `price`, 1 `unit_of_measure_id`, false `service` UNION ALL
+SELECT '16' `id`, CURRENT_TIME() `created_at`, CURRENT_TIME() `updated_at`, 'PPP' `code`, 'consulenza' `description`, 160 `price`, 1 `unit_of_measure_id`, true `service` UNION ALL
+SELECT '17' `id`, CURRENT_TIME() `created_at`, CURRENT_TIME() `updated_at`, 'QQQ' `code`, 'consegna' `description`, 170 `price`, 1 `unit_of_measure_id`, true `service` UNION ALL
+SELECT '18' `id`, CURRENT_TIME() `created_at`, CURRENT_TIME() `updated_at`, 'RRR' `code`, 'montatura' `description`, 180 `price`, 4 `unit_of_measure_id`, true `service`) A
 WHERE NOT EXISTS (SELECT NULL FROM item B WHERE A.id=B.id);
