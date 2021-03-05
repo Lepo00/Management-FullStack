@@ -405,6 +405,9 @@
         text-align: center;
         margin-top: 15px;
         margin-bottom: -2px;
+        border-radius: 10px;
+        height: 25px;
+        line-height: 25px;
     }
     
     .create-invoice form {
@@ -437,6 +440,7 @@
         font-size: 15px;
         margin-bottom: 0;
         background-color: var(--colorbg);
+        border-bottom: 1px solid white;
     }
     
     .summary {
@@ -468,7 +472,9 @@
     .summary input {
         text-align: center;
         font-weight: bold;
-        font-size: 25px;
+        font-size: 20px;
+        padding: 0;
+        height: 28px;
         color: var(--colorbgdark);
     }
     
@@ -509,4 +515,71 @@
     
     .addItem:hover {
         color: var(--color1);
+    }
+    
+    .itemsArr table {
+        border-collapse: collapse;
+        width: 100%;
+        border-radius: 5px;
+    }
+    
+    .itemsArr {
+        td,
+        th {
+            text-align: center;
+            border: 1px solid white;
+            height: 35px;
+        }
+        button {
+            width: 70%;
+            height: 100%;
+            background-color: var(--colorbg);
+            border-radius: 50%;
+            border: 2px solid white;
+        }
+        button:hover {
+            color: var(--color1);
+        }
+        .brd {
+            border: 3px solid red;
+        }
+    }
+    
+    .itemsArr table .article {
+        width: 18%;
+    }
+    
+    .itemsArr table {
+        .qt {
+            width: 5%;
+        }
+        .pr1,
+        .scper,
+        .sctot,
+        .prsc {
+            width: 8.5%;
+        }
+        .iva {
+            width: 9%;
+        }
+        .imp,
+        .tot {
+            width: 10%;
+        }
+        .agg,
+        .rem {
+            width: 6%;
+        }
+    }
+    
+    .master {
+        width: 40%;
+        float: left;
+        padding: 10px;
+    }
+    
+    .body {
+        width: 60%;
+        float: left;
+        padding: 10px;
     }

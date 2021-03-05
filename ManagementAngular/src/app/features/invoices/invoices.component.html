@@ -179,7 +179,7 @@
         <h1>Crea Nuova Fattura</h1>
         <form [formGroup]="invoiceForm" (ngSubmit)="saveInvoice()">
             <button class="saveButton" type="submit" onclick="toggleLayerX()" id="x-icon" [disabled]="invoiceForm.status === 'INVALID'" [ngClass]="{'disabled': invoiceForm.status === 'INVALID'}"> <i class="far fa-save"></i></button>
-            <div class="col-12 col-sm-12 col-md-12 col-lg-5">
+            <div class="master">
                 <h1 class="headtitle">Testa</h1>
                 <div class="row">
                     <div class="col-8 col-sm-8 col-md-8 col-lg-8">
@@ -196,13 +196,13 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-4 col-sm-4 col-md-4 col-lg-4 ">
+                    <div class="col-5 col-sm-5 col-md-5 col-lg-5">
                         <div class="form-group">
                             <label for="data">Data</label>
                             <input type="date" class="form-control" placeholder="Data" formControlName="date">
                         </div>
                     </div>
-                    <div class="col-8 col-sm-8 col-md-8 col-lg-8">
+                    <div class="col-7 col-sm-7 col-md-7 col-lg-7">
                         <div class="form-group">
                             <label for="pagamento">Pagamento</label>
                             <input class="form-control" placeholder="Pagamento" formControlName="paymentMethod">
@@ -263,79 +263,45 @@
                     </div>
                 </div>
             </div>
-            <div class="col-12 col-sm-12 col-md-12 col-lg-7">
+            <div class="body">
                 <div class="itemsArr">
                     <h1>Articoli</h1>
-                    <div formArrayName="rows" *ngFor="let item of invoiceForm.get('rows')['controls']; let i = index;" class="row">
-                        <div [formGroupName]="i" style="border-bottom: 1px solid white;">
-                            <div class="col-3 col-sm-3 col-md-3 col-lg-3">
-                                <div class="form-group">
-                                    <label>Articolo {{i+1}}</label>
-                                    <select formControlName="item" class="form-control">
-                                        <option value="null" disabled hidden>Seleziona Articolo</option>
-                                            <option [ngValue]="item.id" *ngFor="let item of items">
-                                                {{item.description}}
-                                          </option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-2 col-sm-2 col-md-2 col-lg-2">
-                                <div class="form-group">
-                                    <label>Quantità</label>
-                                    <input type="number" formControlName="quantity" placeholder="Quantità" class="form-control">
-                                </div>
-                            </div>
-                            <div class="col-2 col-sm-2 col-md-2 col-lg-2">
-                                <div class="form-group">
-                                    <label>Prezzo Un.</label>
-                                    <input type="number" placeholder="Prezzo Unitario" class="form-control">
-                                </div>
-                            </div>
-                            <div class="col-2 col-sm-2 col-md-2 col-lg-2">
-                                <div class="form-group">
-                                    <label>Sconto %</label>
-                                    <input type="number" formControlName="percDiscount" placeholder="Sconto Percentuale" class="form-control" min="0" max="100">
-                                </div>
-                            </div>
-                            <div class="col-2 col-sm-2 col-md-2 col-lg-2">
-                                <div class="form-group">
-                                    <label>Sconto Tot.</label>
-                                    <input type="number" placeholder="Totale Sconto" class="form-control" min="0" max="100">
-                                </div>
-                            </div>
-                            <div class="col-3 col-sm-3 col-md-3 col-lg-3">
-                                <div class="form-group">
-                                    <label>Prz. Scont.</label>
-                                    <input type="number" placeholder="Prezzo Scontato" class="form-control" min="0" max="100">
-                                </div>
-                            </div>
-                            <div class="col-2 col-sm-2 col-md-2 col-lg-2">
-                                <div class="form-group">
-                                    <label>Imponibile</label>
-                                    <input type="number" placeholder="Imponibile Sconto" class="form-control" min="0" max="100">
-                                </div>
-                            </div>
-                            <div class="col-2 col-sm-2 col-md-2 col-lg-2">
-                                <div class="form-group">
-                                    <label>IVA</label>
-                                    <input type="number" placeholder="IVA Sconto" class="form-control" min="0" max="100">
-                                </div>
-                            </div>
-                            <div class="col-2 col-sm-2 col-md-2 col-lg-2">
-                                <div class="form-group">
-                                    <label>Totale</label>
-                                    <input type="number" placeholder="Totale" class="form-control" min="0" max="100">
-                                </div>
-                            </div>
-                            <div class="col-2 col-sm-2 col-md-2 col-lg-2">
-                                <button type="button" (click)="addItem();" class="addItem">Aggiungi</button>
-                            </div>
-                        </div>
-                        <div class="deleteForm" *ngIf="invoiceForm.get('rows')['controls'].length>1">
-                            <button type="button" (click)="deleteItem(i)" class="deleteItem"><i class="fas fa-times"></i></button>
-                        </div>
-                    </div>
+                    <table>
+                        <tr>
+                            <th class="article">Articolo</th>
+                            <th class="qt">Qt</th>
+                            <th class="pr1">Prz. Unitario</th>
+                            <th class="scper">Sconto %</th>
+                            <th class="sctot">Sconto Tot.</th>
+                            <th class="prsc">Prz. Scont.</th>
+                            <th class="imp">Imponibile</th>
+                            <th class="iva">IVA</th>
+                            <th class="tot">Totale</th>
+                            <th class="agg">+</th>
+                            <th class="rem">X</th>
+                        </tr>
+                        <ng-container formArrayName="rows" *ngFor="let item of invoiceForm.get('rows')['controls']; let i = index;">
+                            <ng-container [formGroupName]="i">
+                                <tr>
+                                    <td>Legno</td>
+                                    <td>13</td>
+                                    <td>10</td>
+                                    <td>13</td>
+                                    <td>12</td>
+                                    <td>130</td>
+                                    <td>60</td>
+                                    <td>190</td>
+                                    <td>220</td>
+                                    <td class="no-brd"><button>+</button></td>
+                                    <td><button>-</button></td>
+                                </tr>
+                            </ng-container>
+                        </ng-container>
+                    </table>
                 </div>
+                <!--<div class="deleteForm" *ngIf="invoiceForm.get('rows')['controls'].length>1">
+                            <button type="button" (click)="deleteItem(i)" class="deleteItem"><i class="fas fa-times"></i></button>
+                        </div>-->
             </div>
         </form>
     </div>
