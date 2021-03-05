@@ -276,6 +276,17 @@ th:last-child {
     text-align: center;
 }
 
+.add {
+    background-color: var(--colorbglight);
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    padding-left: 3rem;
+    padding-right: 3rem;
+    margin-top: 3vh;
+    border-radius: 3rem;
+    color: white;
+}
+
 .deleteForm {
     padding: 0;
     float: left;
@@ -515,6 +526,6 @@ th:last-child {
 
 .empty {
     text-align: center;
-    color: white;
+    color: var(--color5);
     margin-top: 13%;
 }
