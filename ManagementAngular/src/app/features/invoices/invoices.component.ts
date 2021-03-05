@@ -89,6 +89,7 @@ export class InvoicesComponent implements OnInit, OnDestroy {
   deleteItem(id:number): void{
     this.itemsArr = this.invoiceForm.get('rows') as FormArray;
     this.itemsArr.removeAt(id);
+    console.log('length:'+this.itemsArr.length);
   }
 
   setInvoiceToSave():InvoiceMaster {
@@ -112,24 +113,16 @@ export class InvoicesComponent implements OnInit, OnDestroy {
   }
 
   saveInvoice(){
+    console.log("save invoice pro");
     this.subs.push(this.invoiceService.save(this.currentUser.id, this.setInvoiceToSave()).subscribe(()=>{
       this.updateUser();
     }));
-    /*let invoice= this.setInvoiceToSave();
-    let observer = this.httpService.retrievePostCall<User>("user/"+this.currentUser.id+"/addInvoice", invoice).subscribe(response => {
-      observer.unsubscribe();
-    })*/
   }
 
   updateInvoice(){
     this.subs.push(this.invoiceService.update(this.invoiceDetail.id, this.setInvoiceToSave()).subscribe(()=>{
       this.updateUser();
     }));
-    /*let invoice= this.setInvoiceToSave();
-    let observer = this.httpService.retrievePutCall<User>("invoice/update/"+this.invoiceDetail.id, invoice).subscribe(response => {
-      this.updateUser();
-      observer.unsubscribe();
-    })*/
   }
   
   updateUser(){
@@ -143,11 +136,6 @@ export class InvoicesComponent implements OnInit, OnDestroy {
     this.subs.push(this.invoiceService.delete(this.invoiceDetail.id).subscribe(()=>{
       this.updateUser();
     }));
-    /*let url:string="invoice/delete/"+this.invoiceDetail.id;
-    let observer=this.httpService.retrieveDeleteCall<string>(url).subscribe(response=>{
-      this.updateUser();
-      observer.unsubscribe();
-    });*/
   }
 
   detail(id: number) {

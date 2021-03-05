@@ -50,8 +50,8 @@
         font-weight: bold;
     }
     
-    tr:hover,
-    tr:focus {
+    .tr:hover,
+    .tr:focus {
         background-color: var(--color1);
         color: var(--colorbglight);
     }
@@ -527,17 +527,24 @@
         td,
         th {
             text-align: center;
-            border: 1px solid white;
             height: 35px;
         }
-        button {
-            width: 70%;
-            height: 100%;
+        th {
+            border: 1px solid white;
+        }
+        p {
+            max-width: 36px;
+            max-height: 40px;
+            width: 85%;
+            height: 90%;
             background-color: var(--colorbg);
             border-radius: 50%;
             border: 2px solid white;
+            margin: 0;
+            line-height: 20px;
+            font-size: 30px;
         }
-        button:hover {
+        p:hover {
             color: var(--color1);
         }
         .brd {
@@ -545,41 +552,68 @@
         }
     }
     
-    .itemsArr table .article {
-        width: 18%;
-    }
-    
     .itemsArr table {
-        .qt {
-            width: 5%;
+        input,
+        select {
+            width: 95%;
+            height: 90%;
+            color: var(--color1);
+            text-align: center;
+        }
+        input::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+        input[type=number] {
+            -moz-appearance: textfield;
+        }
+        .article {
+            width: 15.5%;
+        }
+        .qt,
+        .scper {
+            width: 7%;
         }
         .pr1,
-        .scper,
         .sctot,
         .prsc {
-            width: 8.5%;
+            width: 9.5%;
         }
         .iva {
             width: 9%;
         }
         .imp,
         .tot {
-            width: 10%;
+            width: 11.5%;
         }
         .agg,
         .rem {
-            width: 6%;
+            width: 5%;
         }
     }
     
     .master {
-        width: 40%;
+        width: 37%;
         float: left;
         padding: 10px;
     }
     
     .body {
-        width: 60%;
+        width: 63%;
         float: left;
+        padding: 10px 10px 10px 5px;
+    }
+    
+    .no-items {
+        text-align: center;
         padding: 10px;
+        .span {
+            border: 1px solid white;
+            background-color: var(--colorbg);
+            border-radius: 10px;
+        }
+        .span:hover {
+            color: var(--color1);
+        }
     }
