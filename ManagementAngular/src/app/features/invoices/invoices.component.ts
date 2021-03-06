@@ -113,7 +113,6 @@ export class InvoicesComponent implements OnInit, OnDestroy {
   }
 
   saveInvoice(){
-    console.log("save invoice pro");
     this.subs.push(this.invoiceService.save(this.currentUser.id, this.setInvoiceToSave()).subscribe(()=>{
       this.updateUser();
     }));
