@@ -171,6 +171,30 @@ export class InvoicesComponent implements OnInit, OnDestroy {
     return [rows,tail];
   }
 
+  itemSelect(i:number){
+    let row=this.invoiceForm.get('rows').value[i];
+    let itemSelected:Item=this.items[row?.item-1];
+    let price;
+    if(itemSelected)
+      price=itemSelected?.price;
+    else
+      price=0;
+    let prsc=price*row?.percDiscount/100;
+    let sctot=prsc*row?.quantity;
+    let imp=price*row?.quantity-sctot;
+    let iva=imp*22/100;
+    let tot=imp+iva;
+
+    return {
+      price:price,
+      sctot:sctot,
+      prsc:prsc,
+      imp:imp,
+      iva:iva,
+      tot:tot
+    }
+  }
+
   ngOnDestroy(): void {
     this.subs.forEach((subscription) => subscription.unsubscribe());
   }

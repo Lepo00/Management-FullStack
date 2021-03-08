@@ -299,13 +299,25 @@
                                         </select>
                                         </td>
                                         <td class="qt"><input type="number" formControlName="quantity"></td>
-                                        <td class="pr1"><input type="number"></td>
+                                        <td class="pr1">
+                                            <input disabled value={{itemSelect(i)?.price|eur}}>
+                                        </td>
                                         <td class="scper"><input type="number" formControlName="percDiscount"></td>
-                                        <td class="sctot"><input type="number"></td>
-                                        <td class="prsc"><input type="number"></td>
-                                        <td class="imp"><input type="number"></td>
-                                        <td class="iva"><input type="number"></td>
-                                        <td class="tot"><input type="number"></td>
+                                        <td class="sctot">
+                                            <input disabled value={{itemSelect(i)?.sctot|eur}}>
+                                        </td>
+                                        <td class="prsc">
+                                            <input disabled value={{itemSelect(i)?.prsc|eur}}>
+                                        </td>
+                                        <td class="imp">
+                                            <input disabled value={{itemSelect(i)?.imp|eur}}>
+                                        </td>
+                                        <td class="iva">
+                                            <input disabled value={{itemSelect(i)?.iva|eur}}>
+                                        </td>
+                                        <td class="tot">
+                                            <input disabled value={{itemSelect(i)?.tot|eur}}>
+                                        </td>
                                         <td class="agg" (click)="addItem()">
                                             <p>+</p>
                                         </td>
