@@ -173,7 +173,9 @@ export class InvoicesComponent implements OnInit, OnDestroy {
 
   itemSelect(i:number){
     let row=this.invoiceForm.get('rows').value[i];
-    let itemSelected:Item=this.items[row?.item-1];
+    let itemSelected:Item;
+    if(row?.item)
+      itemSelected=this.items[row?.item-1];
     let price;
     if(itemSelected)
       price=itemSelected?.price;

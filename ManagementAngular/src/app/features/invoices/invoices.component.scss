@@ -524,6 +524,7 @@
     }
     
     .itemsArr {
+        tr,
         td,
         th {
             text-align: center;
@@ -555,10 +556,16 @@
     .itemsArr table {
         input,
         select {
+            display: inline;
+            padding: 0;
             width: 95%;
             height: 90%;
             color: var(--color1);
             text-align: center;
+            border-radius: 4px;
+        }
+        input[disabled] {
+            background-color: rgb(187, 187, 187);
         }
         input::-webkit-outer-spin-button,
         input::-webkit-inner-spin-button {
@@ -573,7 +580,7 @@
         }
         .qt,
         .scper {
-            width: 7%;
+            width: 7.5%;
         }
         .pr1,
         .sctot,
@@ -589,7 +596,7 @@
         }
         .agg,
         .rem {
-            width: 5%;
+            width: 4.5%;
         }
     }
     
