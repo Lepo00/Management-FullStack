@@ -1,4 +1,4 @@
-import {HttpClient, HttpEvent, HttpEventType, HttpParams, HttpRequest, HttpResponse} from '@angular/common/http';
+import {HttpClient, HttpEvent, HttpEventType, HttpHeaders, HttpParams, HttpRequest, HttpResponse} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
 import {filter, map} from 'rxjs/operators';
@@ -42,6 +42,10 @@ export class HttpCommunicationsService {
       })
     );
   }
+
+  downloadXlsx<T>(endpoint:string): Observable<Blob>{
+    return this.httpClient.get(this.host + endpoint, { responseType: 'blob' })
+  };
 
   sendMail(url: string, body: { name: any; replyto: any; message: any; }, arg2: {
     headers: import("@angular/common/http").HttpHeaders;
