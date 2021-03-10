@@ -482,6 +482,20 @@
         color: var(--colorbgdark);
     }
     
+    .summary input[type=number] {
+        font-size: 15px;
+    }
+    
+    .summary input::-webkit-outer-spin-button,
+    .summary input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+    
+    .summary input[type=number] {
+        -moz-appearance: textfield;
+    }
+    
     .flex-row {
         display: flex;
         flex-direction: row;
@@ -490,6 +504,7 @@
     }
     
     .one {
+        width: 100%;
         margin: 0 10px;
         text-align: center;
     }
