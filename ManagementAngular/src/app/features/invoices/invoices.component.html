@@ -176,7 +176,7 @@
 <div id="div-new" style="display: none;">
     <div class="create-invoice">
         <button id="x-icon" onclick="toggleLayerX()"><i class="fas fa-times"></i></button>
-        <h1>Crea Nuova Fattura</h1>
+        <h1 class="firsttitle">Creazione Fattura N.{{invoices?.length+1}}</h1>
         <form [formGroup]="invoiceForm" (ngSubmit)="saveInvoice()">
             <button class="saveButton" type="submit" onclick="toggleLayerX()" id="x-icon" [disabled]="invoiceForm.status === 'INVALID' || invoiceForm.get('rows')['controls'].length==0" [ngClass]="{'disabled': invoiceForm.status === 'INVALID'||invoiceForm.get('rows')['controls'].length==0 }"> <i class="far fa-save"></i></button>
             <div class="master">
