@@ -1,12 +1,15 @@
 import { formatDate } from '@angular/common';
-import { Component, Inject, LOCALE_ID, OnInit } from '@angular/core';
+import { Component, Inject, LOCALE_ID, OnDestroy, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { InvoiceMaster } from 'src/app/core/models/invoice-master.interface';
 import { InvoiceTail } from 'src/app/core/models/invoice-tail.interface';
 import { Item } from 'src/app/core/models/item.interface';
 import { User } from 'src/app/core/models/user';
-import { HttpCommunicationsService } from 'src/app/core/services/http-communications.service';
+import { InvoiceService } from 'src/app/core/services/invoice.service';
+import { ItemService } from 'src/app/core/services/item.service';
+import { UserService } from 'src/app/core/services/user.service';
 import { DateCustomPipe } from 'src/app/shared/pipes/date-custom.pipe';
 
 @Component({
@@ -15,7 +18,8 @@ import { DateCustomPipe } from 'src/app/shared/pipes/date-custom.pipe';
   styleUrls: ['./invoices.component.scss'],
   providers: [DateCustomPipe]
 })
-export class InvoicesComponent implements OnInit {
+export class InvoicesComponent implements OnInit, OnDestroy {
+  subs: Subscription[] = [];
   searchButton:boolean;
   currentUser: User;
   items: Item[];
@@ -24,7 +28,8 @@ export class InvoicesComponent implements OnInit {
   invoiceForm: FormGroup;
   itemsArr: FormArray;
 
-  constructor(private httpService: HttpCommunicationsService, private fb: FormBuilder, private route:ActivatedRoute, @Inject(LOCALE_ID) private locale: string, private datepipe: DateCustomPipe) {
+  constructor(private fb: FormBuilder, private route:ActivatedRoute, @Inject(LOCALE_ID) private locale: string, private datepipe: DateCustomPipe,
+   private invoiceService:InvoiceService, private itemService:ItemService, private userService:UserService) {
     this.invoiceForm = this.fb.group({
       accountholder: ['', Validators.required],
       date: ['', Validators.required],
@@ -34,27 +39,19 @@ export class InvoicesComponent implements OnInit {
     });
     this.currentUser = <User>JSON.parse(sessionStorage.getItem("user"));
     this.invoices=this.currentUser.invoices.sort((a, b) => a.id - b.id);
-    let observer=this.httpService.retrieveGetCall<Item[]>("item").subscribe(response => {
-      this.items = response;
-      observer.unsubscribe();
-    });
+    this.subs.push(this.itemService.retrieveItems().subscribe(response=>{
+      this.items=response;
+    }));
     this.searchButton=true;
   }
-
+  
   ngOnInit(): void {
-    this.route.params.subscribe(params => {
+    this.subs.push(this.route.params.subscribe(params => {
       if(params['search']!=null){
-        this.filterCustomers(params['search']);
+        this.invoices=this.invoiceService.filterInvoices(params['search'],this.currentUser.invoices);
+        this.searchButton=false;
       }
-    });
-  }
-
-  filterCustomers(search: any) {
-    this.invoices=this.currentUser.invoices.sort((a, b) => a.id - b.id);
-    this.searchButton=false;
-    this.invoices= this.invoices.filter(invoice=>
-      invoice.accountholder.includes(search) || invoice.date.includes(search) || invoice.paymentMethod.includes(search)
-      )
+    }));
   }
 
   createItem(item?, quantity?, percDiscount?): FormGroup {
@@ -73,7 +70,7 @@ export class InvoicesComponent implements OnInit {
   addInvoice():void{
     this.invoiceForm.reset();
     this.itemsArr?.clear();
-    this.itemsArr?.push(this.createItem())
+    this.itemsArr?.push(this.createItem());
   }
 
   populateForm(){
@@ -92,6 +89,7 @@ export class InvoicesComponent implements OnInit {
   deleteItem(id:number): void{
     this.itemsArr = this.invoiceForm.get('rows') as FormArray;
     this.itemsArr.removeAt(id);
+    console.log('length:'+this.itemsArr.length);
   }
 
   setInvoiceToSave():InvoiceMaster {
@@ -115,35 +113,28 @@ export class InvoicesComponent implements OnInit {
   }
 
   saveInvoice(){
-    let invoice= this.setInvoiceToSave();
-    let observer = this.httpService.retrievePostCall<User>("user/"+this.currentUser.id+"/addInvoice", invoice).subscribe(response => {
+    this.subs.push(this.invoiceService.save(this.currentUser.id, this.setInvoiceToSave()).subscribe(()=>{
       this.updateUser();
-      observer.unsubscribe();
-    })
+    }));
   }
 
   updateInvoice(){
-    let invoice= this.setInvoiceToSave();
-    let observer = this.httpService.retrievePutCall<User>("invoice/update/"+this.invoiceDetail.id, invoice).subscribe(response => {
+    this.subs.push(this.invoiceService.update(this.invoiceDetail.id, this.setInvoiceToSave()).subscribe(()=>{
       this.updateUser();
-      observer.unsubscribe();
-    })
+    }));
   }
   
   updateUser(){
-    let observer=this.httpService.retrieveGetCall<User>("user/"+this.currentUser.id).subscribe(response=>{
+    this.subs.push(this.userService.update(this.currentUser.id).subscribe(response=>{
       sessionStorage.setItem("user",JSON.stringify(response));
       this.invoices=response.invoices.sort((a, b) => a.id - b.id);
-      observer.unsubscribe();
-    })
+    }));
   }
 
   delete(){
-    let url:string="invoice/delete/"+this.invoiceDetail.id;
-    let observer=this.httpService.retrieveDeleteCall<string>(url).subscribe(response=>{
+    this.subs.push(this.invoiceService.delete(this.invoiceDetail.id).subscribe(()=>{
       this.updateUser();
-      observer.unsubscribe();
-    });
+    }));
   }
 
   detail(id: number) {
@@ -180,4 +171,33 @@ export class InvoicesComponent implements OnInit {
     return [rows,tail];
   }
 
+  itemSelect(i:number){
+    let row=this.invoiceForm.get('rows').value[i];
+    let itemSelected:Item;
+    if(row?.item)
+      itemSelected=this.items[row?.item-1];
+    let price;
+    if(itemSelected)
+      price=itemSelected?.price;
+    else
+      price=0;
+    let prsc=price*row?.percDiscount/100;
+    let sctot=prsc*row?.quantity;
+    let imp=price*row?.quantity-sctot;
+    let iva=imp*22/100;
+    let tot=imp+iva;
+
+    return {
+      price:price,
+      sctot:sctot,
+      prsc:prsc,
+      imp:imp,
+      iva:iva,
+      tot:tot
+    }
+  }
+
+  ngOnDestroy(): void {
+    this.subs.forEach((subscription) => subscription.unsubscribe());
+  }
 }

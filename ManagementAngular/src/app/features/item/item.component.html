@@ -19,6 +19,7 @@
                         <td class="th">Codice</td>
                         <td class="th">Descrizione</td>
                         <td class="th">Prezzo</td>
+                        <td class="th">Tipo</td>
                         <td class="th">Unità di misura</td>
                         <td class="th">Azioni</td>
                     </tr>
@@ -26,6 +27,10 @@
                         <td class="td">{{item.code|titlecase}}</td>
                         <td class="td">{{item.description|titlecase}}</td>
                         <td class="td">{{item.price| number:'1.2-2'|eur}}</td>
+                        <td class="td">
+                            <span *ngIf="item.service">Servizio</span>
+                            <span *ngIf="!item.service">Prodotto</span>
+                        </td>
                         <td class="td">{{item.unitOfMeasure.unit|titlecase}} ({{item.unitOfMeasure.name|titlecase}})</td>
                         <td class="td">
                             <button onclick="toggleLayer()"><i class="fas fa-edit"></i></button>
