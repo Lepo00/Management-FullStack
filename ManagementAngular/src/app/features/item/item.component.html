@@ -8,6 +8,9 @@
                     <h1>
                         <span *ngIf="!searchButton">Ricerca </span>Articoli.
                     </h1>
+                    <div class="button-container-new" *ngIf="searchButton">
+                        <button onclick="toggleNewLayer()"><a>Nuovo Articolo</a></button>
+                    </div>
                     <i class="fas fa-box-open"></i>
                 </div>
                 <h3 *ngIf="!searchButton" class="results">La tua ricerca ha prodotto: {{items.length}} risultati</h3>
@@ -17,12 +20,18 @@
                         <td class="th">Descrizione</td>
                         <td class="th">Prezzo</td>
                         <td class="th">Unità di misura</td>
+                        <td class="th">Azioni</td>
                     </tr>
                     <tr *ngFor="let item of items" class="tr">
                         <td class="td">{{item.code|titlecase}}</td>
                         <td class="td">{{item.description|titlecase}}</td>
                         <td class="td">{{item.price| number:'1.2-2'|eur}}</td>
                         <td class="td">{{item.unitOfMeasure.unit|titlecase}} ({{item.unitOfMeasure.name|titlecase}})</td>
+                        <td class="td">
+                            <button onclick="toggleLayer()"><i class="fas fa-edit"></i></button>
+                            <button onclick="toggleLayerZoom()"><i class="fas fa-search" id="zoom"></i></button>
+                            <button onclick="toggleLayerConfirm()"><i class="fas fa-times"></i></button>
+                        </td>
                     </tr>
                 </table>
             </div>
@@ -33,3 +42,124 @@
     </div>
 </div>
 <app-footer></app-footer>
+
+
+<!--DIV CREA Articolo-->
+<div id="div-new" style="display: none;">
+    <div class="form-container">
+        <button id="x-icon" onclick="toggleLayerX()"><i class="fas fa-times" ></i></button>
+        <h1>Crea Nuovo Articolo</h1>
+        <form>
+            <div class="row">
+                <div class="col-8 col-sm-8 col-md-8 col-lg-8">
+                    <div class="form-group">
+                        <label for="ragione-sociale">Ragione Sociale/Nome*</label>
+                        <input class="form-control" placeholder="Ragione Sociale" formControlName="name">
+                    </div>
+                </div>
+                <div class="col-4 col-sm-4 col-md-4 col-lg-4 ">
+                    <div class="form-group">
+                        <label for="codice">Cognome</label>
+                        <input class="form-control" placeholder="Cognome" formControlName="surname">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-6 col-sm-6 col-md-6 col-lg-6 ">
+                    <div class="form-group">
+                        <label for="partita-iva">Partita IVA*</label>
+                        <input class="form-control" placeholder="Partita IVA" formControlName="ivaCode">
+                    </div>
+                </div>
+                <div class="col-6 col-sm-6 col-md-6 col-lg-6">
+                    <div class="form-group">
+                        <label for="codice-fiscale">Numero di telefono</label>
+                        <input type="tel" class="form-control" placeholder="Numero di telefono" formControlName="phone">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-5 col-sm-5 col-md-5 col-lg-5 ">
+                    <div class="form-group">
+                        <label for="e-mail">E-mail*</label>
+                        <input type="email" class="form-control" placeholder="E-mail" formControlName="email">
+                    </div>
+                </div>
+                <div class="col-7 col-sm-7 col-md-7 col-lg-7">
+                    <div class="form-group">
+                        <label for="indirizzo">Indirizzo*</label>
+                        <input class="form-control" placeholder="Indirizzo" formControlName="address">
+                    </div>
+                </div>
+            </div>
+            <p>* Campi obbligatori</p>
+            <div class="form-group">
+                <button type="submit" class="new" onclick="toggleLayerX()">Crea Articolo</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!--DIV SEI SICURO DI VOLER ELIMINARE IL Articolo?-->
+<div id="div-delete" style="display: none; ">
+    <div class="form-container">
+        <button id="x-icon"><i class="fas fa-times" onclick="cancelConfirmLayer()"></i></button>
+        <h1>Sei sicuro di voler eliminare il Articolo?</h1>
+        <br> <br>
+        <button class="confirm-button" style="margin-right: 20px;" type="submit" onclick="toggleLayerX()">Si</button>
+        <button onclick="cancelConfirmLayer()" class="confirm-button" type="submit">No</button>
+        <br><br><br>
+    </div>
+</div>
+
+<!--DIV DETTAGLIO Articolo-->
+<div id="div-detail" style="display: none; color: white;">
+    <div class="form-container">
+        <button id="x-icon" onclick="toggleLayerX()"><i class="fas fa-times" ></i></button>
+        <h1>Visualizza Articolo</h1>
+        <form>
+            <div class="row">
+                <div class="col-4 col-sm-4 col-md-4 col-lg-4 ">
+                    <div class="form-group">
+                        <label for="codice">Codice</label>
+                        <input type="email" class="form-control new" placeholder="Codice" readonly disabled>
+                    </div>
+                </div>
+                <div class="col-8 col-sm-8 col-md-8 col-lg-8">
+                    <div class="form-group">
+                        <label for="ragione-sociale">Ragione Sociale</label>
+                        <input class="form-control" placeholder="Ragione Sociale" readonly disabled>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-6 col-sm-6 col-md-6 col-lg-6 ">
+                    <div class="form-group">
+                        <label for="partita-iva">Partita IVA</label>
+                        <input type="email" class="form-control" placeholder="Partita IVA" readonly disabled>
+                    </div>
+                </div>
+                <div class="col-6 col-sm-6 col-md-6 col-lg-6">
+                    <div class="form-group">
+                        <label for="codice-fiscale">Num.Telefono</label>
+                        <input class="form-control" placeholder="Codice Fiscale" readonly disabled>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-6 col-sm-6 col-md-6 col-lg-6 ">
+                    <div class="form-group">
+                        <label for="e-mail">E-mail</label>
+                        <input type="email" class="form-control" placeholder="E-mail" readonly disabled>
+                    </div>
+                </div>
+                <div class="col-6 col-sm-6 col-md-6 col-lg-6">
+                    <div class="form-group">
+                        <label for="indirizzo">Indirizzo</label>
+                        <input class="form-control" placeholder="Indirizzo" readonly disabled>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

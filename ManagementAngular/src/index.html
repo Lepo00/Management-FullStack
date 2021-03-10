@@ -418,7 +418,7 @@
         w.style.display = "none";
         x.style.display = "none";
         y.style.display = "none";
-        z.style.display = "none";
+        z.style.display = "none !important";
     }
 
     /* gestione layer edit on click sulla X del seleziona elementi fattura*/
@@ -442,6 +442,16 @@
         y.style.display = "none";
         z.style.display = "none";
     }
+
+
+    $("#overlay").click(function() {
+        $("#div-select").hide();
+        $("#div-detail").hide();
+        $("#div-delete").hide();
+        $("#div-edit").hide();
+        $("#div-new").hide();
+        $("#overlay").hide();
+    });
 
     /* gestione layer edit on click sull'overlay*/
     function cancelConfirmLayer() {

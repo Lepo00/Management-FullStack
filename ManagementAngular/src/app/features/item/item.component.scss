@@ -129,3 +129,134 @@ th:last-child {
     color: var(--colorbg);
     text-align: center;
 }
+
+.button-container-new {
+    float: right;
+    margin-top: 3vh;
+}
+
+.button-container-new button {
+    background-color: var(--colorbg);
+    color: white;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    text-transform: uppercase;
+}
+
+.button-container-new button:hover {
+    background-color: var(--colorbglight);
+}
+
+.button-container-new a {
+    color: white;
+    text-decoration: none;
+}
+
+
+/*edit layer*/
+
+#div-edit {
+    width: 100%;
+    display: none;
+    color: var(--color4);
+}
+
+.form-container {
+    background-color: var(--bgcolorlayer);
+    height: auto;
+    width: 50%;
+    position: fixed;
+    top: 14%;
+    left: 25%;
+    z-index: 9999999999999999;
+}
+
+#x-icon {
+    float: right;
+}
+
+#x-icon i {
+    float: right;
+    margin-right: 10px;
+    margin-top: 10px;
+    font-size: 3rem;
+}
+
+.form-container h1 {
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: 2rem;
+}
+
+.form-container form {
+    margin: 5vh auto;
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.form-group button {
+    width: 100%;
+    margin-left: auto;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    margin-right: auto;
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: 2rem;
+    background-color: var(--colorbg);
+}
+
+.form-group button:hover {
+    background-color: var(--colorbglight);
+}
+
+
+/*end*/
+
+
+/*new layer*/
+
+#div-new {
+    width: 100%;
+    display: none;
+    color: var(--color4);
+}
+
+
+/*end*/
+
+
+/*delete layer*/
+
+#div-delete {
+    width: 100%;
+    display: none;
+    color: var(--color4);
+    text-align: center;
+}
+
+#div-delete .form-container {
+    top: 28%;
+}
+
+#div-delete .confirm-button {
+    width: 20%;
+    margin-left: auto;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    margin-right: auto;
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: 2rem;
+    background-color: var(--colorbg);
+}
+
+#div-delete .confirm-button:hover {
+    background-color: var(--colorbglight);
+}
