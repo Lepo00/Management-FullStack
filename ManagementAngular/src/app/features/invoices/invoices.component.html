@@ -354,8 +354,9 @@
     <div class="form-container">
         <div class="action">
             <span class="title">Dettaglio Fattura</span>
-            <button id="x-icon" onclick="toggleLayerX()"><i class="fas fa-times"></i></button>
-            <button onclick="window.printDiv('div-detail')" class="print"><i class="fas fa-print"></i></button>
+            <button id="x-icon" onclick="toggleLayerX()" title="Chiudi finestra"><i class="fas fa-times"></i></button>
+            <button onclick="window.printDiv('div-detail')" class="print" title="Satampa o salva in PDF"><i class="fas fa-print"></i></button>
+            <button (click)="exportExcel()" class="print" title="Scarica il file Excel"><i class="fas fa-file-excel"></i></button>
         </div>
         <div class="fattura">
             <div class="row testa">
