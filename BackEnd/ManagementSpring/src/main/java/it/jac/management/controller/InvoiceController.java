@@ -98,7 +98,7 @@ public class InvoiceController {
 		}
 	}
 
-	@GetMapping(path = "/{id}/csv")
+	@GetMapping(path = "/{id}/xlsx")
 	public void exportCsv(@PathVariable Long id, HttpServletResponse response) throws IOException {
 		response.setContentType("application/vnd.ms-excel");
 		response.setHeader("Content-Disposition", "attachment; filename=Fattura-" + id + ".xlsx");
