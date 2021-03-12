@@ -5,14 +5,15 @@ import java.util.Optional;
 
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.CreationHelper;
 import org.apache.poi.ss.usermodel.Font;
+import org.apache.poi.ss.usermodel.HorizontalAlignment;
 import org.apache.poi.ss.usermodel.IndexedColors;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -27,9 +28,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import it.jac.management.model.InvoiceBody;
 import it.jac.management.model.InvoiceMaster;
 import it.jac.management.model.ResponseMessage;
 import it.jac.management.service.InvoiceMasterService;
+import it.jac.management.service.XlsxService;
 
 @RestController
 @RequestMapping("/invoice")
@@ -38,6 +41,8 @@ public class InvoiceController {
 
 	@Autowired
 	InvoiceMasterService invoiceService;
+	@Autowired
+	XlsxService xlsxService;
 
 	@GetMapping("/{id}")
 	public ResponseEntity<?> get(@PathVariable Long id) {
@@ -96,7 +101,7 @@ public class InvoiceController {
 	@GetMapping(path = "/{id}/csv")
 	public void exportCsv(@PathVariable Long id, HttpServletResponse response) throws IOException {
 		response.setContentType("application/vnd.ms-excel");
-		response.setHeader("Content-Disposition", "attachment; filename=Fattura" + id + ".xlsx");
+		response.setHeader("Content-Disposition", "attachment; filename=Fattura-" + id + ".xlsx");
 		InvoiceMaster invoice = invoiceService.get(id).get();
 		// Create a Workbook
 		Workbook workbook = new XSSFWorkbook(); // new HSSFWorkbook() for generating `.xls` file
@@ -108,52 +113,90 @@ public class InvoiceController {
 		CreationHelper createHelper = workbook.getCreationHelper();
 
 		// Create a Sheet
-		Sheet sheet = workbook.createSheet("Employee");
+		Sheet sheet = workbook.createSheet("Invoice");
 
 		// Create a Font for styling header cells
-		Font headerFont = workbook.createFont();
-		headerFont.setBold(true);
-		headerFont.setFontHeightInPoints((short) 14);
-		headerFont.setColor(IndexedColors.RED.getIndex());
+		Font titleFont = xlsxService.createFont(workbook, true, (short) 23, IndexedColors.RED.getIndex());
+		Font headerFont = xlsxService.createFont(workbook, false, (short) 15, IndexedColors.RED.getIndex());
+		Font textFont = xlsxService.createFont(workbook, false, (short) 12, IndexedColors.BLACK.getIndex());
 
 		// Create a CellStyle with the font
-		CellStyle headerCellStyle = workbook.createCellStyle();
-		headerCellStyle.setFont(headerFont);
-
-		// Create a Row
-		Row headerRow = sheet.createRow(0);
-
-		String[] columns = { "Num.", "Intestatario", "Data", "Pagamento" };
-		// Create cells
-		for (int i = 0; i < columns.length; i++) {
-			Cell cell = headerRow.createCell(i);
-			cell.setCellValue(columns[i]);
-			cell.setCellStyle(headerCellStyle);
-		}
+		CellStyle headerCellStyle = xlsxService.createCellStyle(workbook, headerFont, HorizontalAlignment.CENTER);
+		CellStyle titleCellStyle = xlsxService.createCellStyle(workbook, titleFont, HorizontalAlignment.CENTER);
+		CellStyle textCellStyle = xlsxService.createCellStyle(workbook, textFont, HorizontalAlignment.CENTER);
+		CellStyle currencyCellStyle = xlsxService.createCellStyle(workbook, textFont, HorizontalAlignment.CENTER, (short)8);
 
 		// Create Cell Style for formatting Date
-		CellStyle dateCellStyle = workbook.createCellStyle();
+		CellStyle dateCellStyle = xlsxService.createCellStyle(workbook, textFont, HorizontalAlignment.CENTER);
 		dateCellStyle.setDataFormat(createHelper.createDataFormat().getFormat("dd-MM-yyyy"));
 
-		// Create Other rows and cells with employees data
-		int rowNum = 1;
-		Row row = sheet.createRow(rowNum++);
+		// merge title cells
+		sheet.addMergedRegion(new CellRangeAddress(0, 0, 0, 8));
+		sheet.addMergedRegion(new CellRangeAddress(4, 4, 0, 8));
 
-		row.createCell(0).setCellValue(invoice.getId());
+		// Create a Row into createCell
+		xlsxService.createCell(0, sheet.createRow(0), titleCellStyle, "Fattura-" + id);
 
-		row.createCell(1).setCellValue(invoice.getAccountholder());
+		Row headerRow = sheet.createRow(1);
+		String[] headMaster = { "Numero", "Intestatario", "Data", "Pagamento", "Totale" };
+		for (int i = 0; i < headMaster.length; i++) {
+			xlsxService.createCell(i + 2, headerRow, headerCellStyle, headMaster[i]);
+		}
 
-		Cell date = row.createCell(2);
-		date.setCellValue(invoice.getDate());
-		date.setCellStyle(dateCellStyle);
+		Row master = sheet.createRow(2);
 
-		row.createCell(3).setCellValue(invoice.getPaymentMethod());
+		xlsxService.createCell(2, master, textCellStyle, invoice.getId());
+		xlsxService.createCell(3, master, textCellStyle, invoice.getAccountholder());
+		xlsxService.createCell(4, master, dateCellStyle, invoice.getDate());
+		xlsxService.createCell(5, master, textCellStyle, invoice.getPaymentMethod());
+		xlsxService.createCell(6, master, currencyCellStyle, invoice.getTail().getFinalAmount());
 
-		Row rows = sheet.createRow(3);
-		rows.createCell(0).setCellValue("prova");
+		xlsxService.createCell(0, sheet.createRow(4), titleCellStyle, "Righe");
+
+		headerRow = sheet.createRow(5);
+		String[] headBody = { "Oggetto", "Quantità", "Prezzo un.", "Sconto %", "Val. sconto", "Netto", "Imponibile",
+				"IVA", "Totale" };
+		for (int i = 0; i < headBody.length; i++) {
+			xlsxService.createCell(i, headerRow, headerCellStyle, headBody[i]);
+		}
+
+		int contRows = 6;
+		for (InvoiceBody row : invoice.getRows()) {
+			Row body = sheet.createRow(contRows++);
+			xlsxService.createCell(0, body, textCellStyle, row.getItem().getDescription());
+			xlsxService.createCell(1, body, textCellStyle, row.getQuantity());
+			xlsxService.createCell(2, body, currencyCellStyle, row.getItem().getPrice());
+			xlsxService.createCell(3, body, textCellStyle, row.getPercDiscount());
+			xlsxService.createCell(4, body, currencyCellStyle, row.getTotDiscount());
+			xlsxService.createCell(5, body, currencyCellStyle, row.getNetPrice());
+			xlsxService.createCell(6, body, currencyCellStyle, row.getTaxable());
+			xlsxService.createCell(7, body, currencyCellStyle, row.getTaxed());
+			xlsxService.createCell(8, body, currencyCellStyle, row.getFinalAmount());
+		}
+
+		xlsxService.createCell(0, sheet.createRow(++contRows), titleCellStyle, "Coda");
+		sheet.addMergedRegion(new CellRangeAddress(contRows, contRows, 0, 8));
+		headerRow = sheet.createRow(++contRows);
+		String[] headTail = { "ItemsValue?","Servizi", "Sconto righe", "Sconto % coda", "Val. sconto coda",
+				"Totale sconto", "Imponibile", "IVA", "Totale" };
+		for (int i = 0; i < headTail.length; i++) {
+			xlsxService.createCell(i, headerRow, headerCellStyle, headTail[i]);
+		}
+
+		Row tail = sheet.createRow(++contRows);
+
+		xlsxService.createCell(0, tail, currencyCellStyle, invoice.getTail().getItemsValue());
+		xlsxService.createCell(1, tail, currencyCellStyle, invoice.getTail().getServiceValue());
+		xlsxService.createCell(2, tail, currencyCellStyle, invoice.getTail().getRowsDiscount());
+		xlsxService.createCell(3, tail, textCellStyle, invoice.getTail().getPercDiscount());
+		xlsxService.createCell(4, tail, currencyCellStyle, invoice.getTail().getDiscountValue());
+		xlsxService.createCell(5, tail, currencyCellStyle, invoice.getTail().getTotDiscount());
+		xlsxService.createCell(6, tail, currencyCellStyle, invoice.getTail().getTaxable());
+		xlsxService.createCell(7, tail, currencyCellStyle, invoice.getTail().getTaxed());
+		xlsxService.createCell(8, tail, currencyCellStyle, invoice.getTail().getFinalAmount());
 
 		// Resize all columns to fit the content size
-		for (int i = 0; i < columns.length; i++) {
+		for (int i = 0; i < headBody.length; i++) {
 			sheet.autoSizeColumn(i);
 		}
 
