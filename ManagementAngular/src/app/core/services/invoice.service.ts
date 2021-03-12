@@ -32,7 +32,7 @@ export class InvoiceService {
   }
 
   xlsx(id:number){
-    return this.httpService.downloadXlsx("invoice/"+id+"/csv");
+    return this.httpService.downloadXlsx("invoice/"+id+"/xlsx");
   }
 
 }
