@@ -2,12 +2,17 @@ package it.jac.management.service.impl;
 
 import java.util.Date;
 
+import org.apache.poi.ss.usermodel.BorderStyle;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.CreationHelper;
 import org.apache.poi.ss.usermodel.Font;
 import org.apache.poi.ss.usermodel.HorizontalAlignment;
 import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.util.CellRangeAddress;
+import org.apache.poi.ss.util.RegionUtil;
 import org.springframework.stereotype.Service;
 
 import it.jac.management.service.XlsxService;
@@ -74,6 +79,41 @@ public class XlsxServiceImpl implements XlsxService {
 		cellStyle.setAlignment(alignment);
 		cellStyle.setDataFormat(format);
 		return cellStyle;
+	}
+	
+	@Override
+	public CellStyle createDateCellStyle(Workbook workbook, Font font, HorizontalAlignment alignment, String format) {
+		CreationHelper createHelper = workbook.getCreationHelper();
+		CellStyle cellStyle = workbook.createCellStyle();
+		cellStyle.setFont(font);
+		cellStyle.setAlignment(alignment);
+		cellStyle.setDataFormat(createHelper.createDataFormat().getFormat(format));
+		return cellStyle;
+	}
+
+	@Override
+	public void setBorders(CellRangeAddress region, BorderStyle border, Sheet sheet) {
+		RegionUtil.setBorderBottom(border, region, sheet);
+		RegionUtil.setBorderTop(border, region, sheet);
+		RegionUtil.setBorderLeft(border, region, sheet);
+		RegionUtil.setBorderRight(border, region, sheet);
+	}
+
+	@Override
+	public void setBorders(CellRangeAddress[] regions, BorderStyle border, Sheet sheet) {
+		for(CellRangeAddress region: regions) {
+			RegionUtil.setBorderBottom(border, region, sheet);
+			RegionUtil.setBorderTop(border, region, sheet);
+			RegionUtil.setBorderLeft(border, region, sheet);
+			RegionUtil.setBorderRight(border, region, sheet);
+		}
+		
+	}
+
+	@Override
+	public void mergeRegions(CellRangeAddress[] regions, Sheet sheet) {
+		for(CellRangeAddress region:regions)
+			sheet.addMergedRegion(region);
 	}
 
 }
