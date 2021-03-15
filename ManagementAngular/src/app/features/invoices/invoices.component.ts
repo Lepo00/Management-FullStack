@@ -11,6 +11,7 @@ import { InvoiceService } from 'src/app/core/services/invoice.service';
 import { ItemService } from 'src/app/core/services/item.service';
 import { UserService } from 'src/app/core/services/user.service';
 import { DateCustomPipe } from 'src/app/shared/pipes/date-custom.pipe';
+import {saveAs as importedSaveAs} from "file-saver";
 
 @Component({
   selector: 'app-invoices',
@@ -195,6 +196,15 @@ export class InvoicesComponent implements OnInit, OnDestroy {
       iva:iva,
       tot:tot
     }
+  }
+
+  exportExcel(){
+    if(this.invoiceDetail)
+      this.subs.push(this.invoiceService.xlsx(this.invoiceDetail?.id).subscribe(
+        blob => {
+          importedSaveAs(blob, "Fattura-"+this.invoiceDetail.id+".xlsx");
+      }
+      ));
   }
 
   ngOnDestroy(): void {

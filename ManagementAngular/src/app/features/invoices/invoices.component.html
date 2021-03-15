@@ -182,16 +182,16 @@
             <div class="master">
                 <h1 class="headtitle">Testa</h1>
                 <div class="row">
-                    <div class="col-8 col-sm-8 col-md-8 col-lg-8">
+                    <div class="col-3 col-sm-3 col-md-3 col-lg-3">
+                        <div class="form-group">
+                            <label>Numero</label>
+                            <input disabled class="form-control text-center" [value]="invoices?.length+1">
+                        </div>
+                    </div>
+                    <div class="col-9 col-sm-9 col-md-9 col-lg-9 ">
                         <div class="form-group">
                             <label for="Intestatario">Intestatario</label>
                             <input class="form-control" placeholder="Intestatario" formControlName="accountholder">
-                        </div>
-                    </div>
-                    <div class="col-4 col-sm-4 col-md-4 col-lg-4 ">
-                        <div class="form-group">
-                            <label for="tail">Sconto Coda %</label>
-                            <input type="number" class="form-control" placeholder="Sconto coda percentuale" formControlName="tail" min="0" max="100">
                         </div>
                     </div>
                 </div>
@@ -240,7 +240,7 @@
                     <div class="flex-row">
                         <div class="one">
                             <label>Sconto %</label>
-                            <input class="form-control" disabled [value]="calcs()[1].percDiscount | number:'1.1-2'|perc">
+                            <input type="number" class="form-control" placeholder="Sconto coda percentuale" formControlName="tail" min="0" max="100">
                         </div>
                         <div class="one">
                             <label>Valore sconto</label>
@@ -356,7 +356,7 @@
             <span class="title">Dettaglio Fattura</span>
             <button id="x-icon" onclick="toggleLayerX()" title="Chiudi finestra"><i class="fas fa-times"></i></button>
             <button onclick="window.printDiv('div-detail')" class="print" title="Satampa o salva in PDF"><i class="fas fa-print"></i></button>
-            <button onclick="download_table_as_csv('dettaglioTable');" class="print" title="Scarica il file Excel"><i class="fas fa-file-excel"></i></button>
+            <button (click)="exportExcel()" class="print" title="Scarica il file Excel"><i class="fas fa-file-excel"></i></button>
         </div>
         <div class="fattura">
             <div class="row testa">
@@ -384,7 +384,7 @@
             </div>
             <div class="row">
                 <div class="col-12 col-sm-12 col-md-12 col-lg-12">
-                    <table class="table" id="dettaglioTable">
+                    <table class="table">
                         <tr class="tr">
                             <td colspan="9">
                                 <h4 class="titletable">Riepilogo Righe</h4>

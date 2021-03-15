@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { InvoiceMaster } from '../models/invoice-master.interface';
-import { User } from '../models/user';
 import { HttpCommunicationsService } from './http-communications.service';
 
 @Injectable({
@@ -30,6 +29,10 @@ export class InvoiceService {
   delete(id:number):Observable<string>{
     let url:string="invoice/delete/"+id;
     return this.httpService.retrieveDeleteCall<string>(url);
+  }
+
+  xlsx(id:number){
+    return this.httpService.downloadXlsx("invoice/"+id+"/xlsx");
   }
 
 }
