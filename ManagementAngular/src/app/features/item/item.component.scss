@@ -209,11 +209,12 @@ th:last-child {
     text-transform: uppercase;
     font-weight: bold;
     font-size: 2rem;
-    background-color: var(--colorbg);
+    background-color: var(--colorbglight);
 }
 
 .form-group button:hover {
-    background-color: var(--colorbglight);
+    background-color: white;
+    color: var(--colorbglight);
 }
 
 
@@ -254,9 +255,10 @@ th:last-child {
     text-transform: uppercase;
     font-weight: bold;
     font-size: 2rem;
-    background-color: var(--colorbg);
+    background-color: var(--colorbglight);
 }
 
 #div-delete .confirm-button:hover {
-    background-color: var(--colorbglight);
+    background-color: white;
+    color: var(--colorbglight);
 }
