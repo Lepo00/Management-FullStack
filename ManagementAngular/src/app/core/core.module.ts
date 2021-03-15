@@ -4,6 +4,7 @@ import { SharedModule } from '../shared/shared.module';
 import { HttpCommunicationsService } from './services/http-communications.service';
 import { InvoiceService } from './services/invoice.service';
 import { UserService } from './services/user.service';
+import { UnitOfMeasureService } from './services/unit-of-measure.service';
 
 @NgModule({
   declarations: [],
@@ -11,6 +12,6 @@ import { UserService } from './services/user.service';
     SharedModule,
     HttpClientModule
   ],
-  providers: [HttpCommunicationsService, UserService, InvoiceService],
+  providers: [HttpCommunicationsService, UserService, InvoiceService, UnitOfMeasureService],
 })
 export class CoreModule { }

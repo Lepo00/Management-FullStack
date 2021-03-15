@@ -262,3 +262,13 @@ th:last-child {
     background-color: white;
     color: var(--colorbglight);
 }
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type=number] {
+  -moz-appearance: textfield;
+}
