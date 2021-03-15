@@ -24,9 +24,9 @@ export class ItemComponent implements OnInit, OnDestroy {
     this.searchButton=true;
     this.subs.push(
       itemService.retrieveItems().subscribe(response=>{
-      this.items=response;
-      this.itemsTot=response;
-    }),
+        this.items=response;
+        this.itemsTot=response;
+      }),
       UnitOfMeasureService.retrieveUnits().subscribe(response=>{
         this.measures=response;
       })
@@ -53,6 +53,10 @@ export class ItemComponent implements OnInit, OnDestroy {
     this.items=this.itemsTot;
     this.searchButton=false;
     this.items=this.items.filter(item => item.description.includes(search) || item.code.includes(search));
+  }
+
+  resetForm(){
+    this.itemForm.reset();
   }
 
   ngOnDestroy(): void {

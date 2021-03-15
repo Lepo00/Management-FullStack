@@ -9,7 +9,7 @@
                         <span *ngIf="!searchButton">Ricerca </span>Articoli.
                     </h1>
                     <div class="button-container-new" *ngIf="searchButton">
-                        <button onclick="toggleNewLayer()"><a>Nuovo Articolo</a></button>
+                        <button onclick="toggleNewLayer()" (click)="resetForm()"><a>Nuovo Articolo</a></button>
                     </div>
                     <i class="fas fa-box-open"></i>
                 </div>
@@ -31,7 +31,8 @@
                             <span *ngIf="item.service">Servizio</span>
                             <span *ngIf="!item.service">Prodotto</span>
                         </td>
-                        <td class="td">{{item.unitOfMeasure.unit|titlecase}} ({{item.unitOfMeasure.name|titlecase}})</td>
+                        <td class="td">{{item.unitOfMeasure.unit|titlecase}} ({{item.unitOfMeasure.name|titlecase}})
+                        </td>
                         <td class="td">
                             <button onclick="toggleLayer()"><i class="fas fa-edit"></i></button>
                             <button onclick="toggleLayerZoom()"><i class="fas fa-search" id="zoom"></i></button>
@@ -52,7 +53,7 @@
 <!--DIV CREA Articolo-->
 <div id="div-new" style="display: none;">
     <div class="form-container">
-        <button id="x-icon" onclick="toggleLayerX()"><i class="fas fa-times" ></i></button>
+        <button id="x-icon" onclick="toggleLayerX()"><i class="fas fa-times"></i></button>
         <h1>Crea Nuovo Articolo</h1>
         <form>
             <div class="row">
@@ -83,8 +84,8 @@
                         <label>Tipo</label>
                         <select class="form-control">
                             <option value="null" disabled hidden>Seleziona Tipo</option>
-                            <option  value=1>Servizio</option>
-                            <option  value=0>Prodotto</option>
+                            <option value=1>Servizio</option>
+                            <option value=0>Prodotto</option>
                         </select>
                     </div>
                 </div>
@@ -92,7 +93,7 @@
                     <label>Unità di Misura</label>
                     <select class="form-control">
                         <option value="null" disabled hidden>Seleziona Unità di Misura</option>
-                        <option  [ngValue]=measure.unit *ngFor="let measure of measures">
+                        <option [value]="measure.unit" *ngFor="let measure of measures">
                             {{measure.unit}}</option>
                     </select>
                 </div>
@@ -120,7 +121,7 @@
 <!--DIV DETTAGLIO Articolo-->
 <div id="div-detail" style="display: none;">
     <div class="form-container">
-        <button id="x-icon" onclick="toggleLayerX()"><i class="fas fa-times" ></i></button>
+        <button id="x-icon" onclick="toggleLayerX()"><i class="fas fa-times"></i></button>
         <h1>Dettaglio Articolo</h1>
         <form>
             <div class="row">
@@ -151,18 +152,20 @@
                         <label>Tipo</label>
                         <select class="form-control">
                             <option value="null" disabled hidden>Seleziona Tipo</option>
-                            <option  value=1>Servizio</option>
-                            <option  value=0>Prodotto</option>
+                            <option value=1>Servizio</option>
+                            <option value=0>Prodotto</option>
                         </select>
                     </div>
                 </div>
                 <div class="col-6 col-sm-6 col-md-6 col-lg-6">
-                    <label>Unità di Misura</label>
-                    <select class="form-control">
-                        <option value="null" disabled hidden>Seleziona Unità di Misura</option>
-                        <option  [ngValue]=measure.unit *ngFor="let measure of measures">
-                            {{measure.unit}}</option>
-                    </select>
+                    <div class="form-group">
+                        <label>Unità di Misura</label>
+                        <select class="form-control">
+                            <option value="null" disabled hidden>Seleziona Unità</option>
+                            <option [ngValue]="measure.unit" *ngFor="let measure of measures">
+                                {{measure.unit}}</option>
+                        </select>
+                    </div>
                 </div>
             </div>
             <p>* Campi obbligatori</p>
@@ -176,7 +179,7 @@
 <!--DIV MODIFICA ARTICOLO-->
 <div id="div-edit" style="display: none;">
     <div class="form-container">
-        <button id="x-icon" onclick="toggleLayerX()"><i class="fas fa-times" ></i></button>
+        <button id="x-icon" onclick="toggleLayerX()"><i class="fas fa-times"></i></button>
         <h1>Modifica Articolo</h1>
         <form>
             <div class="row">
@@ -207,8 +210,8 @@
                         <label>Tipo</label>
                         <select class="form-control">
                             <option value="null" disabled hidden>Seleziona Tipo</option>
-                            <option  value=1>Servizio</option>
-                            <option  value=0>Prodotto</option>
+                            <option value=1>Servizio</option>
+                            <option value=0>Prodotto</option>
                         </select>
                     </div>
                 </div>
@@ -216,7 +219,7 @@
                     <label>Unità di Misura</label>
                     <select class="form-control">
                         <option value="null" disabled hidden>Seleziona Unità di Misura</option>
-                        <option  [ngValue]=measure.unit *ngFor="let measure of measures">
+                        <option [ngValue]=measure.unit *ngFor="let measure of measures">
                             {{measure.unit}}</option>
                     </select>
                 </div>
