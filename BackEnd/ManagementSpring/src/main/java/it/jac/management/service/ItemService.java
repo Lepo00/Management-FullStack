@@ -16,5 +16,7 @@ public interface ItemService {
 	public void delete(Long id);
 
 	public Item update(Item i, Long id);
+	
+	public Item getByCode(String code);
 
 }

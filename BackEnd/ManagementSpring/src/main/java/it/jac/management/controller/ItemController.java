@@ -1,6 +1,7 @@
 package it.jac.management.controller;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +19,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import it.jac.management.model.Item;
 import it.jac.management.model.ResponseMessage;
+import it.jac.management.model.UnitOfMeasure;
 import it.jac.management.service.ItemService;
+import it.jac.management.service.UnitOfMeasureService;
 
 @RestController
 @RequestMapping("/item")
@@ -27,6 +30,9 @@ public class ItemController {
 
 	@Autowired
 	ItemService itemService;
+	
+	@Autowired
+	UnitOfMeasureService unitService;
 	
 	@GetMapping
 	public ResponseEntity<?> getAll() {
@@ -77,6 +83,26 @@ public class ItemController {
 			return ResponseEntity.ok().body(new ResponseMessage("Item deleted"));
 		} catch (Exception e) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ResponseMessage("Item doesn't exists"));
+		}
+	}
+	
+	@PostMapping(path = "/{id}/addItem")
+	public ResponseEntity<?> addCustomer(@PathVariable Long id, @RequestBody Item item) throws Exception {
+		try {
+			UnitOfMeasure unit = unitService.get(id).get();
+			Item exists = itemService.getByCode(item.getCode());
+			if (exists != null) {
+				item.setUnitOfMeasure(unit);
+			} else {
+				item.setUnitOfMeasure(unit);
+				itemService.create(item);
+			}
+			itemService.update(item, item.getId());
+			return ResponseEntity.ok(item);
+		} catch (NoSuchElementException e) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ResponseMessage("Item not found"));
+		} catch (Exception e) {
+			return ResponseEntity.badRequest().body(new ResponseMessage("Item Not Added!"));
 		}
 	}
 

@@ -45,4 +45,9 @@ public class ItemServiceImpl implements ItemService {
 			return create(item);
 		});
 	}
+
+	@Override
+	public Item getByCode(String code) {
+		return itemRepository.findByCode(code);
+	}
 }

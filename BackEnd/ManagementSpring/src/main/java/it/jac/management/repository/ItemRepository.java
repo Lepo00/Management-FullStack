@@ -7,5 +7,5 @@ import it.jac.management.model.Item;
 
 @Repository("itemRepository")
 public interface ItemRepository extends JpaRepository<Item, Long> {
-
+	Item findByCode(String code);
 }

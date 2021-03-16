@@ -13,7 +13,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @Table(name = "unit_of_measure")
 public class UnitOfMeasure {
 
-	@JsonIgnore
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private @Id Long id;
 
