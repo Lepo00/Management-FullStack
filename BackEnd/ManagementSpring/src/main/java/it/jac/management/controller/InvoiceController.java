@@ -163,7 +163,7 @@ public class InvoiceController {
 			xlsx.createCell(initColumn, body, textStyle, row.getItem().getDescription());
 			xlsx.createCell(initColumn + 1, body, textStyle, row.getQuantity());
 			xlsx.createCell(initColumn + 2, body, currencyStyle, row.getItem().getPrice());
-			xlsx.createCell(initColumn + 3, body, percentageStyle, row.getPercDiscount());
+			xlsx.createCell(initColumn + 3, body, percentageStyle, (double)row.getPercDiscount()/100);
 			xlsx.createCell(initColumn + 4, body, currencyStyle, row.getTotDiscount());
 			xlsx.createCell(initColumn + 5, body, currencyStyle, row.getNetPrice());
 			xlsx.createCell(initColumn + 6, body, currencyStyle, row.getTaxable());
@@ -183,7 +183,7 @@ public class InvoiceController {
 		xlsx.createCell(initColumn, tail, currencyStyle, invoice.getTail().getItemsValue());
 		xlsx.createCell(initColumn + 1, tail, currencyStyle, invoice.getTail().getServiceValue());
 		xlsx.createCell(initColumn + 2, tail, currencyStyle, invoice.getTail().getRowsDiscount());
-		xlsx.createCell(initColumn + 3, tail, percentageStyle, invoice.getTail().getPercDiscount() / 100);
+		xlsx.createCell(initColumn + 3, tail, percentageStyle, (double)invoice.getTail().getPercDiscount()/100);
 		xlsx.createCell(initColumn + 4, tail, currencyStyle, invoice.getTail().getDiscountValue());
 		xlsx.createCell(initColumn + 5, tail, currencyStyle, invoice.getTail().getTotDiscount());
 		xlsx.createCell(initColumn + 6, tail, currencyStyle, invoice.getTail().getTaxable());
