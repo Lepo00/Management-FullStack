@@ -293,17 +293,6 @@
         background-color: white;
         color: var(--colorbglight);
     }
-    /*end*/
-    /*media*/
-    
-    @media screen and (max-width: 800px) {
-        .row,
-        .flex-row {
-            width: 102.6% !important;
-        }
-    }
-    /*end media*/
-    /*detail layer*/
     
     #div-detail {
         width: 100%;
@@ -623,11 +612,24 @@
         .body,.master {
           width: 100%;
         }
-        .create-invoice{
+        .create-invoice {
             margin: 10px auto;
             width: 90%;
-            height: 1050px;
-            padding: 10px;
+            height: 820px;
+            padding: 20px;
+        }
+        .itemsArr{
+            height: 200px;
+        }
+        .saveButton{
+            top: 2.5%;
+            margin-right: 25px;
+        }
+    }
+
+    @media only screen and (max-width: 950px) {
+        .create-invoice {
+            height: 945px;
         }
     }
     
