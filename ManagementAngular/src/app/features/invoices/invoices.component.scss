@@ -618,6 +618,18 @@
         float: left;
         padding: 10px 10px 10px 5px;
     }
+
+    @media only screen and (max-width: 950px) {
+        .body,.master {
+          width: 100%;
+        }
+        .create-invoice{
+            margin: 10px auto;
+            width: 90%;
+            height: 1050px;
+            padding: 10px;
+        }
+    }
     
     .no-items {
         text-align: center;
