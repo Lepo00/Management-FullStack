@@ -1,0 +1,287 @@
+/* edit layer*/
+
+button {
+    outline: none;
+    background-color: transparent;
+    border: none;
+}
+
+button:focus {
+    outline: none;
+}
+
+button:hover {
+    outline: none;
+}
+
+button:hover i {
+    color: var(--color2);
+}
+
+.table {
+    border-collapse: collapse;
+    width: 100%;
+    margin: 0 auto;
+    background-color: var(--colorbglight);
+    margin-top: 2vh;
+}
+
+.tr {
+    text-align: center;
+    border: 2px solid white;
+}
+
+.td {
+    border: 2px solid white;
+}
+
+.th {
+    font-weight: bold;
+    border: 2px solid white;
+}
+
+tr:first-child {
+    background-color: var(--color1);
+    color: var(--colorbglight);
+    font-weight: bold;
+}
+
+tr:hover,
+tr:focus {
+    background-color: var(--color1);
+    color: var(--colorbglight);
+}
+
+#overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: #0A0903;
+    opacity: 0.8;
+    overflow: hidden;
+    width: 100%;
+    height: 0;
+    transition: .5s ease;
+    cursor: pointer;
+}
+
+#x-icon:hover i {
+    color: var(--colorbglight) !important;
+}
+
+input:focus {
+    box-shadow: none !important;
+    outline: none !important;
+    border: none !important;
+}
+
+th:last-child {
+    width: 10%;
+}
+
+#overlay {
+    display: none;
+    position: fixed;
+    width: 218vh;
+    height: 110vh;
+    background: #0A0903;
+    opacity: 0.8;
+    z-index: 9999999999;
+}
+
+.container-page {
+    background-color: var(--color2) !important;
+    //min-height: 60%;
+}
+
+.container-row {
+    width: 100%;
+    background-color: var(--color2) !important;
+    position: relative;
+    background-color: var(--color2);
+    padding-top: 9vh;
+    height: auto;
+    padding-bottom: 3vh;
+    margin: 0;
+    height: auto;
+    min-height: 69.8vh;
+}
+
+.table-container-responsive {
+    background-color: var(--color2) !important;
+}
+
+.title-container {
+    color: var(--colorbg);
+}
+
+.title-container h1 {
+    display: inline-block;
+    font-size: 4rem !important;
+    font-weight: bold !important;
+}
+
+.title-container i {
+    margin-left: 10px;
+    font-size: 3rem !important;
+}
+
+.button-container-new {
+    float: right;
+    margin-top: 3vh;
+}
+
+.button-container-new button {
+    background-color: var(--colorbg);
+    color: white;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    text-transform: uppercase;
+}
+
+.button-container-new button:hover {
+    background-color: var(--colorbglight);
+}
+
+.button-container-new a {
+    color: white;
+    text-decoration: none;
+}
+
+
+/*edit layer*/
+
+#div-edit {
+    width: 100%;
+    display: none;
+    color: var(--color4);
+}
+
+.form-container {
+    background-color: var(--bgcolorlayer);
+    height: auto;
+    width: 50%;
+    position: fixed;
+    top: 14%;
+    left: 25%;
+    z-index: 9999999999999999;
+}
+
+#x-icon {
+    float: right;
+}
+
+#x-icon i {
+    float: right;
+    margin-right: 10px;
+    margin-top: 10px;
+    font-size: 3rem;
+}
+
+.form-container h1 {
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: 2rem;
+}
+
+.form-container form {
+    margin: 5vh auto;
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.form-group button {
+    width: 100%;
+    margin-left: auto;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    margin-right: auto;
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: 2rem;
+    background-color: var(--colorbglight);
+}
+
+.form-group button:hover {
+    background-color: white;
+    color: var(--colorbglight);
+}
+
+
+/*end*/
+
+
+/*new layer*/
+
+#div-new {
+    width: 100%;
+    display: none;
+    color: var(--color4);
+}
+
+
+/*end*/
+
+
+/*delete layer*/
+
+#div-delete {
+    width: 100%;
+    display: none;
+    color: var(--color4);
+    text-align: center;
+}
+
+#div-delete .form-container {
+    top: 28%;
+}
+
+#div-delete .confirm-button {
+    width: 20%;
+    margin-left: auto;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    margin-right: auto;
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: 2rem;
+    background-color: var(--colorbglight);
+}
+
+#div-delete .confirm-button:hover {
+    background-color: white;
+    color: var(--colorbglight);
+}
+
+.empty {
+    text-align: center;
+    color: var(--color5);
+    margin-top: 13%;
+}
+
+.add {
+    background-color: var(--colorbglight);
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    padding-left: 3rem;
+    padding-right: 3rem;
+    margin-top: 3vh;
+    border-radius: 3rem;
+    color: white;
+}
+
+.disabled {
+    background-color: grey !important;
+}
+
+.results {
+    color: var(--colorbg);
+    text-align: center;
+}

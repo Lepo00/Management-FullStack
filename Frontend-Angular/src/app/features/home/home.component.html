@@ -1,0 +1,38 @@
+<app-menu [search]=false></app-menu>
+<div class="all">
+    <div class="block">
+        <div class="card" routerLink="/items">
+            <div class="card__container">
+                <div class="card__front">
+                    <i class="fas fa-box-open "></i> <br> <span class="block-descrition ">Articoli</span>
+                </div>
+                <div class="card__back ">
+                    <i class="fas fa-box-open " style="font-size: 5rem; display: block !important; "></i><br>
+                    <span class="block-descrition ">Numero Articoli: {{nItems}}</span>
+                </div>
+            </div>
+        </div>
+        <div class="card" routerLink="/customers">
+            <div class="card__container ">
+                <div class="card__front ">
+                    <i class="fas fa-users "></i> <br> <span class="block-descrition ">Clienti</span>
+                </div>
+                <div class="card__back ">
+                    <i class="fas fa-users " style="font-size: 5rem; display: block !important; "></i> <br>
+                    <span class="block-descrition ">Totale Clienti: {{nCustomers}}</span>
+                </div>
+            </div>
+        </div>
+        <div class="card" routerLink="/invoices">
+            <div class="card__container ">
+                <div class="card__front ">
+                    <i class="fas fa-cash-register "></i> <br> <span class="block-descrition ">Fatture</span>
+                </div>
+                <div class="card__back ">
+                    <i class="fas fa-cash-register " style="font-size: 5rem; display: block !important; "></i> <br> <br> <span class="block-descrition ">Totale Fatturato: {{totInvoices.toString()| number:'1.2-2'|eur}}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<app-footer></app-footer>

@@ -1,0 +1,233 @@
+<!-- corpo  base-->
+<app-menu [search]=true></app-menu>
+<div class="container-page">
+    <div class="row container-row ">
+        <div class="col-12 col-sm-12 col-md-12 col-lg-12 table-container">
+            <div class="container table-responsive py-5 table-container-responsive">
+                <div class="title-container">
+                    <h1>
+                        <span *ngIf="!searchButton">Ricerca </span>Articoli.
+                    </h1>
+                    <div class="button-container-new" *ngIf="searchButton">
+                        <button onclick="toggleNewLayer()" (click)="resetForm()"><a>Nuovo Articolo</a></button>
+                    </div>
+                    <i class="fas fa-box-open"></i>
+                </div>
+                <h3 *ngIf="!searchButton" class="results">La tua ricerca ha prodotto: {{items.length}} risultati</h3>
+                <table class="table" *ngIf="items?.length>0;">
+                    <tr class="tr">
+                        <td class="th">Codice</td>
+                        <td class="th">Descrizione</td>
+                        <td class="th">Prezzo</td>
+                        <td class="th">Tipo</td>
+                        <td class="th">Unità di misura</td>
+                        <td class="th">Azioni</td>
+                    </tr>
+                    <tr *ngFor="let item of items" class="tr">
+                        <td class="td">{{item.code|titlecase}}</td>
+                        <td class="td">{{item.description|titlecase}}</td>
+                        <td class="td">{{item.price| number:'1.2-2'|eur}}</td>
+                        <td class="td">
+                            <span *ngIf="item.service">Servizio</span>
+                            <span *ngIf="!item.service">Prodotto</span>
+                        </td>
+                        <td class="td">{{item.unitOfMeasure.unit|titlecase}} ({{item.unitOfMeasure.name|titlecase}})
+                        </td>
+                        <td class="td">
+                            <button onclick="toggleLayer()"><i class="fas fa-edit"></i></button>
+                            <button onclick="toggleLayerZoom()"><i class="fas fa-search" id="zoom"></i></button>
+                            <button onclick="toggleLayerConfirm()"><i class="fas fa-times"></i></button>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <button onclick="toggleLayerOverlay()">
+            <div id="overlay"></div>
+        </button>
+    </div>
+</div>
+<app-footer></app-footer>
+
+
+<!--DIV CREA Articolo-->
+<div id="div-new" style="display: none;">
+    <div class="form-container">
+        <button id="x-icon" onclick="toggleLayerX()"><i class="fas fa-times"></i></button>
+        <h1>Crea Nuovo Articolo</h1>
+        <form>
+            <div class="row">
+                <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                    <div class="form-group">
+                        <label for="ragione-sociale">Codice</label>
+                        <input class="form-control" placeholder="Codice">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-8 col-sm-8 col-md-8 col-lg-8">
+                    <div class="form-group">
+                        <label for="ragione-sociale">Descrizione</label>
+                        <input class="form-control" placeholder="Descrizione">
+                    </div>
+                </div>
+                <div class="col-4 col-sm-4 col-md-4 col-lg-4 ">
+                    <div class="form-group">
+                        <label>Prezzo</label>
+                        <input type="number" class="form-control" placeholder="Prezzo">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-6 col-sm-6 col-md-6 col-lg-6 ">
+                    <div class="form-group">
+                        <label>Tipo</label>
+                        <select class="form-control">
+                            <option value="null" disabled hidden>Seleziona Tipo</option>
+                            <option value=1>Servizio</option>
+                            <option value=0>Prodotto</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-6 col-sm-6 col-md-6 col-lg-6">
+                    <label>Unità di Misura</label>
+                    <select class="form-control">
+                        <option value="null" disabled hidden>Seleziona Unità di Misura</option>
+                        <option [value]="measure.unit" *ngFor="let measure of measures">
+                            {{measure.unit}}</option>
+                    </select>
+                </div>
+            </div>
+            <p>* Campi obbligatori</p>
+            <div class="form-group">
+                <button type="submit" class="new" onclick="toggleLayerX()">Crea Articolo</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!--DIV SEI SICURO DI VOLER ELIMINARE IL Articolo?-->
+<div id="div-delete" style="display: none; ">
+    <div class="form-container">
+        <button id="x-icon"><i class="fas fa-times" onclick="cancelConfirmLayer()"></i></button>
+        <h1>Sei sicuro di voler eliminare il Articolo?</h1>
+        <br> <br>
+        <button class="confirm-button" style="margin-right: 20px;" type="submit" onclick="toggleLayerX()">Si</button>
+        <button onclick="cancelConfirmLayer()" class="confirm-button" type="submit">No</button>
+        <br><br><br>
+    </div>
+</div>
+
+<!--DIV DETTAGLIO Articolo-->
+<div id="div-detail" style="display: none;">
+    <div class="form-container">
+        <button id="x-icon" onclick="toggleLayerX()"><i class="fas fa-times"></i></button>
+        <h1>Dettaglio Articolo</h1>
+        <form>
+            <div class="row">
+                <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                    <div class="form-group">
+                        <label for="ragione-sociale">Codice</label>
+                        <input class="form-control" placeholder="Codice">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-8 col-sm-8 col-md-8 col-lg-8">
+                    <div class="form-group">
+                        <label for="ragione-sociale">Descrizione</label>
+                        <input class="form-control" placeholder="Descrizione">
+                    </div>
+                </div>
+                <div class="col-4 col-sm-4 col-md-4 col-lg-4 ">
+                    <div class="form-group">
+                        <label>Prezzo</label>
+                        <input type="number" class="form-control" placeholder="Prezzo">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-6 col-sm-6 col-md-6 col-lg-6 ">
+                    <div class="form-group">
+                        <label>Tipo</label>
+                        <select class="form-control">
+                            <option value="null" disabled hidden>Seleziona Tipo</option>
+                            <option value=1>Servizio</option>
+                            <option value=0>Prodotto</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-6 col-sm-6 col-md-6 col-lg-6">
+                    <div class="form-group">
+                        <label>Unità di Misura</label>
+                        <select class="form-control">
+                            <option value="null" disabled hidden>Seleziona Unità</option>
+                            <option [ngValue]="measure.unit" *ngFor="let measure of measures">
+                                {{measure.unit}}</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <p>* Campi obbligatori</p>
+            <div class="form-group">
+                <button type="submit" class="new" onclick="toggleLayerX()">Crea Articolo</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!--DIV MODIFICA ARTICOLO-->
+<div id="div-edit" style="display: none;">
+    <div class="form-container">
+        <button id="x-icon" onclick="toggleLayerX()"><i class="fas fa-times"></i></button>
+        <h1>Modifica Articolo</h1>
+        <form>
+            <div class="row">
+                <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                    <div class="form-group">
+                        <label for="ragione-sociale">Codice</label>
+                        <input class="form-control" placeholder="Codice">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-8 col-sm-8 col-md-8 col-lg-8">
+                    <div class="form-group">
+                        <label for="ragione-sociale">Descrizione</label>
+                        <input class="form-control" placeholder="Descrizione">
+                    </div>
+                </div>
+                <div class="col-4 col-sm-4 col-md-4 col-lg-4 ">
+                    <div class="form-group">
+                        <label>Prezzo</label>
+                        <input type="number" class="form-control" placeholder="Prezzo">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-6 col-sm-6 col-md-6 col-lg-6 ">
+                    <div class="form-group">
+                        <label>Tipo</label>
+                        <select class="form-control">
+                            <option value="null" disabled hidden>Seleziona Tipo</option>
+                            <option value=1>Servizio</option>
+                            <option value=0>Prodotto</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-6 col-sm-6 col-md-6 col-lg-6">
+                    <label>Unità di Misura</label>
+                    <select class="form-control">
+                        <option value="null" disabled hidden>Seleziona Unità di Misura</option>
+                        <option [ngValue]=measure.unit *ngFor="let measure of measures">
+                            {{measure.unit}}</option>
+                    </select>
+                </div>
+            </div>
+            <p>* Campi obbligatori</p>
+            <div class="form-group">
+                <button type="submit" class="new" onclick="toggleLayerX()">Modifica Articolo</button>
+            </div>
+        </form>
+    </div>
+</div>

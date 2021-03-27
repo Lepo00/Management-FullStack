@@ -1,0 +1,23 @@
+<nav class="menu">
+    <ol>
+        <li class="menu-item logo no-hover" routerLink="/home"></li>
+        <li class="menu-item"><a routerLink="/home">Home <i class="fas fa-home"></i></a></li>
+        <li class="menu-item"><a routerLink="/items">Articoli <i class="fas fa-box-open"></i></a></li>
+        <li class="menu-item"><a routerLink="/customers">Clienti <i class="fas fa-users"></i></a></li>
+        <li class="menu-item"><a routerLink="/invoices">Fatture <i class="fas fa-file-invoice-dollar"></i></a> </li>
+        <li class="menu-item logout" (click)="logout()"><a>Logout <i class="fas fa-sign-out-alt"></i></a></li>
+        <li class="menu-item no-hover search" *ngIf="search==true">
+            <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+            <form (ngSubmit)="searchButton(txt.value)">
+                <input type="search" #txt>
+                <i class="fa fa-search" (click)="searchButton(txt.value)"></i>
+            </form>
+        </li>
+        <li class="menu-item last no-hover">
+            <label id="switch" class="switch">
+                        <input type="checkbox" onchange="toggleTheme()" id="slider">
+                        <span class="slider round"></span>
+                    </label>
+        </li>
+    </ol>
+</nav>

@@ -1,0 +1,513 @@
+<app-menu [search]=true></app-menu>
+<div class="container-page">
+    <div class="row container-row ">
+        <div class="col-12 col-sm-12 col-md-12 col-lg-12 table-container ">
+            <div class="container table-responsive py-5 table-container-responsive"
+                *ngIf="invoices.length>0; else empty">
+                <div class="title-container">
+                    <h1><span *ngIf="!searchButton">Ricerca </span>Fatture.</h1> <i class="fas fa-file-invoice"></i>
+                    <div class="button-container-new" style="display: inline-block;">
+                        <button onclick="toggleNewLayer()" (click)="addInvoice()"><a>Nuova
+                                Fattura</a></button>
+                    </div>
+                </div>
+                <h3 *ngIf="!searchButton" class="results">La tua ricerca ha prodotto: {{invoices.length}} risultati</h3>
+                <table class="table">
+                    <tr class="tr">
+                        <td class="th">Numero</td>
+                        <td class="th">Ragione Sociale</td>
+                        <td class="th">Data</td>
+                        <td class="th">Metodo di Pagamento</td>
+                        <td class="th">Totale</td>
+                        <td class="th">Azioni</td>
+                    </tr>
+                    <tr *ngFor="let invoice of invoices; let i = index;" class="tr">
+                        <td class="td">{{i+1}}</td>
+                        <td class="td">{{invoice.accountholder|titlecase}}</td>
+                        <td class="td">{{invoice.date}}</td>
+                        <td class="td">{{invoice.paymentMethod|titlecase}}</td>
+                        <td class="td">{{invoice.tail.finalAmount| number:'1.2-2'|eur}}</td>
+                        <td class="td">
+                            <button onclick="toggleLayer()"><i class="fas fa-edit"
+                                    (click)="detail(invoice.id); populateForm()"></i></button>
+                            <button onclick="toggleLayerZoom()"><i class="fas fa-search"
+                                    (click)="detail(invoice.id)"></i></button>
+                            <button onclick="toggleLayerConfirm()"><i class="fas fa-times"
+                                    (click)="detail(invoice.id)"></i></button>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <ng-template #empty>
+                <div class="empty" *ngIf="searchButton">
+                    <h2>Non hai nessuna fattura.<br>Aggiungine una ora!</h2>
+                    <button onclick="toggleNewLayer()" class="add">Nuova Fattura</button>
+                </div>
+                <div class="empty" *ngIf="!searchButton">
+                    <h2>La tua ricerca non ha prodotto risultati.</h2>
+                </div>
+            </ng-template>
+        </div>
+        <button onclick="toggleLayerOverlay()">
+            <div id="overlay"></div>
+        </button>
+    </div>
+</div>
+<app-footer></app-footer>
+
+<!--DIV MODIFICA-->
+<div id="div-edit" style="display: none;">
+    <div class="create-invoice">
+        <button id="x-icon-2" onclick="toggleLayerX()"><i class="fas fa-times"></i></button>
+        <h1 class="firsttitle">Modifica Fattura</h1>
+        <form [formGroup]="invoiceForm" (ngSubmit)="updateInvoice()">
+            <button class="saveButton" type="submit" onclick="toggleLayerX()" id="x-icon-2"
+                [disabled]="invoiceForm.status === 'INVALID'"
+                [ngClass]="{'disabled': invoiceForm.status === 'INVALID'}"> <i class="far fa-save"></i></button>
+            <div class="master">
+                <h1 class="headtitle">Testa</h1>
+                <div class="row">
+                    <div class="col-3 col-sm-3 col-md-3 col-lg-3">
+                        <div class="form-group">
+                            <label>Numero</label>
+                            <input disabled class="form-control text-center" [value]="invoices?.length+1">
+                        </div>
+                    </div>
+                    <div class="col-9 col-sm-9 col-md-9 col-lg-9 ">
+                        <div class="form-group">
+                            <label for="Intestatario">Intestatario</label>
+                            <input class="form-control" placeholder="Intestatario" formControlName="accountholder">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-5 col-sm-5 col-md-5 col-lg-5">
+                        <div class="form-group">
+                            <label for="data">Data</label>
+                            <input type="date" class="form-control" placeholder="Data" formControlName="date">
+                        </div>
+                    </div>
+                    <div class="col-7 col-sm-7 col-md-7 col-lg-7">
+                        <div class="form-group">
+                            <label for="pagamento">Pagamento</label>
+                            <input class="form-control" placeholder="Pagamento" formControlName="paymentMethod">
+                        </div>
+                    </div>
+                </div>
+                <div class="summary">
+                    <h1>Riepilogo</h1>
+                    <h2>RIGHE</h2>
+                    <div class="flex-row">
+                        <div class="one">
+                            <label>Sconto %</label>
+                            <input type="text" class="form-control" disabled
+                                [value]="calcs()[0].percDiscount | number:'1.1-2'|perc">
+                        </div>
+                        <div class="one">
+                            <label>Valore sconto</label>
+                            <input class="form-control" disabled [value]="calcs()[0].discountValue| number:'1.2-2'|eur">
+                        </div>
+                    </div>
+                    <div class="flex-row">
+                        <div class="one">
+                            <label>Imponibile</label>
+                            <input class="form-control" disabled [value]="calcs()[0].taxable| number:'1.2-2'|eur">
+                        </div>
+                        <div class="one">
+                            <label>IVA</label>
+                            <input class="form-control" disabled [value]="calcs()[0].taxed| number:'1.2-2'|eur">
+                        </div>
+                        <div class="one">
+                            <label>Totale</label>
+                            <input class="form-control" disabled [value]="calcs()[0].finalAmount| number:'1.2-2'|eur">
+                        </div>
+                    </div>
+                    <h2>CODA</h2>
+                    <div class="flex-row">
+                        <div class="one">
+                            <label>Sconto %</label>
+                            <input type="number" class="form-control" placeholder="Sconto coda percentuale"
+                                formControlName="tail" min="0" max="100">
+                        </div>
+                        <div class="one">
+                            <label>Valore sconto</label>
+                            <input class="form-control" disabled [value]="calcs()[1].discountValue| number:'1.2-2'|eur">
+                        </div>
+                    </div>
+                    <div class="flex-row">
+                        <div class="one">
+                            <label>Imponibile</label>
+                            <input class="form-control" disabled [value]="calcs()[1].taxable| number:'1.2-2'|eur">
+                        </div>
+                        <div class="one">
+                            <label>IVA</label>
+                            <input class="form-control" disabled [value]="calcs()[1].taxed| number:'1.2-2'|eur">
+                        </div>
+                        <div class="one">
+                            <label>Totale</label>
+                            <input class="form-control" disabled [value]="calcs()[1].finalAmount| number:'1.2-2'|eur">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="body">
+                <div class="itemsArr">
+                    <h1>Articoli</h1>
+                    <div class="no-items" *ngIf="invoiceForm.get('rows')['controls'].length==0; else table">
+                        <h2>Non hai selezionato nessun articolo,
+                            <span class="span" (click)="addItem()">aggiungine uno!</span>
+                        </h2>
+                    </div>
+                    <ng-template #table>
+                        <table>
+                            <tr>
+                                <th class="article">Articolo</th>
+                                <th class="qt">Qt</th>
+                                <th class="pr1">Prz. Unitario</th>
+                                <th class="scper">Sconto %</th>
+                                <th class="sctot">Sconto Tot.</th>
+                                <th class="prsc">Prz. Scont.</th>
+                                <th class="imp">Imponibile</th>
+                                <th class="iva">IVA</th>
+                                <th class="tot">Totale</th>
+                                <th class="agg">+</th>
+                                <th class="rem">x</th>
+                            </tr>
+                            <ng-container formArrayName="rows" *ngFor="let item of invoiceForm.get('rows')['controls']; let i = index;">
+                                <ng-container [formGroupName]="i">
+                                    <tr>
+                                        <td class="article">
+                                            <select formControlName="item">
+                                            <option value="null" disabled hidden>Seleziona Articolo</option>
+                                            <option [ngValue]="item.id" *ngFor="let item of items">
+                                                {{item.code}}: {{item.description}}
+                                          </option>
+                                        </select>
+                                        </td>
+                                        <td class="qt"><input type="number" formControlName="quantity" class="form-control"></td>
+                                        <td class="pr1">
+                                            <input disabled value={{itemSelect(i)?.price|eur}} class="form-control">
+                                        </td>
+                                        <td class="scper"><input type="number" formControlName="percDiscount" class="form-control"></td>
+                                        <td class="sctot">
+                                            <input disabled value={{itemSelect(i)?.sctot|eur}} class="form-control">
+                                        </td>
+                                        <td class="prsc">
+                                            <input disabled value={{itemSelect(i)?.prsc|eur}} class="form-control">
+                                        </td>
+                                        <td class="imp">
+                                            <input disabled value={{itemSelect(i)?.imp|eur}} class="form-control">
+                                        </td>
+                                        <td class="iva">
+                                            <input disabled value={{itemSelect(i)?.iva|eur}} class="form-control">
+                                        </td>
+                                        <td class="tot">
+                                            <input disabled value={{itemSelect(i)?.tot|eur}} class="form-control">
+                                        </td>
+                                        <td class="agg" (click)="addItem()">
+                                            <p>+</p>
+                                        </td>
+                                        <td class="rem" (click)="deleteItem(i)">
+                                            <p>-</p>
+                                        </td>
+                                    </tr>
+                                </ng-container>
+                            </ng-container>
+                        </table>
+                    </ng-template>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!--DIV CREA FATTURA-->
+<div id="div-new" style="display: none;">
+    <div class="create-invoice">
+        <button id="x-icon" onclick="toggleLayerX()"><i class="fas fa-times"></i></button>
+        <h1 class="firsttitle">Creazione Fattura N.{{invoices?.length+1}}</h1>
+        <form [formGroup]="invoiceForm" (ngSubmit)="saveInvoice()">
+            <button class="saveButton" type="submit" onclick="toggleLayerX()" id="x-icon"
+                [disabled]="invoiceForm.status === 'INVALID' || invoiceForm.get('rows')['controls'].length==0"
+                [ngClass]="{'disabled': invoiceForm.status === 'INVALID'||invoiceForm.get('rows')['controls'].length==0 }">
+                <i class="far fa-save"></i></button>
+            <div class="master">
+                <h1 class="headtitle">Testa</h1>
+                <div class="row">
+                    <div class="col-3 col-sm-3 col-md-3 col-lg-3">
+                        <div class="form-group">
+                            <label>Numero</label>
+                            <input disabled class="form-control text-center" [value]="invoices?.length+1">
+                        </div>
+                    </div>
+                    <div class="col-9 col-sm-9 col-md-9 col-lg-9 ">
+                        <div class="form-group">
+                            <label for="Intestatario">Intestatario</label>
+                            <input class="form-control" placeholder="Intestatario" formControlName="accountholder">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-5 col-sm-5 col-md-5 col-lg-5">
+                        <div class="form-group">
+                            <label for="data">Data</label>
+                            <input type="date" class="form-control" placeholder="Data" formControlName="date">
+                        </div>
+                    </div>
+                    <div class="col-7 col-sm-7 col-md-7 col-lg-7">
+                        <div class="form-group">
+                            <label for="pagamento">Pagamento</label>
+                            <input class="form-control" placeholder="Pagamento" formControlName="paymentMethod">
+                        </div>
+                    </div>
+                </div>
+                <div class="summary">
+                    <h1>Riepilogo</h1>
+                    <h2>RIGHE</h2>
+                    <div class="flex-row">
+                        <div class="one">
+                            <label>Sconto %</label>
+                            <input type="text" class="form-control" disabled
+                                [value]="calcs()[0].percDiscount | number:'1.1-2'|perc">
+                        </div>
+                        <div class="one">
+                            <label>Valore sconto</label>
+                            <input class="form-control" disabled [value]="calcs()[0].discountValue| number:'1.2-2'|eur">
+                        </div>
+                    </div>
+                    <div class="flex-row">
+                        <div class="one">
+                            <label>Imponibile</label>
+                            <input class="form-control" disabled [value]="calcs()[0].taxable| number:'1.2-2'|eur">
+                        </div>
+                        <div class="one">
+                            <label>IVA</label>
+                            <input class="form-control" disabled [value]="calcs()[0].taxed| number:'1.2-2'|eur">
+                        </div>
+                        <div class="one">
+                            <label>Totale</label>
+                            <input class="form-control" disabled [value]="calcs()[0].finalAmount| number:'1.2-2'|eur">
+                        </div>
+                    </div>
+                    <h2>CODA</h2>
+                    <div class="flex-row">
+                        <div class="one">
+                            <label>Sconto %</label>
+                            <input type="number" class="form-control" placeholder="Sconto coda percentuale"
+                                formControlName="tail" min="0" max="100">
+                        </div>
+                        <div class="one">
+                            <label>Valore sconto</label>
+                            <input class="form-control" disabled [value]="calcs()[1].discountValue| number:'1.2-2'|eur">
+                        </div>
+                    </div>
+                    <div class="flex-row">
+                        <div class="one">
+                            <label>Imponibile</label>
+                            <input class="form-control" disabled [value]="calcs()[1].taxable| number:'1.2-2'|eur">
+                        </div>
+                        <div class="one">
+                            <label>IVA</label>
+                            <input class="form-control" disabled [value]="calcs()[1].taxed| number:'1.2-2'|eur">
+                        </div>
+                        <div class="one">
+                            <label>Totale</label>
+                            <input class="form-control" disabled [value]="calcs()[1].finalAmount| number:'1.2-2'|eur">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="body">
+                <div class="itemsArr">
+                    <h1>Articoli</h1>
+                    <div class="no-items" *ngIf="invoiceForm.get('rows')['controls'].length==0; else table">
+                        <h2>Non hai selezionato nessun articolo,
+                            <span class="span" (click)="addItem()">aggiungine uno!</span>
+                        </h2>
+                    </div>
+                    <ng-template #table>
+                        <table>
+                            <tr>
+                                <th class="article">Articolo</th>
+                                <th class="qt">Qt</th>
+                                <th class="pr1">Prz. Unitario</th>
+                                <th class="scper">Sconto %</th>
+                                <th class="sctot">Sconto Tot.</th>
+                                <th class="prsc">Prz. Scont.</th>
+                                <th class="imp">Imponibile</th>
+                                <th class="iva">IVA</th>
+                                <th class="tot">Totale</th>
+                                <th class="agg">+</th>
+                                <th class="rem">x</th>
+                            </tr>
+                            <ng-container formArrayName="rows"
+                                *ngFor="let item of invoiceForm.get('rows')['controls']; let i = index;">
+                                <ng-container [formGroupName]="i">
+                                    <tr>
+                                        <td class="article">
+                                            <select formControlName="item">
+                                                <option value="null" disabled hidden>Seleziona Articolo</option>
+                                                <option [ngValue]="item.id" *ngFor="let item of items">
+                                                    {{item.code}}: {{item.description}}
+                                                </option>
+                                            </select>
+                                        </td>
+                                        <td class="qt"><input type="number" formControlName="quantity"
+                                                class="form-control"></td>
+                                        <td class="pr1">
+                                            <input disabled value={{itemSelect(i)?.price|eur}} class="form-control">
+                                        </td>
+                                        <td class="scper"><input type="number" formControlName="percDiscount"
+                                                class="form-control"></td>
+                                        <td class="sctot">
+                                            <input disabled value={{itemSelect(i)?.sctot|eur}} class="form-control">
+                                        </td>
+                                        <td class="prsc">
+                                            <input disabled value={{itemSelect(i)?.prsc|eur}} class="form-control">
+                                        </td>
+                                        <td class="imp">
+                                            <input disabled value={{itemSelect(i)?.imp|eur}} class="form-control">
+                                        </td>
+                                        <td class="iva">
+                                            <input disabled value={{itemSelect(i)?.iva|eur}} class="form-control">
+                                        </td>
+                                        <td class="tot">
+                                            <input disabled value={{itemSelect(i)?.tot|eur}} class="form-control">
+                                        </td>
+                                        <td class="agg" (click)="addItem()">
+                                            <p>+</p>
+                                        </td>
+                                        <td class="rem" (click)="deleteItem(i)">
+                                            <p>-</p>
+                                        </td>
+                                    </tr>
+                                </ng-container>
+                            </ng-container>
+                        </table>
+                    </ng-template>
+                </div>
+                <!--<div class="deleteForm" *ngIf="invoiceForm.get('rows')['controls'].length>1">
+                            <button type="button" (click)="deleteItem(i)" class="deleteItem"><i class="fas fa-times"></i></button>
+                        </div>-->
+            </div>
+        </form>
+    </div>
+</div>
+
+<!--DIV SEI SICURO DI VOLER ELIMINARE FATTURA?-->
+<div id="div-delete" style="display: none; ">
+    <div class="form-container">
+        <button id="x-icon" onclick="toggleLayerX()"><i class="fas fa-times"></i></button>
+        <h1>Sei sicuro di voler eliminare la fattura?</h1>
+        <br> <br>
+        <button onclick="cancelConfirmLayer()" class="confirm-button" style="margin-right: 20px;" type="submit"
+            (click)="delete()">Si</button>
+        <button onclick="cancelConfirmLayer()" class="confirm-button" id="annulla" type="submit">No</button>
+        <br><br><br>
+    </div>
+</div>
+
+<!--DIV DETTAGLIO FATTURA-->
+<div id="div-detail" style="display: none; ">
+    <div class="form-container">
+        <div class="action">
+            <span class="title">Dettaglio Fattura</span>
+            <button id="x-icon" onclick="toggleLayerX()" title="Chiudi finestra"><i class="fas fa-times"></i></button>
+            <button onclick="window.printDiv('div-detail')" class="print" title="Satampa o salva in PDF"><i
+                    class="fas fa-print"></i></button>
+            <button (click)="exportExcel()" class="print" title="Scarica il file Excel"><i
+                    class="fas fa-file-excel"></i></button>
+        </div>
+        <div class="fattura">
+            <div class="row testa">
+                <div class="col-6 col-sm-6 col-md-6 col-lg-6 logo">
+                    <img src="../../../assets/logo-fatture.png" alt="" class="imgDetail">
+                </div>
+                <div class="col-6 col-sm-6 col-md-6 col-lg-6 info">
+                    Ragione Sociale:<br> <b>{{invoiceDetail?.accountholder}}</b> <br> Partita IVA:<br>
+                    <b>{{currentUser?.ivaCode}}</b><br> Sede Spedizione:<br> <b>{{currentUser?.address}}</b>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-6 col-sm-6 col-md-6 col-lg-6 rif">
+                    <table class="table" style="width: 76%;">
+                        <tr class="tr">
+                            <td class="th">Numero</td>
+                            <td class="th">Data</td>
+                        </tr>
+                        <tr class="tr">
+                            <td class="td">{{invoiceDetail?.id}}</td>
+                            <td class="td">{{invoiceDetail?.date}}</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                    <table class="table">
+                        <tr class="tr">
+                            <td colspan="9">
+                                <h4 class="titletable">Riepilogo Righe</h4>
+                            </td>
+                        </tr>
+                        <tr class="tr">
+                            <td class="th">Nome Articolo</td>
+                            <td class="th">Prezzo<br>Unitario</td>
+                            <td class="th">Quantità</td>
+                            <td class="th">Sconto (%)</td>
+                            <td class="th">Totale Sconto</td>
+                            <td class="th">Prezzo scontato<br>Singolo</td>
+                            <td class="th">Imponibile</td>
+                            <td class="th">IVA</td>
+                            <td class="th">Totale</td>
+                        </tr>
+                        <tr *ngFor="let row of invoiceDetail?.rows" class="tr">
+                            <td class="td">{{row.item.description}}</td>
+                            <td class="td">{{row.item.price|eur}}</td>
+                            <td class="td">{{row.quantity}}</td>
+                            <td class="td">{{row.percDiscount|perc}}</td>
+                            <td class="td">{{row.totDiscount|eur}}</td>
+                            <td class="td">{{row.netPrice|eur}}</td>
+                            <td class="td">{{row.taxable|eur}}</td>
+                            <td class="td">{{row.taxed|eur}}</td>
+                            <td class="td">{{row.finalAmount|eur}}</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                    <table class="table">
+                        <tr class="tr">
+                            <td colspan="9">
+                                <h4 class="titletable">Coda fattura</h4>
+                            </td>
+                        </tr>
+                        <tr class="tr">
+                            <td class="th">Totale Righe</td>
+                            <td class="th">Servizi</td>
+                            <td class="th">Tot. Sconto<br>Righe</td>
+                            <td class="th">Sconto<br>coda(%)</td>
+                            <td class="th">Valore<br>Sconto</td>
+                            <td class="th">Totale<br>sconto</td>
+                            <td class="th">Imponibile</td>
+                            <td class="th">IVA</td>
+                            <td class="th">Totale</td>
+                        </tr>
+                        <tr>
+                            <td class="td">{{invoiceDetail?.tail.itemsValue|eur}}</td>
+                            <td class="td">{{invoiceDetail?.tail.serviceValue|eur}}</td>
+                            <td class="td">{{invoiceDetail?.tail.rowsDiscount|eur}}</td>
+                            <td class="td">{{invoiceDetail?.tail.percDiscount|perc}}</td>
+                            <td class="td">{{invoiceDetail?.tail.discountValue|eur}}</td>
+                            <td class="td">{{invoiceDetail?.tail.totDiscount|eur}}</td>
+                            <td class="td">{{invoiceDetail?.tail.taxable|eur}}</td>
+                            <td class="td">{{invoiceDetail?.tail.taxed|eur}}</td>
+                            <td class="td">{{invoiceDetail?.tail.finalAmount|eur}}</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
